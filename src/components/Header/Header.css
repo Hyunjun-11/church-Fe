@@ -1,0 +1,11 @@
+.Header {
+  display: grid;
+  gap: 20px;
+  border: solid 2px tomato;
+  padding: 20px;
+}
+
+.Header_ {
+  display: flex;
+  justify-content: space-between;
+}
