@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-
 import "./App.css";
+import Router from "./Routes/Router";
 
 const App = () => {
   return (
     <>
-      <div></div>;
+      <Router />
     </>
   );
 };
