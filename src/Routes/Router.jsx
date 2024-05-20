@@ -9,6 +9,7 @@ import NewMembers from "../components/Body/churchInfo/NewMembers";
 import ChurchGuide from "../components/Body/churchInfo/ChurchGuide";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
+import InfoLayout from "../components/Body/layout/InfoLayout";
 
 const Router = () => {
   return (
@@ -19,13 +20,13 @@ const Router = () => {
       </Routes>
       {/* churchInfo */}
       <Routes>
-        <Route path="info">
-          <Route path="intro/" element={<ChurchInfo />}></Route>
-          <Route path="organization/" element={<ChurchOrganization />}></Route>
-          <Route path="parking/" element={<DirectionsParking />}></Route>
-          <Route path="greeting/" element={<Greeting />}></Route>
-          <Route path="newMember/" element={<NewMembers />}></Route>
-          <Route path="guide/" element={<ChurchGuide />}></Route>
+        <Route path="info" element={<InfoLayout />}>
+          <Route path="intro" element={<ChurchInfo />}></Route>
+          <Route path="organization" element={<ChurchOrganization />}></Route>
+          <Route path="parking" element={<DirectionsParking />}></Route>
+          <Route path="greeting" element={<Greeting />}></Route>
+          <Route path="newMember" element={<NewMembers />}></Route>
+          <Route path="guide" element={<ChurchGuide />}></Route>
         </Route>
       </Routes>
       <Footer />
