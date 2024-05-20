@@ -1,13 +1,11 @@
 import "./FilterBar.css";
 
-const hover = () => {};
-
 const FilterBar = () => {
   return (
-    <>
-      <div className="FilterBar">
-        <div className="info">
-          교회소개
+    <div className="FilterBar">
+      <div className="info">
+        교회소개
+        <div>
           <div>인삿말</div>
           <div>교회안내</div>
           <div>약도/주차안내</div>
@@ -15,15 +13,19 @@ const FilterBar = () => {
           <div>섬기는분들</div>
           <div>교회조직</div>
         </div>
+      </div>
+      <div>
+        예배안내
         <div>
-          예배안내
           <div>교회비전</div>
           <div>교회표어</div>
           <div>연간행사계획</div>
           <div>함섬 주보</div>
         </div>
+      </div>
+      <div>
+        말씀 기도
         <div>
-          말씀 기도
           <div>주일예배</div>
           <div>수요예배</div>
           <div>주일학교예배</div>
@@ -37,8 +39,10 @@ const FilterBar = () => {
           <div>기도</div>
           <div>목회자 자료실</div>
         </div>
+      </div>
+      <div>
+        교육 전도
         <div>
-          교육 전도
           <div>사무엘 부서</div>
           <div>다니엘 부서</div>
           <div>청년부 부서</div>
@@ -47,15 +51,19 @@ const FilterBar = () => {
           <div>남전도회 부서 I</div>
           <div>남전도회 부서 II</div>
         </div>
+      </div>
+      <div>
+        복음자료실
         <div>
-          복음자료실
           <div>복음에 대하여</div>
           <div>복음 자료실</div>
           <div>전도 자료실</div>
           <div>선교 자료실</div>
         </div>
+      </div>
+      <div>
+        커뮤니티
         <div>
-          커뮤니티
           <div>교회소식</div>
           <div>함섬갤러리</div>
           <div>함섬영상자료실</div>
@@ -63,7 +71,7 @@ const FilterBar = () => {
           <div>매일성경</div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
