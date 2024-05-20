@@ -1,7 +1,11 @@
+import Body from "../components/Body/Body";
+import Footer from "../components/Footer/Footer";
+import Header from "../components/Header/Header";
+
 const Home = () => {
   return (
     <div>
-      <div>홈화면</div>
+      <Body />
     </div>
   );
 };
