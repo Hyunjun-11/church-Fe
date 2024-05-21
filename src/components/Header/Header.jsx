@@ -1,11 +1,23 @@
+import { useNavigate } from "react-router-dom";
 import FilterBar from "./FilterBar";
 import "./Header.css";
 
 const Header = () => {
+  const nav = useNavigate();
+  const onClick = (path) => {
+    nav(path);
+  };
   return (
     <div className="Header">
       <div className="Header_">
-        <div>교회이름</div>
+        <div
+          className="Home"
+          onClick={() => {
+            onClick("/");
+          }}
+        >
+          교회이름
+        </div>
         <div>
           <div>로그인</div>
           <div>회원가입</div>

@@ -9,3 +9,8 @@
   display: flex;
   justify-content: space-between;
 }
+
+.Home {
+  cursor: pointer;
+  height: fit-content;
+}
