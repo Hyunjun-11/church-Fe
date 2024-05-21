@@ -1,7 +1,7 @@
 const Greeting = () => {
   return (
     <div>
-      <div>인삿말</div>
+      <div>섬기는분들</div>
     </div>
   );
 };

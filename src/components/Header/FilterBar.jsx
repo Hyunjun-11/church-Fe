@@ -1,25 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import "./FilterBar.css";
+import InfoList from "../Body/churchInfo/InfoList";
 
 const FilterBar = () => {
   const navigate = useNavigate();
 
-  const handleClick = (path) => {
-    navigate(path);
-  };
   return (
     <div className="FilterBar">
-      <div className="info">
-        교회소개
-        <div>
-          <div onClick={() => handleClick("/info/intro")}>인삿말</div>
-          <div onClick={() => handleClick("/info/guide")}>교회안내</div>
-          <div onClick={() => handleClick("/info/parking")}>약도/주차안내</div>
-          <div onClick={() => handleClick("/info/newMember")}>새가족안내</div>
-          <div onClick={() => handleClick("/info/greeting")}>섬기는분들</div>
-          <div onClick={() => handleClick("/info/organization")}>교회조직</div>
-        </div>
-      </div>
+      <InfoList type={"NAV"} />
       <div>
         예배안내
         <div>

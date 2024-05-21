@@ -1,0 +1,16 @@
+.Bar_NAV {
+  cursor: pointer;
+  color: aqua;
+}
+.Bar_NAV > div:hover {
+  text-decoration: underline;
+}
+.Bar_LIST {
+  display: grid;
+  padding-top: 8px;
+  gap: 8px;
+}
+.Bar_LIST > div:hover {
+  cursor: pointer;
+  color: aquamarine;
+}
