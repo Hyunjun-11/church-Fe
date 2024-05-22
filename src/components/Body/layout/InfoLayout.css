@@ -1,9 +1,0 @@
-.InfoLayout {
-  border: solid 2px rgb(184, 60, 147);
-  min-height: 500px;
-  padding: 20px;
-}
-.Info {
-  display: flex;
-  gap: 20px;
-}
