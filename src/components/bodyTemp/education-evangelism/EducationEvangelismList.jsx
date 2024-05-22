@@ -23,12 +23,12 @@ const EducationEvangelismList = ({ type }) => {
       navi: "/education-evangelism/women",
     },
     {
-      name: "남전도회 부서 I",
+      name: "남전도회 부서 Ⅰ",
       navi: "/education-evangelism/men1",
     },
     {
       name: "남전도회 부서 Ⅱ",
-      navi: "/education-evangelism/men1",
+      navi: "/education-evangelism/men2",
     },
   ];
 
