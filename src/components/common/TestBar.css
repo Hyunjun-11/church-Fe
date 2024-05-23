@@ -1,0 +1,33 @@
+/* .Bar_NAV 클래스에 대한 스타일 */
+.Bar_NAV {
+  display: grid;
+  padding-top: 8px;
+  gap: 8px;
+}
+/* .Bar_NAV의 하위 요소에 대한 호버 효과 */
+.Bar_NAV > div:hover {
+  cursor: pointer;
+  color: aquamarine;
+  text-decoration: underline;
+}
+
+/* .Bar_LIST 클래스에 대한 스타일 */
+.Bar_LIST {
+  cursor: pointer;
+  color: aqua;
+}
+
+/* .Bar_LIST의 하위 요소에 대한 호버 효과 */
+
+/* 하위 항목의 스타일 및 개별 호버 효과 */
+.SubItems {
+  margin-left: 20px;
+}
+
+.SubItems .SubItem {
+  cursor: pointer;
+}
+
+.SubItems .SubItem:hover {
+  text-decoration: underline;
+}

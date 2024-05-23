@@ -1,7 +1,8 @@
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./NavBarList.css";
-import { useState } from "react";
-const NavBarList = ({ title, list, type }) => {
+import "./TestBar.css";
+
+const TestBar = ({ title, list, type }) => {
   const navigate = useNavigate();
   const [openItems, setOpenItems] = useState({});
 
@@ -57,4 +58,4 @@ const NavBarList = ({ title, list, type }) => {
   );
 };
 
-export default NavBarList;
+export default TestBar;
