@@ -46,6 +46,7 @@ import SundaySchoolWorship from "../components/bodyTemp/prayer-sermon/SundayScho
 import WednesdayWorship from "../components/bodyTemp/prayer-sermon/WednesdayWorship";
 import SundayWorship from "../components/bodyTemp/prayer-sermon/SundayWorship";
 import TestList from "../components/bodyTemp/TestList";
+import TestComponent from "../components/bodyTemp/TestComponent";
 
 const Router = () => {
   return (
@@ -112,7 +113,7 @@ const Router = () => {
         <Route path="test" element={<Layout ListComponent={TestList} />}>
           <Route path="1" element={<div>테스트1</div>} />
           <Route path="2" element={<div>테스트2</div>} />
-          <Route path="3" element={<div>테스트3</div>} />
+          <Route path="3" element={<TestComponent />} />
 
           <Route path="test" element={<div>테스트</div>} />
           <Route path="test/1" element={<div>하위 테스트1</div>} />
