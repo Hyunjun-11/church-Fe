@@ -1,0 +1,47 @@
+.ImageBoardLayout {
+  width: 100%;
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+.ImageBoardLayout > div:first-child {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.image_board {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.image_item {
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: white;
+  transition: transform 0.2s;
+}
+
+.image_item:hover {
+  transform: scale(1.05);
+}
+
+.image_thumbnail {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.image_title {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.image_date {
+  font-size: 14px;
+  color: #888;
+  padding: 0 10px 10px;
+}
