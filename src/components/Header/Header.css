@@ -16,3 +16,9 @@
   cursor: pointer;
   height: fit-content;
 }
+.HeaderMenu {
+  cursor: pointer;
+}
+.HeaderMenu > div:hover {
+  text-decoration: underline;
+}

@@ -46,15 +46,18 @@ import Footer from "../components/footer/Footer";
 import Header from "../components/header/Header";
 import Login from "../Pages/user/login/Login";
 import Home from "../Pages/Home";
+import Signup from "../Pages/user/login/Signup";
 
 const Router = () => {
   const location = useLocation();
-  const isLoginPage = location.pathname === "/login";
+  const authPages = ["/login", "/signup"]; // 추가적인 경로를 배열에 포함시킴
+  const isAuthPage = authPages.includes(location.pathname);
   return (
     <>
-      {!isLoginPage && <Header />}
+      {!isAuthPage && <Header />}
       <Routes>
         <Route path="login" element={<Login />}></Route>
+        <Route path="signup" element={<Signup />}></Route>
         <Route path="/" element={<Home />}></Route>
         {/* churchInfo */}
         <Route path="info" element={<Layout ListComponent={InfoList} />}>
@@ -112,7 +115,7 @@ const Router = () => {
           <Route path="pastor-materials" element={<PastorMaterials />} />
         </Route>
       </Routes>
-      {!isLoginPage && <Footer />}
+      {!isAuthPage && <Footer />}
     </>
   );
 };
