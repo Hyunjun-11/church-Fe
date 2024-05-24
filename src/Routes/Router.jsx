@@ -50,6 +50,8 @@ import Signup from "../Pages/user/login/Signup";
 import TestList from "../components/bodyTemp/testBar/TestList";
 import BoardTest from "../components/bodyTemp/testBar/BoardTest";
 import ImageBoardTest from "../components/bodyTemp/testBar/ImageBoardTest";
+import BoardDetail from "../components/common/board/BoardDetail";
+import ImageBoardDetail from "../components/common/imageBoard/ImageBoardDetail";
 
 const Router = () => {
   const location = useLocation();
@@ -120,7 +122,9 @@ const Router = () => {
         {/*prayerSermonList */}
         <Route path="test" element={<Layout ListComponent={TestList} />}>
           <Route path="board" element={<BoardTest />} />
+          <Route path="board/:id" element={<BoardDetail />} />
           <Route path="imageboard" element={<ImageBoardTest />} />
+          <Route path="imageboard/:id" element={<ImageBoardDetail />} />
         </Route>
       </Routes>
       {!isAuthPage && <Footer />}
