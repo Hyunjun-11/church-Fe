@@ -19,7 +19,14 @@ const Header = () => {
           교회이름
         </div>
         <div>
-          <div>로그인</div>
+          <div
+            className="Home"
+            onClick={() => {
+              onClick("/login");
+            }}
+          >
+            로그인
+          </div>
           <div>회원가입</div>
           <div>검색</div>
           <div>등등</div>
