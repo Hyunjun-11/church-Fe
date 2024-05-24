@@ -47,6 +47,9 @@ import Header from "../components/header/Header";
 import Login from "../Pages/user/login/Login";
 import Home from "../Pages/Home";
 import Signup from "../Pages/user/login/Signup";
+import TestList from "../components/bodyTemp/testBar/TestList";
+import BoardTest from "../components/bodyTemp/testBar/BoardTest";
+import ImageBoardTest from "../components/bodyTemp/testBar/ImageBoardTest";
 
 const Router = () => {
   const location = useLocation();
@@ -113,6 +116,11 @@ const Router = () => {
           <Route path="praise/samuel" element={<PraiseSamuel />} />
           <Route path="prayer" element={<Prayer />} />
           <Route path="pastor-materials" element={<PastorMaterials />} />
+        </Route>
+        {/*prayerSermonList */}
+        <Route path="test" element={<Layout ListComponent={TestList} />}>
+          <Route path="board" element={<BoardTest />} />
+          <Route path="imageboard" element={<ImageBoardTest />} />
         </Route>
       </Routes>
       {!isAuthPage && <Footer />}

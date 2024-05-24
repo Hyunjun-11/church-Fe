@@ -12,17 +12,17 @@ const BoardLayout = ({ title, boardList }) => {
       <div>{title}</div>
       <div className="board">
         <div className="board_header">
-          <div className="number">번호</div>
-          <div className="title">제목</div>
-          <div className="date">날짜</div>
+          <div className="board_number">번호</div>
+          <div className="board_title">제목</div>
+          <div className="board_date">날짜</div>
         </div>
         {boardList.map((item) => (
           <div key={item.id} className="board_body">
-            <div className="number">{item.number}</div>
-            <div className="title" onClick={() => handleClick(item.id)}>
+            <div className="board_number">{item.id}</div>
+            <div className="board_title" onClick={() => handleClick(item.id)}>
               {item.title}
             </div>
-            <div className="date">{item.date}</div>
+            <div className="board_date">{item.date}</div>
           </div>
         ))}
       </div>

@@ -31,22 +31,22 @@
   border-bottom: 1px solid #745959;
 }
 
-.number,
-.title,
-.date {
+.board_number,
+.board_title,
+.board_date {
   text-align: center;
   padding: 0 10px;
 }
 
-.number {
+.board_number {
   width: 15%;
 }
 
-.title {
+.board_title {
   width: 70%;
   cursor: pointer;
 }
 
-.date {
+.board_date {
   width: 15%;
 }
