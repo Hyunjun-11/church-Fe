@@ -1,0 +1,24 @@
+.BoardDetail {
+  padding: 20px;
+  border: 1px solid #ddd;
+  margin: 20px;
+  border-radius: 8px;
+  /* background-color: #f9f9f9; */
+  flex-grow: 1;
+}
+
+.BoardDetail h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.BoardDetail p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.BoardDetail div.content {
+  font-size: 16px;
+  line-height: 1.6;
+}

@@ -1,3 +1,53 @@
-.Board {
-  border: solid 2px rgb(133, 133, 202);
+.BoardLayout {
+  border: 2px solid rgb(133, 133, 202);
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+}
+
+.board_header .title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.board {
+  border: 1px solid #dd5050;
+}
+
+.board_header,
+.board_body {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.board_header {
+  border-bottom: 2px solid black;
+  background-color: #791e1e;
+  color: white;
+}
+
+.board_body {
+  border-bottom: 1px solid #745959;
+}
+
+.number,
+.title,
+.date {
+  text-align: center;
+  padding: 0 10px;
+}
+
+.number {
+  width: 15%;
+}
+
+.title {
+  width: 70%;
+  cursor: pointer;
+}
+
+.date {
+  width: 15%;
 }
