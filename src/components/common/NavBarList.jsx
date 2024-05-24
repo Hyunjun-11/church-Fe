@@ -20,13 +20,14 @@ const NavBarList = ({ title, list, type }) => {
   };
 
   return (
-    <div>
-      {title}
-      <div>
+    <div className="NavBarList">
+      <div className={`Title_NAV ${type}`}>{title}</div>
+
+      <div className={`Bar_${type}`}>
         {list.map((item) =>
           type === "NAV" ? (
             // 네비게이션 바에서는 상위 항목만 표시
-            <div key={item.name} className={`Bar_${type}`} onClick={() => handleClick(item.navi)}>
+            <div key={item.name} onClick={() => handleClick(item.navi)}>
               {item.name}
             </div>
           ) : (

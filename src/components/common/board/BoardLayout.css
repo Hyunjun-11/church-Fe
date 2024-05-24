@@ -2,7 +2,6 @@
   border: 2px solid rgb(133, 133, 202);
   display: grid;
   gap: 20px;
-  padding: 20px;
 }
 
 .board_header .title {

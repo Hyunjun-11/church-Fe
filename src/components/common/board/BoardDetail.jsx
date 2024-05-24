@@ -13,17 +13,23 @@ const BoardDetail = () => {
   const selectedItem = boardList.find((item) => item.id === parseInt(id));
 
   return (
-    <div className="BoardDetail">
-      {selectedItem ? (
-        <>
-          <h2>{selectedItem.title}</h2>
-          <p>{selectedItem.date}</p>
-          <div className="content">{selectedItem.content}</div>
-        </>
-      ) : (
-        <div>게시글을 찾을 수 없습니다.</div>
-      )}
-    </div>
+    <>
+      <div className="BoardDetail">
+        {selectedItem ? (
+          <>
+            <div className="Detail_title">{selectedItem.title}</div>
+            <div className="Detail_date">{selectedItem.date}</div>
+            <div className="Detail_content">{selectedItem.content}</div>
+          </>
+        ) : (
+          <div>게시글을 찾을 수 없습니다.</div>
+        )}
+      </div>
+      <div className="Detail_button_container">
+        <div className="Detail_button">수정</div>
+        <div className="Detail_button">삭제</div>
+      </div>
+    </>
   );
 };
 

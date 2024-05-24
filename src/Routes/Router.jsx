@@ -45,8 +45,9 @@ import SpecialWorship from "../components/bodyTemp/prayer-sermon/SpecialWorship"
 import SundaySchoolWorship from "../components/bodyTemp/prayer-sermon/SundaySchoolWorship";
 import WednesdayWorship from "../components/bodyTemp/prayer-sermon/WednesdayWorship";
 import SundayWorship from "../components/bodyTemp/prayer-sermon/SundayWorship";
-import TestList from "../components/bodyTemp/TestList";
-import TestComponent from "../components/bodyTemp/TestComponent";
+// import TestList from "../components/bodyTemp/TestList";
+// import TestComponent from "../components/bodyTemp/TestComponent";
+import BoardDetail from "../components/common/board/BoardDetail";
 
 const Router = () => {
   return (
@@ -110,16 +111,17 @@ const Router = () => {
           <Route path="pastor-materials" element={<PastorMaterials />} />
         </Route>
         {/*prayerSermonList */}
-        <Route path="test" element={<Layout ListComponent={TestList} />}>
+        {/* <Route path="test" element={<Layout ListComponent={TestList} />}>
           <Route path="1" element={<div>테스트1</div>} />
           <Route path="2" element={<div>테스트2</div>} />
-          <Route path="3" element={<TestComponent />} />
 
+          <Route path="board" element={<TestComponent />} />
+          <Route path="board/:id" element={<BoardDetail />} />
           <Route path="test" element={<div>테스트</div>} />
           <Route path="test/1" element={<div>하위 테스트1</div>} />
           <Route path="test/2" element={<div>하위 테스트2</div>} />
           <Route path="test/3" element={<div>하위 테스트3</div>} />
-        </Route>
+        </Route> */}
       </Routes>
       <Footer />
     </>

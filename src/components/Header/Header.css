@@ -1,8 +1,10 @@
 .Header {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 20px;
   border: solid 2px tomato;
   padding: 20px;
+  height: 200px;
 }
 
 .Header_ {

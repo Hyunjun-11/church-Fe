@@ -6,8 +6,11 @@
   gap: 20px;
   width: auto;
 }
+
 .Outlet {
-  flex-grow: 1; /* 이 속성을 추가하여 최대한의 너비를 가지도록 함 */
+  flex-grow: 1; /* 최대 너비를 차지하도록 설정 */
   border: solid 2px greenyellow;
   padding-left: 20px;
+  display: flex;
+  flex-direction: column;
 }

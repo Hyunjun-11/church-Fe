@@ -1,7 +1,51 @@
-.Bar_NAV {
-  cursor: pointer;
-  color: aqua;
+/* .Bar_NAV 클래스에 대한 스타일 */
+.NavBarList {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  background-color: rgb(92, 105, 105);
 }
+.Bar_NAV {
+  padding-top: 12px;
+  cursor: pointer;
+  min-width: 100%;
+  display: none;
+}
+.Title_NAV {
+  padding: 10px;
+  background-color: rgb(172, 177, 241);
+}
+
+.Bar_NAV > div {
+  min-width: max-content;
+}
+
+/* .Bar_NAV의 하위 요소에 대한 호버 효과 */
 .Bar_NAV > div:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  color: aquamarine;
+}
+
+/* .Bar_LIST 클래스에 대한 스타일 */
+.Bar_LIST {
+  cursor: pointer;
+  color: rgb(156, 187, 84);
+  min-width: max-content;
+  padding-top: 8px;
+}
+
+/* .Bar_LIST의 하위 요소에 대한 호버 효과 */
+
+/* 하위 항목의 스타일 및 개별 호버 효과 */
+.SubItems {
+  margin-left: 20px;
+}
+
+.SubItems .SubItem {
+  cursor: pointer;
+}
+
+.SubItems .SubItem:hover {
   text-decoration: underline;
 }

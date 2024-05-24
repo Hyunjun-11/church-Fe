@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import FilterBar from "./FilterBar";
 import "./Header.css";
+import NavigatorBar from "./NavigatorBar";
 
 const Header = () => {
   const nav = useNavigate();
@@ -25,7 +25,8 @@ const Header = () => {
           <div>등등</div>
         </div>
       </div>
-      <FilterBar />
+      {/* <FilterBar /> */}
+      <NavigatorBar />
     </div>
   );
 };

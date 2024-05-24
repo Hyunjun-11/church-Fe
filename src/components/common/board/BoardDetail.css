@@ -1,24 +1,46 @@
 .BoardDetail {
-  padding: 20px;
+  flex-grow: 1;
+
   border: 1px solid #ddd;
-  margin: 20px;
   border-radius: 8px;
   /* background-color: #f9f9f9; */
-  flex-grow: 1;
+  overflow-y: auto; /* 내용이 넘칠 경우 스크롤 */
 }
 
-.BoardDetail h2 {
+.Detail_title {
+  font-weight: bold;
   font-size: 24px;
   margin-bottom: 10px;
 }
 
-.BoardDetail p {
-  font-size: 14px;
+.Detail_date {
+  font-size: 16px;
   color: #666;
   margin-bottom: 20px;
 }
 
-.BoardDetail div.content {
+.Detail_content {
   font-size: 16px;
   line-height: 1.6;
+}
+
+.Detail_button_container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 20px;
+}
+
+.Detail_button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.Detail_button:hover {
+  background-color: #0056b3;
 }
