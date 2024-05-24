@@ -3,6 +3,9 @@
   display: grid;
   gap: 20px;
 }
+.BoardLayout > div:first-child {
+  font-size: 24px;
+}
 
 .board_header .title {
   font-size: 24px;

@@ -4,6 +4,7 @@ import "./BoardDetail.css";
 
 const BoardDetail = () => {
   const { id } = useParams();
+  console.log(id);
   const boardList = [
     { id: 1, number: 1, title: "첫번째 게시글", date: "2023-05-01", content: "첫번째 게시글 내용" },
     { id: 2, number: 2, title: "두번째 게시글", date: "2023-05-02", content: "두번째 게시글 내용" },

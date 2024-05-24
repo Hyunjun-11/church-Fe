@@ -5,7 +5,8 @@ const BoardLayout = ({ title, boardList }) => {
   const navigate = useNavigate();
 
   const handleClick = (id) => {
-    navigate(`/test/board/${id}`);
+    navigate(`${id}`);
+    console.log(id);
   };
   return (
     <div className="BoardLayout">

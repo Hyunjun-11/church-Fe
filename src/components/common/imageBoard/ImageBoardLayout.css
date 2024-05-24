@@ -1,7 +1,9 @@
 .ImageBoardLayout {
   width: 100%;
-  padding: 20px;
-  background-color: #f4f4f4;
+  height: 100%;
+  /* background-color: #f4f4f4; */
+  box-sizing: border-box;
+  overflow-y: auto; /* 세로 스크롤 활성화 */
 }
 
 .ImageBoardLayout > div:first-child {
@@ -12,7 +14,7 @@
 .image_board {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
+  gap: 40px;
 }
 
 .image_item {
@@ -20,8 +22,8 @@
   border: 1px solid #ccc;
   border-radius: 10px;
   overflow: hidden;
-  background-color: white;
-  transition: transform 0.2s;
+  /* background-color: white; */
+  transition: transform 0.3s;
 }
 
 .image_item:hover {

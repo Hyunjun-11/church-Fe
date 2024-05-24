@@ -20,7 +20,7 @@ const BoardTest = () => {
   ];
   return (
     <div>
-      <BoardLayout title={"test"} boardList={boardList} />
+      <BoardLayout title={"글 게시판테스트"} boardList={boardList} />
     </div>
   );
 };

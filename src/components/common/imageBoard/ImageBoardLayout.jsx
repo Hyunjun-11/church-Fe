@@ -5,7 +5,7 @@ const ImageBoardLayout = ({ title, imageList }) => {
   const navigate = useNavigate();
 
   const handleClick = (id) => {
-    navigate(`/image/board/${id}`);
+    navigate(`${id}`);
   };
 
   return (
