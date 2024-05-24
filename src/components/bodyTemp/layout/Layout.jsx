@@ -8,7 +8,7 @@ const Layout = ({ ListComponent }) => {
       <div className="List">
         <ListComponent type={"LIST"} />
       </div>
-      <div className="Outlett">
+      <div className="Outlet">
         <Outlet />
       </div>
     </div>

@@ -6,7 +6,8 @@
   gap: 20px;
   width: auto;
 }
-.Outlett {
+.Outlet {
   flex-grow: 1; /* 이 속성을 추가하여 최대한의 너비를 가지도록 함 */
   border: solid 2px greenyellow;
+  padding-left: 20px;
 }
