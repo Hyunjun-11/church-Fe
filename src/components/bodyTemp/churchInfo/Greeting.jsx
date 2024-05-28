@@ -1,7 +1,7 @@
 import Category from "../../common/Category";
 
 const Greeting = () => {
-  const categoryList = ["목사", "전도사", "찬양 사역자"];
+  const categoryList = ["목사", "전도사", "장로", "안수집사", "권사", "집사", "찬양사역자"];
   return (
     <div>
       <div>섬기는 사람들</div>

@@ -3,6 +3,6 @@
   flex-direction: column;
   background-color: rgb(70, 70, 70);
   color: white;
-  max-width: 1440px; /* 최대 너비를 1440px로 설정 */
+  max-width: 1280px; /* 최대 너비를 1440px로 설정 */
   margin: 0 auto;
 }
