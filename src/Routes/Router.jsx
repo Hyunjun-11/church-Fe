@@ -55,7 +55,7 @@ import Footer from "../components/footer/Footer";
 
 const Router = () => {
   const location = useLocation();
-  const authPages = ["/login", "/signup"]; // 추가적인 경로를 배열에 포함시킴
+  const authPages = ["/login", "/signup"];
   const isAuthPage = authPages.includes(location.pathname);
   return (
     <>

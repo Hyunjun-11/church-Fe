@@ -1,5 +1,3 @@
-import InfoList from "../bodyTemp/churchInfo/InfoList";
-import TestList from "../bodyTemp/testBar/TestList";
 import "./testbar.css";
 const TestBar = () => {
   return (

@@ -1,7 +1,6 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Header.css";
 import NavigatorBar from "./NavigatorBar";
-import TestBar from "./TestBar";
 
 const Header = () => {
   const nav = useNavigate();
