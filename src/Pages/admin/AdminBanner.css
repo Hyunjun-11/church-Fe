@@ -1,0 +1,24 @@
+.AdminBanner {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.BannerImg {
+  border: solid 2px rgb(238, 220, 117);
+  height: 150px;
+  position: relative;
+  overflow: hidden;
+}
+
+.AdminBannerInfo {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.AdminButton {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 20px;
+}
