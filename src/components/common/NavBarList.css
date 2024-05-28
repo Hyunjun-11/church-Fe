@@ -1,26 +1,28 @@
 /* .Bar_NAV 클래스에 대한 스타일 */
 .NavBarList {
   display: flex;
-  width: 100%;
   flex-direction: column;
-  background-color: rgb(92, 105, 105);
+  text-align: center;
+  width: 100%;
+  max-width: 200px;
+  z-index: 1;
 }
 .Bar_NAV {
   padding-top: 12px;
   cursor: pointer;
-  min-width: 100%;
+  height: 100%;
   display: none;
+  transition: opacity 0.3s ease, visibility 0.3s ease; /* 전환 효과 설정 */
 }
 .Title_NAV {
   padding: 10px;
-  background-color: rgb(172, 177, 241);
 }
 
 .Bar_NAV > div {
   min-width: max-content;
+  transition: color 1s ease, text-decoration 0.5s ease;
 }
 
-/* .Bar_NAV의 하위 요소에 대한 호버 효과 */
 .Bar_NAV > div:hover {
   cursor: pointer;
   text-decoration: underline;
@@ -35,9 +37,6 @@
   padding-top: 8px;
 }
 
-/* .Bar_LIST의 하위 요소에 대한 호버 효과 */
-
-/* 하위 항목의 스타일 및 개별 호버 효과 */
 .SubItems {
   margin-left: 20px;
 }

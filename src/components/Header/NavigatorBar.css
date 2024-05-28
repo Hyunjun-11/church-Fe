@@ -1,13 +1,15 @@
 .NavigatorBar {
   display: flex;
   justify-content: space-around;
-
-  position: relative;
+  background-color: #d15252;
 }
 
 .NavigatorBar > div > div {
   padding: 20px 0px;
+  transition: background-color 0.7s ease;
 }
+
 .NavigatorBar:hover > div > div {
   display: block;
+  background: rgba(224, 159, 159, 0.9);
 }

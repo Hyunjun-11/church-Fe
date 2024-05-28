@@ -14,7 +14,7 @@ const BoardTest = () => {
     },
     {
       id: 3,
-      title: "테스트제목",
+      title: "테스트제목dddddddddddddd",
       date: "2024-01-01",
     },
   ];

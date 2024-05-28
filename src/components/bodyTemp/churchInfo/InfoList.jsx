@@ -19,7 +19,7 @@ const InfoList = ({ type }) => {
       navi: "/info/newMember",
     },
     {
-      name: "섬기는분들",
+      name: "섬기는 사람들",
       navi: "/info/greeting",
     },
     {

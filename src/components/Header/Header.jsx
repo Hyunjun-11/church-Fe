@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./Header.css";
 import NavigatorBar from "./NavigatorBar";
+import TestBar from "./TestBar";
 
 const Header = () => {
   const nav = useNavigate();
@@ -26,7 +27,7 @@ const Header = () => {
           >
             로그인
           </div>
-          <Link to="/admin">관리자페이지</Link>
+
           <div
             onClick={() => {
               onClick("/signup");
@@ -34,11 +35,15 @@ const Header = () => {
           >
             회원가입
           </div>
-          <div>검색</div>
-          <div>등등</div>
+          <div
+            onClick={() => {
+              onClick("/admin");
+            }}
+          >
+            관리자페이지(임시)
+          </div>
         </div>
       </div>
-      {/* <FilterBar /> */}
       <NavigatorBar />
     </div>
   );

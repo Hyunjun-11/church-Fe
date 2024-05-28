@@ -1,8 +1,4 @@
 :root {
-  display: grid;
-
   background-color: rgb(70, 70, 70);
   color: white;
-  width: 1440px;
-  margin: 0 auto;
 }

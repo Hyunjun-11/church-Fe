@@ -7,7 +7,7 @@ const TestList = ({ type }) => {
       navi: "/test",
     },
     {
-      name: "게시판",
+      name: "게시테스트제목판",
       navi: "/test/board",
     },
     {

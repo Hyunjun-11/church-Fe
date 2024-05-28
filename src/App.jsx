@@ -7,7 +7,7 @@ const App = () => {
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith("/admin");
 
-  return <>{isAdminPage ? <AdminRoutes /> : <Router />}</>;
+  return <div className="app">{isAdminPage ? <AdminRoutes /> : <Router />}</div>;
 };
 
 export default App;
