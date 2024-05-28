@@ -42,7 +42,6 @@ import Bulletin from "../components/bodyTemp/worshipInfo/Bulletin";
 import Slogan from "../components/bodyTemp/worshipInfo/Slogan";
 import Vision from "../components/bodyTemp/worshipInfo/Vision";
 import WorshipInfoList from "../components/bodyTemp/worshipInfo/WorshipInfoList";
-import Footer from "../components/footer/Footer";
 import Header from "../components/header/Header";
 import Login from "../Pages/user/login/Login";
 import Home from "../Pages/Home";
@@ -52,6 +51,7 @@ import BoardTest from "../components/bodyTemp/testBar/BoardTest";
 import ImageBoardTest from "../components/bodyTemp/testBar/ImageBoardTest";
 import BoardDetail from "../components/common/board/BoardDetail";
 import ImageBoardDetail from "../components/common/imageBoard/ImageBoardDetail";
+import Footer from "../components/footer/Footer";
 
 const Router = () => {
   const location = useLocation();
