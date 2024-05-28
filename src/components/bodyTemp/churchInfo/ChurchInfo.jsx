@@ -1,7 +1,10 @@
+import BodyTitle from "../../common/BodyTitle";
+
 const ChurchInfo = () => {
   return (
     <div>
-      <h2>인삿말</h2>
+      <BodyTitle title={"인삿말"} />
+
       <div>
         함께 섬기는 교회는 그리스도 안에서 완전한 자로 세움을 받아 함께 하나님을 사랑하고, 함께 이웃을 섬기고, 함 께
         제자되는 교회가 되는데 사명을 가지고 2010년 4월 11일에 창립예배를 드렸습니다. 이후 여름성경학교와 수련회를

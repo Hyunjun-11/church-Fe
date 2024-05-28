@@ -1,7 +1,9 @@
+import BodyTitle from "../../common/BodyTitle";
+
 const DirectionsParking = () => {
   return (
     <div>
-      <div>DirectionsParking</div>
+      <BodyTitle title={"오시는길"} />
     </div>
   );
 };

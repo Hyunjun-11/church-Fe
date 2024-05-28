@@ -31,7 +31,7 @@
 
 .Outlet {
   flex-grow: 1; /* 최대 너비를 차지하도록 설정 */
-  border: solid 2px greenyellow;
+  /* border: solid 2px greenyellow; */
   padding-left: 20px;
   display: flex;
   flex-direction: column;
