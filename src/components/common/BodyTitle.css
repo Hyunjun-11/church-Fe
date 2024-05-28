@@ -1,0 +1,11 @@
+.BodyTitle {
+  font-size: 24px;
+  font-weight: 700;
+  display: flex;
+  gap: 12px;
+}
+
+.Line {
+  padding: 2px;
+  background-color: #4b83e9;
+}
