@@ -1,12 +1,23 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Category.css";
 
-const Category = ({ list }) => {
-  const [selectedCategory, setSelectedCategory] = useState(list[0]);
+const Category = ({ list, onCategoryChange }) => {
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  useEffect(() => {
+    if (list && list.length > 0) {
+      setSelectedCategory(list[0]);
+      onCategoryChange(list[0]);
+    }
+  }, []);
 
   const handleCategoryClick = (category) => {
+    // console.log(category);
     setSelectedCategory(category);
+    onCategoryChange(category);
   };
+
+  if (!list || list.length === 0) return null;
 
   return (
     <div className="Category">

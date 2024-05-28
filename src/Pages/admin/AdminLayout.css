@@ -20,8 +20,14 @@
 }
 
 .AdminHeader nav ul li {
+  cursor: pointer;
   display: inline;
   margin-right: 20px;
+  transition: color 0.7s ease;
+}
+.AdminHeader nav ul li:hover {
+  text-decoration: underline;
+  color: aquamarine;
 }
 
 .AdminHeader nav ul li a {

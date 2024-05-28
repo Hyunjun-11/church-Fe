@@ -1,28 +1,25 @@
 // AdminLayout.js
 
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import "./AdminLayout.css";
 
 const AdminLayout = () => {
+  const navigate = useNavigate();
+  const handleClick = (path) => {
+    navigate(`${path}`);
+  };
   return (
     <div className="AdminLayout">
       <header className="AdminHeader">
         <h1>Admin Dashboard</h1>
         <nav>
           <ul>
-            <li>
-              <Link to="/admin/dashboard">Dashboard</Link>
-            </li>
-            <li>
-              <Link to="/admin/posts">Posts</Link>
-            </li>
-            <li>
-              <Link to="/admin/users">Users</Link>
-            </li>
-            <li>
-              <Link to="/">유저페이지</Link>
-            </li>
+            <li onClick={() => handleClick("dashboard")}>Dashboard</li>
+            <li onClick={() => handleClick("posts")}>Posts</li>
+            <li onClick={() => handleClick("users")}>Users</li>
+            <li onClick={() => handleClick("banner")}>Banner</li>
+            <li onClick={() => handleClick("/")}>유저페이지</li>
           </ul>
         </nav>
       </header>

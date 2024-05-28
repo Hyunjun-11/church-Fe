@@ -1,14 +1,18 @@
 .Category {
   display: flex;
-  gap: 12px;
+  gap: 24px;
 }
 
 .Category > div {
-  padding: 6px 12px;
+  padding: 12px 4px;
   cursor: pointer;
   border-bottom: solid 1px transparent; /* 기본으로 모든 카테고리에 선을 넣어줍니다. */
 }
 
 .Category > div.selected {
   border-bottom: solid 2px; /* 선택된 카테고리에 대해 선의 굵기를 2px로 설정합니다. */
+}
+.Category > div:hover {
+  background-color: rgb(163, 170, 168);
+  transition: background-color 1s ease;
 }
