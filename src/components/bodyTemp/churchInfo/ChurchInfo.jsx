@@ -3,7 +3,7 @@ import BodyTitle from "../../common/BodyTitle";
 const ChurchInfo = () => {
   return (
     <div>
-      <BodyTitle title={"인삿말"} />
+      <BodyTitle title={"인사말"} />
 
       <div>
         함께 섬기는 교회는 그리스도 안에서 완전한 자로 세움을 받아 함께 하나님을 사랑하고, 함께 이웃을 섬기고, 함 께

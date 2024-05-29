@@ -16,7 +16,7 @@ const Header = () => {
             onClick("/");
           }}
         >
-          교회이름
+          함께 섬기는 교회
         </div>
         <div className="HeaderMenu">
           <div

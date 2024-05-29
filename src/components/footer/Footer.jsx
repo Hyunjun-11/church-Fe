@@ -12,9 +12,9 @@ const Footer = () => {
           <div>게시판운영원칙</div>
         </div>
         <div className="info">
-          <div>Since~~~~</div>
-          <div>전화번호 : 063-111-1111 </div>
-          <div>주소 : 전북 전주시 완산구 삼천동~~~~</div>
+          <div>전화번호 : 063-237-3927 </div>
+          <div>FAX : 063-237-3927 </div>
+          <div>주소 : 전라북도 전주시 완산구 백제대로 115번지</div>
         </div>
       </div>
       <div>

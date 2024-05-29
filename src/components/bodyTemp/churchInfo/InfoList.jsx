@@ -3,7 +3,7 @@ import NavBarList from "../../common/NavBarList";
 const InfoList = ({ type }) => {
   const list = [
     {
-      name: "인삿말",
+      name: "인사말",
       navi: "/info/intro",
     },
     {
