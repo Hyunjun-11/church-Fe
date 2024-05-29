@@ -14,6 +14,10 @@ const TestList = ({ type }) => {
       name: "이미지게시판",
       navi: "/test/imageboard",
     },
+    {
+      name: "일정표",
+      navi: "/test/cal",
+    },
   ];
 
   return <NavBarList title="테스트목록" list={list} type={type} />;

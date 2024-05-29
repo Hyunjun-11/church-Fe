@@ -11,8 +11,12 @@ const WorshipInfoList = ({ type }) => {
       navi: "/worship/slogan",
     },
     {
-      name: "연간행사계획",
-      navi: "/worship/annual-plan",
+      name: "교회일정",
+      navi: "/worship/church-schedule",
+    },
+    {
+      name: "교회행사 앨범",
+      navi: "/worship/event-album",
     },
     {
       name: "주보",

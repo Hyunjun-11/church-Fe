@@ -1,4 +1,6 @@
 import { Route, Routes, useLocation } from "react-router-dom";
+import Login from "../Pages/user/login/Login";
+import Signup from "../Pages/user/login/Signup";
 import ChurchGuide from "../components/bodyTemp/churchInfo/ChurchGuide";
 import ChurchInfo from "../components/bodyTemp/churchInfo/ChurchInfo";
 import ChurchOrganization from "../components/bodyTemp/churchInfo/ChurchOrganization";
@@ -37,21 +39,20 @@ import SpecialWorship from "../components/bodyTemp/prayer-sermon/SpecialWorship"
 import SundaySchoolWorship from "../components/bodyTemp/prayer-sermon/SundaySchoolWorship";
 import SundayWorship from "../components/bodyTemp/prayer-sermon/SundayWorship";
 import WednesdayWorship from "../components/bodyTemp/prayer-sermon/WednesdayWorship";
-import AnnualPlan from "../components/bodyTemp/worshipInfo/AnnualPlan";
+import BoardTest from "../components/bodyTemp/testBar/BoardTest";
+import CalTest from "../components/bodyTemp/testBar/CalTest";
+import ImageBoardTest from "../components/bodyTemp/testBar/ImageBoardTest";
+import TestList from "../components/bodyTemp/testBar/TestList";
 import Bulletin from "../components/bodyTemp/worshipInfo/Bulletin";
+import ChurchSchedule from "../components/bodyTemp/worshipInfo/ChurchSchedule";
+import EventAlbum from "../components/bodyTemp/worshipInfo/EventAlbum";
 import Slogan from "../components/bodyTemp/worshipInfo/Slogan";
 import Vision from "../components/bodyTemp/worshipInfo/Vision";
 import WorshipInfoList from "../components/bodyTemp/worshipInfo/WorshipInfoList";
-import Header from "../components/header/Header";
-import Login from "../Pages/user/login/Login";
-import Home from "../Pages/Home";
-import Signup from "../Pages/user/login/Signup";
-import TestList from "../components/bodyTemp/testBar/TestList";
-import BoardTest from "../components/bodyTemp/testBar/BoardTest";
-import ImageBoardTest from "../components/bodyTemp/testBar/ImageBoardTest";
 import BoardDetail from "../components/common/board/BoardDetail";
 import ImageBoardDetail from "../components/common/imageBoard/ImageBoardDetail";
 import Footer from "../components/footer/Footer";
+import Header from "../components/header/Header";
 
 const Router = () => {
   const location = useLocation();
@@ -86,7 +87,8 @@ const Router = () => {
         <Route path="worship" element={<Layout ListComponent={WorshipInfoList} />}>
           <Route path="vision" element={<Vision />} />
           <Route path="slogan" element={<Slogan />} />
-          <Route path="annual-plan" element={<AnnualPlan />} />
+          <Route path="event-album" element={<EventAlbum />} />
+          <Route path="Church-schedule" element={<ChurchSchedule />} />
           <Route path="bulletin" element={<Bulletin />} />
         </Route>
         {/*  education evangelism  */}
@@ -125,6 +127,7 @@ const Router = () => {
           <Route path="board/:id" element={<BoardDetail />} />
           <Route path="imageboard" element={<ImageBoardTest />} />
           <Route path="imageboard/:id" element={<ImageBoardDetail />} />
+          <Route path="cal" element={<CalTest />} />
         </Route>
       </Routes>
       {!isAuthPage && <Footer />}
