@@ -11,29 +11,8 @@ moment.locale("ko");
 
 const Cal = () => {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
-  const [events, setEvents] = useState([]);
   const [holidays, setHolidays] = useState([]);
-  const [filteredEvents, setFilteredEvents] = useState([]);
-
-  const mock = [
-    {
-      date: "2024-05-04",
-      title: "첫번째 일정",
-    },
-    {
-      date: "2024-05-09",
-      title: "두번째 일정",
-    },
-    {
-      date: "2024-05-14",
-      title: "세번째 일정",
-    },
-    {
-      date: "2024-05-28",
-      title: "네번째 일정",
-    },
-  ];
+  const [userEvents, setUserEvents] = useState([]);
 
   const fetchHolidays = async (year) => {
     try {
@@ -42,7 +21,6 @@ const Cal = () => {
       );
 
       const items = response.data.response.body.items.item;
-      console.log(items);
       const formattedHolidays = items.map((item) => ({
         title: item.dateName,
         start: new Date(
@@ -57,14 +35,7 @@ const Cal = () => {
         ),
         type: "holiday", // 휴일 이벤트에 type 속성 추가
       }));
-      const eventsFromMock = mock.map((item) => ({
-        title: item.title,
-        start: new Date(item.date),
-        end: new Date(item.date),
-        type: "event", // 일반 이벤트에 type 속성 추가
-      }));
 
-      setEvents(eventsFromMock);
       setHolidays(formattedHolidays);
     } catch (error) {
       console.error("Error:", error);
@@ -74,14 +45,6 @@ const Cal = () => {
   useEffect(() => {
     fetchHolidays(currentYear);
   }, [currentYear]);
-
-  useEffect(() => {
-    const filteredEvents = events.filter((item) => {
-      const startDate = moment(item.start);
-      return startDate.month() === currentMonth - 1; // currentMonth가 1부터 시작하므로 1을 뺍니다.
-    });
-    setFilteredEvents(filteredEvents);
-  }, [currentMonth, events]);
 
   const localizer = momentLocalizer(moment);
 
@@ -96,7 +59,15 @@ const Cal = () => {
         const day = date.getDay();
         const isWeekend = day === 0 || day === 6;
         const isHoliday = holidays.some((holiday) => moment(holiday.start).isSame(date, "day"));
-        const style = { color: isWeekend || isHoliday ? "red" : "black" };
+        let style = {
+          color: isWeekend || isHoliday ? "red" : "black",
+        };
+        if (day === 6) {
+          style = {
+            ...style,
+            color: "blue",
+          };
+        }
         return <span style={style}>{label}</span>;
       },
     },
@@ -108,7 +79,6 @@ const Cal = () => {
     ),
   };
 
-  // eventStyleGetter 함수에서 type 속성을 기반으로 각각 다른 스타일을 적용
   const eventStyleGetter = (event) => {
     let style = {
       borderRadius: "5px",
@@ -134,12 +104,25 @@ const Cal = () => {
     return { style };
   };
 
+  const handleDateClick = (event) => {
+    const title = window.prompt("일정의 제목을 입력하세요:");
+    if (title) {
+      const newEvent = {
+        title,
+        start: event.start,
+        end: event.end,
+        type: "event",
+      };
+      setUserEvents([...userEvents, newEvent]);
+    }
+  };
+
   return (
     <div className="Cal">
       <h1>일정표</h1>
       <Calendar
         localizer={localizer}
-        events={[...events, ...holidays]}
+        events={[...holidays, ...userEvents]} // 휴일과 사용자 이벤트를 합침
         startAccessor="start"
         endAccessor="end"
         views={["month"]}
@@ -147,17 +130,9 @@ const Cal = () => {
         formats={formats}
         components={components}
         eventPropGetter={eventStyleGetter}
+        selectable={true} // 날짜 선택 가능하도록 설정
+        onSelectSlot={handleDateClick} // 날짜를 클릭할 때 이벤트 핸들러 호출
       />
-      <ul>
-        {filteredEvents.map((item, index) => {
-          const startDate = moment(item.start);
-          return (
-            <li key={index}>
-              {startDate.format("YYYY-MM-DD")} - {item.title}
-            </li>
-          );
-        })}
-      </ul>
     </div>
   );
 };
