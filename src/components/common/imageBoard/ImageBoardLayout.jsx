@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./ImageBoardLayout.css";
+import BodyTitle from "../BodyTitle";
 
 const ImageBoardLayout = ({ title, imageList }) => {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ const ImageBoardLayout = ({ title, imageList }) => {
 
   return (
     <div className="ImageBoardLayout">
-      <div>{title}</div>
+      <BodyTitle title={title} />
       <div className="image_board">
         {imageList.map((item) => (
           <div key={item.id} className="image_item" onClick={() => handleClick(item.id)}>

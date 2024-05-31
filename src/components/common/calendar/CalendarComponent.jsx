@@ -78,7 +78,7 @@ const CalendarComponent = ({
   };
 
   return (
-    <div style={{ height: "500px" }}>
+    <div style={{ height: "100%" }}>
       <Calendar
         localizer={localizer}
         views={["month"]}

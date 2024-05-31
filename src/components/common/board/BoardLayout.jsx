@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./BoardLayout.css";
+import BodyTitle from "../BodyTitle";
 
 const BoardLayout = ({ title, boardList }) => {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ const BoardLayout = ({ title, boardList }) => {
   };
   return (
     <div className="BoardLayout">
-      <div>{title}</div>
+      <BodyTitle title={title} />
       <div className="board">
         <div className="board_header">
           <div className="board_number">번호</div>

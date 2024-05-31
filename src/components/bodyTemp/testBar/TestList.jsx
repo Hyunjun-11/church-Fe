@@ -3,11 +3,7 @@ import NavBarList from "../../common/NavBarList";
 const TestList = ({ type }) => {
   const list = [
     {
-      name: "테스트",
-      navi: "/test",
-    },
-    {
-      name: "게시테스트제목판",
+      name: "일반 게시판",
       navi: "/test/board",
     },
     {

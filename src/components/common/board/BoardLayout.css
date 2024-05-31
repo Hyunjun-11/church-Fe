@@ -1,5 +1,5 @@
 .BoardLayout {
-  border: 2px solid rgb(133, 133, 202);
+  /* border: 2px solid rgb(133, 133, 202); */
   display: grid;
   gap: 20px;
 }
