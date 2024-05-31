@@ -1,11 +1,176 @@
-import Cal from "../../common/calendar/Cal";
+import React, { useState } from "react";
+import useHolidayFetcher from "../../../hooks/useHolidayFetcher";
+import CalendarComponent from "../../common/calendar/CalendarComponent";
+import EventModal from "../../modal/EventModal";
+import CalInfoModal from "../../modal/CalInfoModal";
 
 const CalTest = () => {
+  const initialDate = new Date();
+  const { date, currentYear, currentMonth, holidays, handleNavigate } = useHolidayFetcher(initialDate);
+
+  // 이벤트 상태
+  const [events, setEvents] = useState([
+    {
+      id: 1,
+      title: "오늘일정",
+      content: "content1",
+      start: new Date(2024, 4, 20, 10, 0),
+      end: new Date(2024, 4, 20, 12, 0),
+      color: "lightblue",
+    },
+    {
+      id: 2,
+      title: "수정테스트",
+      content: "content2",
+      start: new Date(2024, 4, 21, 12, 0),
+      end: new Date(2024, 4, 21, 13, 0),
+      color: "lightgreen",
+    },
+  ]);
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [eventTitle, setEventTitle] = useState("");
+  const [eventContent, setEventContent] = useState("");
+  const [eventColor, setEventColor] = useState("lightblue");
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [infoModalIsOpen, setInfoModalIsOpen] = useState(false);
+
+  const handleSelectSlot = ({ start }) => {
+    openModal(start);
+  };
+
+  const openModal = (date) => {
+    setSelectedDate(date);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setSelectedDate(null);
+    setEventTitle("");
+    setEventContent("");
+    setEventColor("lightblue");
+    setIsEditMode(false);
+    setSelectedEvent(null);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!eventTitle) {
+      alert("일정을 입력해주세요");
+      return;
+    }
+    const newEvent = {
+      id: events.length ? events[events.length - 1].id + 1 : 1,
+      title: eventTitle,
+      content: eventContent,
+      start: selectedDate,
+      end: selectedDate,
+      color: eventColor,
+    };
+    setEvents([...events, newEvent]);
+    closeModal();
+  };
+
+  const handleEditSubmit = (event) => {
+    event.preventDefault();
+    if (!eventTitle) {
+      alert("일정을 입력해주세요");
+      return;
+    }
+    if (selectedEvent) {
+      const updatedEvent = {
+        ...selectedEvent,
+        title: eventTitle,
+        content: eventContent,
+        start: selectedDate,
+        end: selectedDate,
+        color: eventColor,
+      };
+      const updatedEvents = events.map((e) => (e.id === selectedEvent.id ? updatedEvent : e));
+      setEvents(updatedEvents);
+      closeModal();
+    } else {
+      console.error("선택된 이벤트가 없습니다.");
+    }
+  };
+
+  const handleSelectEvent = (event) => {
+    openInfoModal(event);
+  };
+
+  const openInfoModal = (event) => {
+    setSelectedEvent(event);
+    setInfoModalIsOpen(true);
+  };
+
+  const closeInfoModal = () => {
+    setInfoModalIsOpen(false);
+  };
+
+  const deleteEvent = () => {
+    if (window.confirm("이 이벤트를 삭제하시겠습니까?")) {
+      setEvents(events.filter((e) => e.id !== selectedEvent.id));
+      closeInfoModal();
+    }
+  };
+
+  const editEvent = (event) => {
+    const foundEvent = events.find((item) => String(item.id) === String(event.id));
+
+    if (foundEvent) {
+      setEventTitle(foundEvent.title);
+      setEventContent(foundEvent.content);
+      setSelectedDate(foundEvent.start);
+      setEventColor(foundEvent.color);
+      setIsEditMode(true);
+      setModalIsOpen(true);
+      setSelectedEvent(foundEvent);
+      closeInfoModal();
+    } else {
+      console.error("이벤트를 찾을 수 없습니다.");
+    }
+  };
+
+  const combinedEvents = Array.from(
+    new Set(
+      [...events, ...holidays].map((e) =>
+        JSON.stringify({ ...e, start: new Date(e.start).toISOString(), end: new Date(e.end).toISOString() })
+      )
+    )
+  ).map((e) => JSON.parse(e));
+
   return (
     <div>
-      <div>
-        <Cal />
-      </div>
+      <CalendarComponent
+        events={combinedEvents}
+        holidays={holidays}
+        handleSelectSlot={handleSelectSlot}
+        handleSelectEvent={handleSelectEvent}
+        handleNavigate={handleNavigate}
+      />
+
+      <EventModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        selectedDate={selectedDate}
+        eventTitle={eventTitle}
+        setEventTitle={setEventTitle}
+        eventContent={eventContent}
+        setEventContent={setEventContent}
+        eventColor={eventColor}
+        setEventColor={setEventColor}
+        handleSubmit={isEditMode ? handleEditSubmit : handleSubmit}
+      />
+      <CalInfoModal
+        isOpen={infoModalIsOpen}
+        selectedEvent={selectedEvent}
+        onDeleteEvent={deleteEvent}
+        onEditEvent={() => editEvent(selectedEvent)}
+        onRequestClose={closeInfoModal}
+      />
     </div>
   );
 };

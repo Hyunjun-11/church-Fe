@@ -1,9 +1,0 @@
-.custom-modal-overlay {
-  background-color: rgba(0, 0, 0, 0.5); /* 모달이 열렸을 때 배경색 */
-}
-
-.custom-modal-content {
-  color: #333; /* 텍스트 색상 */
-  text-align: center; /* 텍스트 가운데 정렬 */
-  padding: 20px; /* 내부 여백 */
-}

@@ -5,8 +5,8 @@ import App from "./App.jsx";
 import "./index.css";
 
 // 모달이 속한 앱의 루트 DOM 요소를 지정
-Modal.setAppElement("#root");
-
+import ReactModal from "react-modal";
+ReactModal.setAppElement("#root");
 // 최상위 컴포넌트 렌더링
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>

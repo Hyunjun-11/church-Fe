@@ -1,0 +1,31 @@
+.rbc-toolbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.rbc-toolbar .rbc-btn-group {
+  display: flex;
+}
+
+.rbc-toolbar .rbc-btn-group button {
+  margin-right: 5px;
+}
+
+.rbc-toolbar-year {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.rbc-toolbar-year select {
+  margin-left: 5px;
+}
+
+.rbc-toolbar-dropdowns {
+  display: flex;
+  align-items: center;
+}
+.rbc-toolbar-dropdowns select {
+  margin-left: 5px;
+}
