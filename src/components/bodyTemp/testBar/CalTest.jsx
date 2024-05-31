@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import useHolidayFetcher from "../../../hooks/useHolidayFetcher";
 import CalendarComponent from "../../common/calendar/CalendarComponent";
 import EventModal from "../../modal/EventModal";
@@ -37,9 +37,9 @@ const CalTest = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [infoModalIsOpen, setInfoModalIsOpen] = useState(false);
 
-  const handleSelectSlot = ({ start }) => {
+  const handleSelectSlot = useCallback(({ start }) => {
     openModal(start);
-  };
+  }, []);
 
   const openModal = (date) => {
     setSelectedDate(date);
@@ -56,50 +56,56 @@ const CalTest = () => {
     setSelectedEvent(null);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (!eventTitle) {
-      alert("일정을 입력해주세요");
-      return;
-    }
-    const newEvent = {
-      id: events.length ? events[events.length - 1].id + 1 : 1,
-      title: eventTitle,
-      content: eventContent,
-      start: selectedDate,
-      end: selectedDate,
-      color: eventColor,
-    };
-    setEvents([...events, newEvent]);
-    closeModal();
-  };
-
-  const handleEditSubmit = (event) => {
-    event.preventDefault();
-    if (!eventTitle) {
-      alert("일정을 입력해주세요");
-      return;
-    }
-    if (selectedEvent) {
-      const updatedEvent = {
-        ...selectedEvent,
+  const handleSubmit = useCallback(
+    (event) => {
+      event.preventDefault();
+      if (!eventTitle) {
+        alert("일정을 입력해주세요");
+        return;
+      }
+      const newEvent = {
+        id: events.length ? events[events.length - 1].id + 1 : 1,
         title: eventTitle,
         content: eventContent,
         start: selectedDate,
         end: selectedDate,
         color: eventColor,
       };
-      const updatedEvents = events.map((e) => (e.id === selectedEvent.id ? updatedEvent : e));
-      setEvents(updatedEvents);
+      setEvents((prevEvents) => [...prevEvents, newEvent]);
       closeModal();
-    } else {
-      console.error("선택된 이벤트가 없습니다.");
-    }
-  };
+    },
+    [eventTitle, eventContent, selectedDate, eventColor, events]
+  );
 
-  const handleSelectEvent = (event) => {
+  const handleEditSubmit = useCallback(
+    (event) => {
+      event.preventDefault();
+      if (!eventTitle) {
+        alert("일정을 입력해주세요");
+        return;
+      }
+      if (selectedEvent) {
+        const updatedEvent = {
+          ...selectedEvent,
+          title: eventTitle,
+          content: eventContent,
+          start: selectedDate,
+          end: selectedDate,
+          color: eventColor,
+        };
+        const updatedEvents = events.map((e) => (e.id === selectedEvent.id ? updatedEvent : e));
+        setEvents(updatedEvents);
+        closeModal();
+      } else {
+        console.error("선택된 이벤트가 없습니다.");
+      }
+    },
+    [eventTitle, eventContent, selectedDate, eventColor, selectedEvent, events]
+  );
+
+  const handleSelectEvent = useCallback((event) => {
     openInfoModal(event);
-  };
+  }, []);
 
   const openInfoModal = (event) => {
     setSelectedEvent(event);
@@ -110,37 +116,44 @@ const CalTest = () => {
     setInfoModalIsOpen(false);
   };
 
-  const deleteEvent = () => {
+  const deleteEvent = useCallback(() => {
     if (window.confirm("이 이벤트를 삭제하시겠습니까?")) {
-      setEvents(events.filter((e) => e.id !== selectedEvent.id));
+      setEvents((prevEvents) => prevEvents.filter((e) => e.id !== selectedEvent.id));
       closeInfoModal();
     }
-  };
+  }, [selectedEvent]);
 
-  const editEvent = (event) => {
-    const foundEvent = events.find((item) => String(item.id) === String(event.id));
+  const editEvent = useCallback(
+    (event) => {
+      const foundEvent = events.find((item) => String(item.id) === String(event.id));
 
-    if (foundEvent) {
-      setEventTitle(foundEvent.title);
-      setEventContent(foundEvent.content);
-      setSelectedDate(foundEvent.start);
-      setEventColor(foundEvent.color);
-      setIsEditMode(true);
-      setModalIsOpen(true);
-      setSelectedEvent(foundEvent);
-      closeInfoModal();
-    } else {
-      console.error("이벤트를 찾을 수 없습니다.");
-    }
-  };
+      if (foundEvent) {
+        setEventTitle(foundEvent.title);
+        setEventContent(foundEvent.content);
+        setSelectedDate(foundEvent.start);
+        setEventColor(foundEvent.color);
+        setIsEditMode(true);
+        setModalIsOpen(true);
+        setSelectedEvent(foundEvent);
+        closeInfoModal();
+      } else {
+        console.error("이벤트를 찾을 수 없습니다.");
+      }
+    },
+    [events]
+  );
 
-  const combinedEvents = Array.from(
-    new Set(
-      [...events, ...holidays].map((e) =>
-        JSON.stringify({ ...e, start: new Date(e.start).toISOString(), end: new Date(e.end).toISOString() })
-      )
-    )
-  ).map((e) => JSON.parse(e));
+  const combinedEvents = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          [...events, ...holidays].map((e) =>
+            JSON.stringify({ ...e, start: new Date(e.start).toISOString(), end: new Date(e.end).toISOString() })
+          )
+        )
+      ).map((e) => JSON.parse(e)),
+    [events, holidays]
+  );
 
   return (
     <div>
