@@ -3,6 +3,7 @@ import useHolidayFetcher from "../../../hooks/useHolidayFetcher";
 import CalendarComponent from "../../common/calendar/CalendarComponent";
 import EventModal from "../../modal/EventModal";
 import CalInfoModal from "../../modal/CalInfoModal";
+import BodyTitle from "../../common/BodyTitle";
 
 const CalTest = () => {
   const initialDate = new Date();
@@ -157,6 +158,7 @@ const CalTest = () => {
 
   return (
     <div>
+      <BodyTitle title={"함께 섬기는 교회 일정"} />
       <CalendarComponent
         events={combinedEvents}
         holidays={holidays}

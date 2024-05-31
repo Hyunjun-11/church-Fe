@@ -6,6 +6,13 @@
   width: 100%;
   max-width: 200px;
   z-index: 1;
+  border-right: solid 0.4px rgb(241, 149, 149);
+  color: white;
+}
+.NavBarList:hover {
+  /* background: #64aedf; */
+  background: #630a96;
+  transition: background-color 0.7s ease;
 }
 .Bar_NAV {
   padding-top: 12px;
@@ -16,25 +23,30 @@
 }
 .Title_NAV {
   padding: 10px;
+  border-radius: 24px;
+  background-color: rgb(153, 150, 150);
 }
 
 .Bar_NAV > div {
   min-width: max-content;
-  transition: color 1s ease, text-decoration 0.5s ease;
+  transition: color 0.4s ease, text-decoration 0.5s ease;
 }
 
 .Bar_NAV > div:hover {
   cursor: pointer;
   text-decoration: underline;
-  color: aquamarine;
+  color: rgb(181, 238, 219);
 }
 
 /* .Bar_LIST 클래스에 대한 스타일 */
 .Bar_LIST {
   cursor: pointer;
-  color: rgb(156, 187, 84);
+  color: rgb(247, 0, 0);
   min-width: max-content;
   padding-top: 8px;
+}
+.Bar_LIST > div:hover {
+  text-decoration: underline;
 }
 
 .SubItems {
@@ -47,4 +59,13 @@
 
 .SubItems .SubItem:hover {
   text-decoration: underline;
+}
+.List > div {
+  color: black;
+  background: white;
+  border: none;
+}
+.List > div:hover {
+  background: white;
+  border: none;
 }
