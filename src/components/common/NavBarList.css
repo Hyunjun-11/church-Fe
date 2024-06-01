@@ -16,10 +16,17 @@
 }
 .Bar_NAV {
   padding-top: 12px;
-  cursor: pointer;
+  /* cursor: pointer; */
   height: 100%;
   display: none;
   transition: opacity 0.3s ease, visibility 0.3s ease; /* 전환 효과 설정 */
+}
+.Bar_NAV a {
+  color: white; /* 글자색 변경 */
+  text-decoration: none; /* 밑줄 제거 */
+  padding: 10px 0;
+  min-width: max-content;
+  transition: color 0.4s ease, text-decoration 0.5s ease;
 }
 
 .Title_NAV {
@@ -33,9 +40,9 @@
 }
 
 .Bar_NAV > div:hover {
-  cursor: pointer;
+  /* cursor: pointer; */
   text-decoration: underline;
-  color: rgb(181, 238, 219);
+  color: white;
 }
 
 /* .Bar_LIST 클래스에 대한 스타일 */

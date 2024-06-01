@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./NavBarList.css";
 import { useState } from "react";
 const NavBarList = ({ title, list, type }) => {
@@ -27,8 +27,10 @@ const NavBarList = ({ title, list, type }) => {
         {list.map((item) =>
           type === "NAV" ? (
             // 네비게이션 바에서는 상위 항목만 표시
-            <div key={item.name} onClick={() => handleClick(item.navi)}>
-              {item.name}
+            <div key={item.name}>
+              <Link to={item.navi} onClick={handleClick}>
+                {item.name}
+              </Link>
             </div>
           ) : (
             // 리스트 페이지에서는 서브 항목도 함께 표시 및 토글 기능 추가
