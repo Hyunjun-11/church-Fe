@@ -4,10 +4,12 @@ import CalendarComponent from "../../common/calendar/CalendarComponent";
 import EventModal from "../../modal/EventModal";
 import CalInfoModal from "../../modal/CalInfoModal";
 import BodyTitle from "../../common/BodyTitle";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 const CalTest = () => {
   const initialDate = new Date();
-  const { currentYear, currentMonth, holidays, handleNavigate } = useHolidayFetcher(initialDate);
+  const { currentYear, currentMonth, holidays, loading, handleNavigate } = useHolidayFetcher(initialDate);
 
   const [events, setEvents] = useState([
     {
@@ -181,15 +183,21 @@ const CalTest = () => {
   return (
     <div>
       <BodyTitle title={"함께섬기는 교회 일정"} />
-      <CalendarComponent
-        onEventDrop={handleEventDrop}
-        onEventResize={handleEventResize}
-        events={combinedEvents}
-        holidays={holidays}
-        handleSelectSlot={handleSelectSlot}
-        handleSelectEvent={handleSelectEvent}
-        handleNavigate={handleNavigate}
-      />
+      {loading ? (
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+          <CircularProgress />
+        </Box>
+      ) : (
+        <CalendarComponent
+          onEventDrop={handleEventDrop}
+          onEventResize={handleEventResize}
+          events={combinedEvents}
+          holidays={holidays}
+          handleSelectSlot={handleSelectSlot}
+          handleSelectEvent={handleSelectEvent}
+          handleNavigate={handleNavigate}
+        />
+      )}
 
       <EventModal
         isOpen={modalIsOpen}

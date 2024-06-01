@@ -1,7 +1,8 @@
 .NavigatorBar {
   display: flex;
   justify-content: space-around;
-  background-color: #0083cc;
+  background-color: #0697e6;
+  z-index: 10;
 }
 
 .NavigatorBar > div > div {
@@ -11,6 +12,4 @@
 
 .NavigatorBar:hover > div > div {
   display: block;
-  /* background: rgba#74abcf(224, 159, 159, 0.9); */
-  background: rgba(137, 179, 228, 0.9);
 }

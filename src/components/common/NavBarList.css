@@ -11,7 +11,7 @@
 }
 .NavBarList:hover {
   /* background: #64aedf; */
-  background: #630a96;
+  background: #73aece;
   transition: background-color 0.7s ease;
 }
 .Bar_NAV {
@@ -21,10 +21,10 @@
   display: none;
   transition: opacity 0.3s ease, visibility 0.3s ease; /* 전환 효과 설정 */
 }
+
 .Title_NAV {
   padding: 10px;
-  border-radius: 24px;
-  background-color: rgb(153, 150, 150);
+  background-color: #0697e6;
 }
 
 .Bar_NAV > div {

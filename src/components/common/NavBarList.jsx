@@ -21,7 +21,7 @@ const NavBarList = ({ title, list, type }) => {
 
   return (
     <div className="NavBarList">
-      <div className={`Title_NAV${type}`}>{title}</div>
+      <div className={`Title_${type}`}>{title}</div>
 
       <div className={`Bar_${type}`}>
         {list.map((item) =>
