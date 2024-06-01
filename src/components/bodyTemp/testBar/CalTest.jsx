@@ -7,30 +7,46 @@ import BodyTitle from "../../common/BodyTitle";
 
 const CalTest = () => {
   const initialDate = new Date();
-  const { date, currentYear, currentMonth, holidays, handleNavigate } = useHolidayFetcher(initialDate);
+  const { currentYear, currentMonth, holidays, handleNavigate } = useHolidayFetcher(initialDate);
 
-  // 이벤트 상태
   const [events, setEvents] = useState([
     {
       id: 1,
       title: "오늘일정",
       content: "content1",
-      start: new Date(2024, 4, 20, 10, 0),
-      end: new Date(2024, 4, 20, 12, 0),
+      start: new Date(2024, 5, 20, 10, 0),
+      end: new Date(2024, 5, 22, 12, 0),
       color: "lightblue",
     },
     {
       id: 2,
       title: "수정테스트",
       content: "content2",
-      start: new Date(2024, 4, 21, 12, 0),
-      end: new Date(2024, 4, 21, 13, 0),
+      start: new Date(2024, 5, 21, 12, 0),
+      end: new Date(2024, 5, 27, 13, 0),
       color: "lightgreen",
     },
   ]);
 
+  const handleEventDrop = useCallback(
+    ({ event, start, end }) => {
+      const updatedEvents = events.map((e) => (e.id === event.id ? { ...e, start, end } : e));
+      setEvents(updatedEvents);
+    },
+    [events]
+  );
+
+  const handleEventResize = useCallback(
+    ({ event, start, end }) => {
+      const updatedEvents = events.map((e) => (e.id === event.id ? { ...e, start, end } : e));
+      setEvents(updatedEvents);
+    },
+    [events]
+  );
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+  const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [eventTitle, setEventTitle] = useState("");
   const [eventContent, setEventContent] = useState("");
   const [eventColor, setEventColor] = useState("lightblue");
@@ -38,18 +54,20 @@ const CalTest = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [infoModalIsOpen, setInfoModalIsOpen] = useState(false);
 
-  const handleSelectSlot = useCallback(({ start }) => {
-    openModal(start);
+  const handleSelectSlot = useCallback(({ start, end }) => {
+    openModal(start, end);
   }, []);
 
-  const openModal = (date) => {
-    setSelectedDate(date);
+  const openModal = (start, end) => {
+    setSelectedStartDate(start);
+    setSelectedEndDate(end);
     setModalIsOpen(true);
   };
 
   const closeModal = () => {
     setModalIsOpen(false);
-    setSelectedDate(null);
+    setSelectedStartDate(null);
+    setSelectedEndDate(null);
     setEventTitle("");
     setEventContent("");
     setEventColor("lightblue");
@@ -68,14 +86,14 @@ const CalTest = () => {
         id: events.length ? events[events.length - 1].id + 1 : 1,
         title: eventTitle,
         content: eventContent,
-        start: selectedDate,
-        end: selectedDate,
+        start: selectedStartDate,
+        end: selectedEndDate,
         color: eventColor,
       };
       setEvents((prevEvents) => [...prevEvents, newEvent]);
       closeModal();
     },
-    [eventTitle, eventContent, selectedDate, eventColor, events]
+    [eventTitle, eventContent, selectedStartDate, selectedEndDate, eventColor, events]
   );
 
   const handleEditSubmit = useCallback(
@@ -90,8 +108,8 @@ const CalTest = () => {
           ...selectedEvent,
           title: eventTitle,
           content: eventContent,
-          start: selectedDate,
-          end: selectedDate,
+          start: selectedStartDate,
+          end: selectedEndDate,
           color: eventColor,
         };
         const updatedEvents = events.map((e) => (e.id === selectedEvent.id ? updatedEvent : e));
@@ -101,11 +119,14 @@ const CalTest = () => {
         console.error("선택된 이벤트가 없습니다.");
       }
     },
-    [eventTitle, eventContent, selectedDate, eventColor, selectedEvent, events]
+    [eventTitle, eventContent, selectedStartDate, selectedEndDate, eventColor, selectedEvent, events]
   );
 
   const handleSelectEvent = useCallback((event) => {
-    openInfoModal(event);
+    // 이벤트가 홀리데이가 아닌 경우에만 정보 모달을 엽니다.
+    if (event.type !== "holiday") {
+      openInfoModal(event);
+    }
   }, []);
 
   const openInfoModal = (event) => {
@@ -131,7 +152,8 @@ const CalTest = () => {
       if (foundEvent) {
         setEventTitle(foundEvent.title);
         setEventContent(foundEvent.content);
-        setSelectedDate(foundEvent.start);
+        setSelectedStartDate(foundEvent.start);
+        setSelectedEndDate(foundEvent.end);
         setEventColor(foundEvent.color);
         setIsEditMode(true);
         setModalIsOpen(true);
@@ -158,8 +180,10 @@ const CalTest = () => {
 
   return (
     <div>
-      <BodyTitle title={"함께 섬기는 교회 일정"} />
+      <BodyTitle title={"함께섬기는 교회 일정"} />
       <CalendarComponent
+        onEventDrop={handleEventDrop}
+        onEventResize={handleEventResize}
         events={combinedEvents}
         holidays={holidays}
         handleSelectSlot={handleSelectSlot}
@@ -170,7 +194,8 @@ const CalTest = () => {
       <EventModal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        selectedDate={selectedDate}
+        selectedStartDate={selectedStartDate}
+        selectedEndDate={selectedEndDate}
         eventTitle={eventTitle}
         setEventTitle={setEventTitle}
         eventContent={eventContent}

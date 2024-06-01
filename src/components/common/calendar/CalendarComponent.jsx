@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { Calendar, momentLocalizer } from "react-big-calendar";
+import { Calendar, momentLocalizer, Views } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import CustomToolbar from "./CustomToolbar";
 import "./CalendarComponent.css";
 import ReactModal from "react-modal";
+import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 
 const localizer = momentLocalizer(moment);
-
+const DragAndDropCalendar = withDragAndDrop(Calendar);
 const formats = {
   weekdayFormat: (date) => ["일", "월", "화", "수", "목", "금", "토"][date.getDay()],
   monthHeaderFormat: "YYYY년 MM월",
@@ -79,12 +80,10 @@ const CalendarComponent = ({
 
   return (
     <div style={{ height: "100%" }}>
-      <Calendar
+      <DragAndDropCalendar
         localizer={localizer}
-        views={["month"]}
-        events={[...events]}
-        startAccessor="start"
-        endAccessor="end"
+        defaultView={Views.MONTH}
+        events={events}
         selectable
         formats={formats}
         onSelectSlot={handleSelectSlot}
@@ -94,45 +93,11 @@ const CalendarComponent = ({
         eventPropGetter={eventStyleGetter}
         components={components}
         onEventDrop={onEventDrop}
-        resizable
         onEventResize={onEventResize}
+        resizable
         onShowMore={handleShowMore}
+        draggableAccessor={(event) => true}
       />
-
-      {showMoreEvents && (
-        <ReactModal
-          isOpen={!!showMoreEvents}
-          onRequestClose={closeMoreEventsModal}
-          contentLabel="More Events"
-          style={{
-            overlay: {
-              backgroundColor: "rgba(0, 0, 0, 0.75)",
-              zIndex: "10",
-            },
-            content: {
-              top: "50%",
-              left: "50%",
-              right: "auto",
-              bottom: "auto",
-              marginRight: "-50%",
-              transform: "translate(-50%, -50%)",
-              width: "400px",
-              height: "auto",
-              padding: "20px",
-            },
-          }}
-        >
-          <h2>{moment(showMoreEvents.date).format("YYYY년 MM월 DD일")}</h2>
-          <ul>
-            {showMoreEvents.events.map((event, index) => (
-              <li key={index}>
-                <strong>{event.title}</strong>: {event.content}
-              </li>
-            ))}
-          </ul>
-          <button onClick={closeMoreEventsModal}>닫기</button>
-        </ReactModal>
-      )}
     </div>
   );
 };
