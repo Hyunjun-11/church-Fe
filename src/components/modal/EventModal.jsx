@@ -5,7 +5,8 @@ import { TextField, Button, Box, Typography, Container, CssBaseline } from "@mui
 const EventModal = ({
   isOpen,
   onRequestClose,
-  selectedDate,
+  selectedStartDate,
+  selectedEndDate,
   eventTitle,
   setEventTitle,
   eventContent,
@@ -15,6 +16,20 @@ const EventModal = ({
   handleSubmit,
 }) => {
   const colors = ["lightblue", "lightgreen", "lightpink", "lightsalmon"];
+
+  const formatDateRange = (start, end) => {
+    const startDate = new Date(start);
+    const endDate = new Date(end);
+
+    if (startDate.getTime() !== endDate.getTime()) {
+      endDate.setDate(endDate.getDate() - 1);
+    }
+
+    const startDateString = startDate.toLocaleDateString();
+    const endDateString = endDate.toLocaleDateString();
+
+    return startDateString === endDateString ? startDateString : `${startDateString} ~ ${endDateString}`;
+  };
 
   return (
     <ReactModal
@@ -49,7 +64,7 @@ const EventModal = ({
           }}
         >
           <Typography component="h1" variant="h5">
-            {selectedDate ? selectedDate.toLocaleDateString() : ""} 일정 등록
+            {selectedStartDate ? formatDateRange(selectedStartDate, selectedEndDate) : ""}
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
             <TextField
