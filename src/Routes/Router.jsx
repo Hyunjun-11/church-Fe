@@ -53,18 +53,22 @@ import BoardDetail from "../components/common/board/BoardDetail";
 import ImageBoardDetail from "../components/common/imageBoard/ImageBoardDetail";
 import Footer from "../components/footer/Footer";
 import Header from "../components/header/Header";
+import SignUpSuccess from "../Pages/user/login/SignUpSuccess";
 
 const Router = () => {
   const location = useLocation();
-  const authPages = ["/login", "/signup"];
+  const authPages = ["/login", "/signup", "/signup-success"];
   const isAuthPage = authPages.includes(location.pathname);
   return (
     <>
       {!isAuthPage && <Header />}
       <Routes>
-        <Route path="login" element={<Login />}></Route>
-        <Route path="signup" element={<Signup />}></Route>
-        <Route path="/" element={<Layout ListComponent={InfoList} />}></Route>
+        <Route path="/">
+          <Route path="login" element={<Login />}></Route>
+          <Route path="signup" element={<Signup />}></Route>
+          <Route path="signup-success" element={<SignUpSuccess />} />
+        </Route>
+
         {/* churchInfo */}
         <Route path="info" element={<Layout ListComponent={InfoList} />}>
           <Route path="intro" element={<ChurchInfo />}></Route>
