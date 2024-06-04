@@ -1,62 +1,40 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./NavBarList.css";
-import { useState } from "react";
 const NavBarList = ({ title, list, type }) => {
   const navigate = useNavigate();
-  const [openItems, setOpenItems] = useState({});
 
-  const handleClick = (path, event) => {
-    if (event) {
-      event.stopPropagation();
-    }
+  const handleClick = (path) => {
     navigate(path);
   };
 
-  const toggleSubItems = (name) => {
-    setOpenItems((prev) => ({
-      ...prev,
-      [name]: !prev[name],
-    }));
-  };
-
   return (
-    <div className="NavBarList">
-      <div className={`Title_${type}`}>{title}</div>
-
-      <div className={`Bar_${type}`}>
-        {list.map((item) =>
-          type === "NAV" ? (
-            // 네비게이션 바에서는 상위 항목만 표시
-            <div key={item.name}>
-              <Link to={item.navi} onClick={handleClick}>
-                {item.name}
-              </Link>
-            </div>
-          ) : (
-            // 리스트 페이지에서는 서브 항목도 함께 표시 및 토글 기능 추가
-            <div key={item.name} className={`Bar_${type}`}>
-              <div
-                onClick={(e) => {
-                  toggleSubItems(item.name);
-                  handleClick(item.navi, e);
-                }}
-              >
+    <>
+      {type === "NAV" ? (
+        <div className="navbar">
+          <div className="nav_title">{title}</div>
+          <div className="nav_list">
+            {list.map((item) => (
+              <div key={item.name}>
+                <Link to={item.navi} onClick={handleClick}>
+                  {item.name}
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="listbar">
+          <div className="list_title">{title}</div>
+          <div className="list_list">
+            {list.map((item) => (
+              <div key={item.id} onClick={(event) => handleClick(item.navi)}>
                 {item.name}
               </div>
-              {openItems[item.name] && item.subItems && item.subItems.length > 0 && (
-                <div className="SubItems">
-                  {item.subItems.map((subItem) => (
-                    <div key={subItem.name} className="SubItem" onClick={(e) => handleClick(subItem.navi, e)}>
-                      {subItem.name}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )
-        )}
-      </div>
-    </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

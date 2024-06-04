@@ -1,79 +1,66 @@
-/* .Bar_NAV 클래스에 대한 스타일 */
-.NavBarList {
-  display: flex;
+.nav_title {
+  padding: 16px 12px;
+  font-weight: 500;
+  color: white;
+}
+.navbar {
+  background-color: #0697e6;
+  width: 100%;
   flex-direction: column;
   text-align: center;
-  width: 100%;
-  max-width: 200px;
-  z-index: 1;
-  border-right: solid 0.4px rgb(241, 149, 149);
-  color: white;
-  background-color: #30a3e0;
+  min-width: fit-content;
 }
-.NavBarList:hover {
-  /* background: #64aedf; */
-  background: #73aece;
-  transition: background-color 0.7s ease;
-}
-.Bar_NAV {
+.nav_list {
   padding-top: 12px;
-  /* cursor: pointer; */
-  height: 100%;
-  /* display: none; */
-  transition: opacity 0.3s ease, visibility 0.3s ease; /* 전환 효과 설정 */
+  background-color: #26a1e4;
+  height: 200px;
+  display: none;
+  overflow: hidden; /* 추가 */
 }
-.Bar_NAV a {
-  color: white; /* 글자색 변경 */
+.nav_list > div {
+  padding: 2px;
+}
+.nav_list > div > a {
+  min-width: fit-content;
+  color: white;
   text-decoration: none; /* 밑줄 제거 */
   padding: 10px 0;
-  min-width: max-content;
-  transition: color 0.4s ease, text-decoration 0.5s ease;
+  /* min-width: max-content; */
 }
-
-.Title_NAV {
-  padding: 10px;
-  background-color: #0697e6;
-}
-
-.Bar_NAV > div {
-  min-width: max-content;
-  transition: color 0.4s ease, text-decoration 0.5s ease;
-}
-
-.Bar_NAV > div:hover {
-  /* cursor: pointer; */
+.nav_list > div > a:hover {
+  color: rgb(219, 148, 16);
   text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.4s ease, text-decoration 0.5s ease;
+}
+
+.nav_list:hover {
+  background: #0697e6;
+}
+
+/* list */
+.List {
+  min-width: fit-content;
+}
+.listbar {
+  display: grid;
+  border: solid 2px;
+}
+.list_title {
+  background-color: rgb(65, 68, 65);
+  border: none;
   color: white;
-}
 
-/* .Bar_LIST 클래스에 대한 스타일 */
-.Bar_LIST {
-  cursor: pointer;
-  color: rgb(247, 0, 0);
-  min-width: max-content;
-  padding-top: 8px;
+  padding: 12px 24px;
 }
-.Bar_LIST > div:hover {
+.list_list {
+  padding: 12px 24px;
+  display: grid;
+  gap: 12px;
+}
+.list_list > div:hover {
+  color: rgb(219, 148, 16);
   text-decoration: underline;
-}
-
-.SubItems {
-  margin-left: 20px;
-}
-
-.SubItems .SubItem {
   cursor: pointer;
-}
-
-.SubItems .SubItem:hover {
-  text-decoration: underline;
-}
-.List > div {
-  color: black;
-  background: white;
-  border: none;
-}
-.List > div:hover {
-  background: white;
-  border: none;
+  transition: color 0.4s ease, text-decoration 0.5s ease;
 }
