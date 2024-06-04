@@ -16,22 +16,23 @@ const fadeIn = keyframes`
 `;
 
 const SuccessContainer = styled.div`
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: white; /* 배경색을 흰색으로 설정 */
+  // height: 100vh;
+  // background: white; /* 배경색을 흰색으로 설정 */
   animation: ${fadeIn} 1s ease-out;
 `;
 
 const Message = styled.div`
-  background: #f8f9fa; /* 연한 회색 배경 */
-  padding: 40px;
+  // background: #f8f9fa; /* 연한 회색 배경 */
+  padding: 60px;
   border-radius: 12px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.07);
   text-align: center;
-  animation: ${fadeIn} 1s ease-out;
+  // animation: ${fadeIn} 1s ease-out;
 `;
 
 const Icon = styled.div`

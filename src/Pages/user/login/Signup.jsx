@@ -9,18 +9,19 @@ const FormContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: #f0f2f5;
+  // height: 100vh;
+  // background: #f0f2f5;
 `;
 
 const Form = styled.form`
   background: white;
   padding: 40px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border: solid 1px;
+  // border-radius: 8px;
+  // box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 100%;
 `;
 
 const Input = styled.input`
@@ -29,6 +30,7 @@ const Input = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
+  width: 350px;
 `;
 
 const Select = styled.select`
@@ -86,7 +88,7 @@ const SuccessMessage = styled.p`
 
 const BirthdateContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  gap: 12px;
 `;
 
 const isValidUsername = (memberId) => {

@@ -57,12 +57,13 @@ import SignUpSuccess from "../Pages/user/login/SignUpSuccess";
 
 const Router = () => {
   const location = useLocation();
-  const authPages = ["/login", "/signup", "/signup-success"];
+  const authPages = [];
   const isAuthPage = authPages.includes(location.pathname);
   return (
     <>
       {!isAuthPage && <Header />}
       <Routes>
+        <Route path="/" element={<Layout ListComponent={TestList} />}></Route>
         <Route path="/">
           <Route path="login" element={<Login />}></Route>
           <Route path="signup" element={<Signup />}></Route>
