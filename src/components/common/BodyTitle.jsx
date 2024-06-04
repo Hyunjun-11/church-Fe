@@ -1,10 +1,26 @@
-import "./BodyTitle.css";
+// BodyTitle.jsx
+import React from "react";
+import styled from "styled-components";
+
+const BodyTitleContainer = styled.div`
+  font-size: 24px;
+  font-weight: 700;
+  display: flex;
+  gap: 12px;
+  padding-bottom: 20px;
+`;
+
+const Line = styled.span`
+  padding: 2px;
+  background-color: #4b83e9;
+`;
+
 const BodyTitle = ({ title }) => {
   return (
-    <div className="BodyTitle">
-      <span className="Line"></span>
-      <div className="">{title}</div>
-    </div>
+    <BodyTitleContainer>
+      <Line />
+      <div>{title}</div>
+    </BodyTitleContainer>
   );
 };
 
