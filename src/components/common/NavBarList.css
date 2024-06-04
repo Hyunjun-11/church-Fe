@@ -8,6 +8,7 @@
   z-index: 1;
   border-right: solid 0.4px rgb(241, 149, 149);
   color: white;
+  background-color: #30a3e0;
 }
 .NavBarList:hover {
   /* background: #64aedf; */
@@ -18,7 +19,7 @@
   padding-top: 12px;
   /* cursor: pointer; */
   height: 100%;
-  display: none;
+  /* display: none; */
   transition: opacity 0.3s ease, visibility 0.3s ease; /* 전환 효과 설정 */
 }
 .Bar_NAV a {

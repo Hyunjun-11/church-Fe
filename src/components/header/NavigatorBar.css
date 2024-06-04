@@ -1,15 +1,9 @@
 .NavigatorBar {
   display: flex;
   justify-content: space-around;
-  background-color: #0697e6;
+  min-height: fit-content;
   z-index: 10;
 }
-
-.NavigatorBar > div > div {
-  padding: 20px 0px;
-  transition: background-color 0.7s ease;
-}
-
 .NavigatorBar:hover > div > div {
   display: block;
 }

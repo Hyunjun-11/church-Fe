@@ -10,17 +10,15 @@ import "./NavigatorBar.css";
 
 const NavigatorBar = () => {
   return (
-    <>
-      <div className="NavigatorBar">
-        <TestList type={"NAV"} />
-        <InfoList type={"NAV"} />
-        <WorshipInfoList type={"NAV"} />
-        <PrayerSermonList type={"NAV"} />
-        <EducationEvangelismList type={"NAV"} />
-        <GospelResourcesList type={"NAV"} />
-        <CommunityList type={"NAV"} />
-      </div>
-    </>
+    <div className="NavigatorBar">
+      <TestList type={"NAV"} />
+      <InfoList type={"NAV"} />
+      <WorshipInfoList type={"NAV"} />
+      <PrayerSermonList type={"NAV"} />
+      <EducationEvangelismList type={"NAV"} />
+      <GospelResourcesList type={"NAV"} />
+      <CommunityList type={"NAV"} />
+    </div>
   );
 };
 export default NavigatorBar;
