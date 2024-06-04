@@ -36,6 +36,13 @@ const Header = () => {
           </div>
           <div
             onClick={() => {
+              onClick("/signup-success");
+            }}
+          >
+            회원가입완료페이지
+          </div>
+          <div
+            onClick={() => {
               onClick("/admin");
             }}
           >
