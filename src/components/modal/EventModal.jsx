@@ -88,6 +88,8 @@ const EventModal = ({
               autoComplete="off"
               value={eventContent}
               onChange={(e) => setEventContent(e.target.value)}
+              multiline
+              rows={3}
             />
             <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
               {colors.map((color) => (
@@ -106,12 +108,14 @@ const EventModal = ({
                 />
               ))}
             </Box>
-            <Button type="submit" fullWidth variant="contained" color="primary" sx={{ mt: 3, mb: 2 }}>
-              등록
-            </Button>
-            <Button fullWidth variant="outlined" color="secondary" onClick={onRequestClose} sx={{ mb: 2 }}>
-              취소
-            </Button>
+            <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3, mb: 2 }}>
+              <Button type="submit" variant="contained" color="primary">
+                등록
+              </Button>
+              <Button variant="outlined" color="secondary" onClick={onRequestClose}>
+                취소
+              </Button>
+            </Box>
           </Box>
         </Box>
       </Container>

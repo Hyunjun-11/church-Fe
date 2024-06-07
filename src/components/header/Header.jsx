@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
 import NavigatorBar from "./NavigatorBar";
+import { Apitest } from "../bodyTemp/testBar/ServerApiTest";
 
 const Header = () => {
   const nav = useNavigate();
@@ -41,6 +42,7 @@ const Header = () => {
           >
             회원가입완료페이지
           </div>
+          <Apitest />
           <div
             onClick={() => {
               onClick("/admin");

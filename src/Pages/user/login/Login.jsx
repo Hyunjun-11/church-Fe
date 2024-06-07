@@ -79,7 +79,7 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:8080/api/member/login", {
+      const response = await axios.post(`${import.meta.env.REACT_APP_API_URL}/member/login`, {
         memberId,
         password,
       });

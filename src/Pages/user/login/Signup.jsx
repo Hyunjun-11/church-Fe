@@ -146,7 +146,7 @@ const SignUp = () => {
     const birth = `${year}-${month}-${day}`;
 
     try {
-      const response = await axios.post("http://localhost:8080/api/member/signUp", {
+      const response = await axios.post(`${import.meta.env.REACT_APP_API_URL}/member/signUp`, {
         name,
         memberId,
         password,

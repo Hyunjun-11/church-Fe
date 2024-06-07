@@ -1,6 +1,6 @@
 import React from "react";
 import ReactModal from "react-modal";
-import { Button, Box, Typography, Container, CssBaseline } from "@mui/material";
+import { Button, Box, Typography, Container, CssBaseline, Divider } from "@mui/material";
 
 const CalInfoModal = ({ isOpen, selectedEvent, onRequestClose, onEditEvent, onDeleteEvent }) => {
   const formatDateRange = (start, end) => {
@@ -36,11 +36,12 @@ const CalInfoModal = ({ isOpen, selectedEvent, onRequestClose, onEditEvent, onDe
           marginRight: "-50%",
           transform: "translate(-50%, -50%)",
           width: "400px",
-          height: "auto",
           maxHeight: "80vh",
           padding: "20px",
           display: "flex",
           flexDirection: "column",
+          borderRadius: "8px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         },
       }}
     >
@@ -53,22 +54,43 @@ const CalInfoModal = ({ isOpen, selectedEvent, onRequestClose, onEditEvent, onDe
             alignItems: "center",
           }}
         >
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" sx={{ mb: 2 }}>
             일정 상세
           </Typography>
 
           {selectedEvent && (
-            <Box sx={{ mt: 3, flexGrow: 1, overflowY: "auto", width: "100%" }}>
-              <Typography variant="body1">제목: {selectedEvent.title}</Typography>
-              <Typography variant="body1">내용: {selectedEvent.content}</Typography>
-              <Typography variant="body1">날짜: {formatDateRange(selectedEvent.start, selectedEvent.end)}</Typography>
+            <Box sx={{ mt: 1, width: "100%" }}>
+              <Typography variant="h6" gutterBottom>
+                제목
+              </Typography>
+              <Typography variant="body1" paragraph>
+                {selectedEvent.title}
+              </Typography>
+              <Divider sx={{ my: 2 }} />
+              <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                <Typography variant="h6" sx={{ mr: 1 }}>
+                  날짜
+                </Typography>
+                <Typography variant="body1" sx={{ alignSelf: "center" }}>
+                  {formatDateRange(selectedEvent.start, selectedEvent.end)}
+                </Typography>
+              </Box>
+              <Divider sx={{ my: 2 }} />
+              <Typography variant="h6" gutterBottom>
+                내용
+              </Typography>
+              <Box sx={{ maxHeight: "144px", overflowY: "auto", mb: 2, padding: "0 8px" }}>
+                <Typography variant="body1" paragraph>
+                  {selectedEvent.content}
+                </Typography>
+              </Box>
             </Box>
           )}
 
           <Box
             sx={{
               display: "flex",
-              justifyContent: "flex-end",
+              justifyContent: "space-between",
               gap: 2,
               width: "100%",
               pt: 3,
@@ -80,11 +102,11 @@ const CalInfoModal = ({ isOpen, selectedEvent, onRequestClose, onEditEvent, onDe
               onClick={() => {
                 onEditEvent(selectedEvent);
               }}
-              sx={{ mb: 2 }}
+              sx={{ flex: 1 }}
             >
               수정
             </Button>
-            <Button variant="outlined" color="primary" onClick={onDeleteEvent} sx={{ mb: 2 }}>
+            <Button variant="outlined" color="secondary" onClick={() => onDeleteEvent(selectedEvent)} sx={{ flex: 1 }}>
               삭제
             </Button>
           </Box>

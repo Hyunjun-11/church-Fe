@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./NavBarList.css";
+
 const NavBarList = ({ title, list, type }) => {
   const navigate = useNavigate();
 
@@ -14,10 +15,8 @@ const NavBarList = ({ title, list, type }) => {
           <div className="nav_title">{title}</div>
           <div className="nav_list">
             {list.map((item) => (
-              <div key={item.name}>
-                <Link to={item.navi} onClick={handleClick}>
-                  {item.name}
-                </Link>
+              <div key={item.id}>
+                <Link to={item.navi}>{item.name}</Link>
               </div>
             ))}
           </div>
@@ -27,7 +26,7 @@ const NavBarList = ({ title, list, type }) => {
           <div className="list_title">{title}</div>
           <div className="list_list">
             {list.map((item) => (
-              <div key={item.id} onClick={(event) => handleClick(item.navi)}>
+              <div key={item.id} onClick={() => handleClick(item.navi)}>
                 {item.name}
               </div>
             ))}
