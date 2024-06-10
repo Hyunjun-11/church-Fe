@@ -79,7 +79,6 @@ const WriteButton = styled.button`
 
 const ButtonContainer = styled.div`
   display: flex;
- 
   justify-content: flex-end;
 `;
 
@@ -92,8 +91,8 @@ const BoardLayout = ({ title }) => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/board/`);
         // 날짜 기준으로 내림차순 정렬
-        console.log(response);
         const sortedList = response.data.data.sort((a, b) => new Date(b.createAt) - new Date(a.createAt));
+        console.log(response.data.data);
         setBoardList(sortedList);
       } catch (error) {
         console.error('There was an error fetching the board list!', error);
@@ -115,7 +114,6 @@ const BoardLayout = ({ title }) => {
   return (
     <BoardLayoutContainer>
       <BodyTitle title={title} />
-     
       <Board>
         <BoardHeader>
           <BoardColumn className="number">번호</BoardColumn>
@@ -130,11 +128,11 @@ const BoardLayout = ({ title }) => {
               {item.title}
             </BoardColumn>
             <BoardColumn className="author">{item.author}</BoardColumn>
-            <BoardColumn className="date">{new Date(item.createAt).toLocaleString()}</BoardColumn>
+              <BoardColumn className="date">{new Date(item.createAt).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })}</BoardColumn>
           </BoardBody>
         ))}
       </Board>
-       <ButtonContainer>
+      <ButtonContainer>
         <WriteButton onClick={() => handleWriteClick("write")}>글쓰기</WriteButton>
       </ButtonContainer>
     </BoardLayoutContainer>

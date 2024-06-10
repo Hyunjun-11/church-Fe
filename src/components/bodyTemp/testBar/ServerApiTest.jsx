@@ -5,7 +5,7 @@ import axios from "axios";
 export const Apitest = () => {
   const handleSubmit = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/member/test`);
+      const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/board`);
 
       if (response.status === 200) {
         console.log(response);

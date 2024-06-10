@@ -95,6 +95,7 @@ const BoardWrite = () => {
   const [author, setAuthor] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const titleRef = useRef(null);
   const quillRef = useRef(null);
   const [isEditing, setIsEditing] = useState(false); // 수정 모드인지 여부를 판단하는 상태
 
@@ -123,6 +124,17 @@ const BoardWrite = () => {
   };
 
   const handleSubmit = async () => {
+    if (title.trim() === '') {
+      alert('제목을 입력해주세요.');
+      titleRef.current.focus();
+      return;
+    }
+    if (quillRef.current.getEditor().getText().trim() === '') {
+      alert('내용을 입력해주세요.');
+      quillRef.current.getEditor().focus();
+      return;
+    }
+
     try {
       if (isEditing) {
         // 수정 모드일 경우 PUT 요청
@@ -176,8 +188,9 @@ const BoardWrite = () => {
     const toolbar = quillRef.current.getEditor().getModule('toolbar');
     toolbar.addHandler('image', handleImageUpload);
   }, []);
-      const handleBackClick = () => {
-    navigate(`/test/board`); // 게시판 목록 페이지로 이동
+
+  const handleBackClick = () => {
+    navigate('/test/board'); // 게시판 목록 페이지로 이동
   };
 
   const modules = {
@@ -199,6 +212,7 @@ const BoardWrite = () => {
           type="text" 
           placeholder="제목을 입력하세요" 
           value={title}
+          ref={titleRef}
           onChange={(e) => setTitle(e.target.value)}
         />
         <InputField 
