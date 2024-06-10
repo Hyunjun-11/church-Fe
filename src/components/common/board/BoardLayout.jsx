@@ -8,9 +8,6 @@ const BoardLayoutContainer = styled.div`
   display: grid;
   gap: 20px;
   border-radius: 8px;
-  // padding: 20px;
-  // background: #f9f9f9;
-  // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const Board = styled.div`
@@ -21,6 +18,7 @@ const Board = styled.div`
 
 const BoardHeader = styled.div`
   display: flex;
+  
   align-items: center;
   padding: 10px;
   background-color: #007bff;
@@ -60,6 +58,27 @@ const BoardColumn = styled.div`
   }
 `;
 
+const WriteButton = styled.button`
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 20px 0;
+
+  &:hover {
+    background-color: #218838;
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  gap:12px;
+  justify-content: flex-end;
+`;
+
 const BoardLayout = ({ title, boardList }) => {
   const navigate = useNavigate();
 
@@ -68,9 +87,18 @@ const BoardLayout = ({ title, boardList }) => {
     console.log(id);
   };
 
+  const handleWriteClick = (path) => {
+    navigate(path); // 글쓰기 페이지로 이동하는 경로 설정
+  };
+
   return (
     <BoardLayoutContainer>
       <BodyTitle title={title} />
+      <ButtonContainer>
+        <WriteButton onClick={() => { handleWriteClick("write") }}>글쓰기폼1</WriteButton>
+        <WriteButton onClick={() => { handleWriteClick("write2") }}>글쓰기폼2</WriteButton>
+        <WriteButton onClick={() => { handleWriteClick("write3") }}>글쓰기폼3</WriteButton>
+      </ButtonContainer>
       <Board>
         <BoardHeader>
           <BoardColumn className="number">번호</BoardColumn>

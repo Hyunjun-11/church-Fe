@@ -54,6 +54,9 @@ import ImageBoardDetail from "../components/common/imageBoard/ImageBoardDetail";
 import Footer from "../components/footer/Footer";
 import Header from "../components/header/Header";
 import SignUpSuccess from "../Pages/user/login/SignUpSuccess";
+import BoardWrite from '../components/common/board/BoardWrite';
+import BoardWrite2 from '../components/common/board/BoardWrite2';
+import BoardWrite3 from '../components/common/board/BoardWrite3';
 
 const Router = () => {
   const location = useLocation();
@@ -129,6 +132,9 @@ const Router = () => {
         {/*prayerSermonList */}
         <Route path="test" element={<Layout ListComponent={TestList} />}>
           <Route path="board" element={<BoardTest />} />
+          <Route path="board/write" element={<BoardWrite />} />
+          <Route path="board/write2" element={<BoardWrite2 />} />
+          <Route path="board/write3" element={<BoardWrite3 />} />
           <Route path="board/:id" element={<BoardDetail />} />
           <Route path="imageboard" element={<ImageBoardTest />} />
           <Route path="imageboard/:id" element={<ImageBoardDetail />} />
