@@ -132,10 +132,9 @@ const Router = () => {
         {/*prayerSermonList */}
         <Route path="test" element={<Layout ListComponent={TestList} />}>
           <Route path="board" element={<BoardTest />} />
-          <Route path="board/write" element={<BoardWrite />} />
-          <Route path="board/write2" element={<BoardWrite2 />} />
-          <Route path="board/write3" element={<BoardWrite3 />} />
           <Route path="board/:id" element={<BoardDetail />} />
+          <Route path="board/write" element={<BoardWrite />} />
+          <Route path="board/edit/:id" element={<BoardWrite />} />
           <Route path="imageboard" element={<ImageBoardTest />} />
           <Route path="imageboard/:id" element={<ImageBoardDetail />} />
           <Route path="cal" element={<CalTest />} />

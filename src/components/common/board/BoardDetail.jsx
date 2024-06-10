@@ -1,66 +1,147 @@
-// BoardDetail.jsx
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import axios from "axios";
 
 const BoardDetailContainer = styled.div`
-  flex-grow: 1;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background: #f9f9f9;
   padding: 20px;
-  margin: 20px;
-  overflow-y: auto;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height:100%;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
 `;
 
 const Title = styled.div`
   font-weight: bold;
-  font-size: 24px;
-  margin-bottom: 10px;
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #333;
 `;
 
-const Date = styled.div`
-  font-size: 16px;
-  color: #666;
-  margin-bottom: 20px;
+const Info = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 40px; /* 제목과 작성자 사이의 간격을 늘리기 위해 변경 */
+`;
+
+const Author = styled.div`
+padding-top:20px;
+  font-weight: bold;
+`;
+
+const DateStyled = styled.div`
+  font-size: 14px;
+  color: #777;
 `;
 
 const Content = styled.div`
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.6;
+  color: #444;
+  padding: 20px 0;
+  border-top: 1px solid #ddd;
+  // border-bottom: 1px solid #ddd;
+  margin-bottom: 20px; /* 추가하여 아래 경계선이 맨 아래까지 나오도록 조정 */
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  padding: 20px;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
 `;
 
-const Button = styled.div`
+const LeftButtonContainer = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+const RightButtonContainer = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+const Button = styled.button`
   background-color: #007bff;
   color: white;
   padding: 10px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
+  font-size: 16px;
   transition: background-color 0.3s ease;
 
   &:hover {
     background-color: #0056b3;
   }
 `;
+const BackButton = styled.button`
+  padding: 12px 20px;
+  background-color: transparent;
+  border: solid 1px;
+  border-radius: 8px;
+  color: #1976d2;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+`;
 
 const BoardDetail = () => {
   const { id } = useParams();
-  const boardList = [
-    { id: 1, number: 1, title: "첫번째 게시글", date: "2023-05-01", content: "첫번째 게시글 내용" },
-    { id: 2, number: 2, title: "두번째 게시글", date: "2023-05-02", content: "aa두번째 게시글 내용" },
-    // 더 많은 게시글 데이터 추가
-  ];
+  const navigate = useNavigate();
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const selectedItem = boardList.find((item) => item.id === parseInt(id));
+  useEffect(() => {
+    const fetchBoardDetail = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/board/${id}`);
+        setSelectedItem(response.data.data);
+      } catch (error) {
+        setError('게시글을 불러오는데 실패했습니다.');
+        console.error('There was an error fetching the board detail!', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBoardDetail();
+  }, [id]);
+
+  const handleEditClick = () => {
+    navigate(`/test/board/edit/${id}`);
+  };
+
+  const handleDeleteClick = async () => {
+    try {
+      await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}/board/${id}`);
+      alert('게시글이 삭제되었습니다.');
+      navigate('/test/board'); // 삭제 후 게시판 목록으로 이동
+    } catch (error) {
+      console.error('There was an error deleting the board!', error);
+      alert('게시글 삭제에 실패했습니다.');
+    }
+  };
+
+    const handleBackClick = () => {
+    navigate(-1); // 게시판 목록 페이지로 이동
+  };
+
+  if (loading) return <div>로딩 중...</div>;
+  if (error) return <div>{error}</div>;
+
+  const formatDate = (dateString) => {
+    const date = new window.Date(dateString);  // 명시적으로 window 객체에서 Date 생성
+    return date.toLocaleString(); // 날짜와 시간을 로컬 형식으로 변환
+  };
 
   return (
     <>
@@ -68,17 +149,25 @@ const BoardDetail = () => {
         {selectedItem ? (
           <>
             <Title>{selectedItem.title}</Title>
-            <Date>{selectedItem.date}</Date>
-            <Content>{selectedItem.content}</Content>
+            <Info>
+              <Author>작성자: {selectedItem.author}</Author>
+              <DateStyled>{formatDate(selectedItem.createAt)}</DateStyled>
+            </Info>
+            <Content dangerouslySetInnerHTML={{ __html: selectedItem.content }} />
           </>
         ) : (
           <div>게시글을 찾을 수 없습니다.</div>
         )}
       </BoardDetailContainer>
       {selectedItem && (
-        <ButtonContainer>
-          <Button>수정</Button>
-          <Button>삭제</Button>
+       <ButtonContainer>
+          <LeftButtonContainer>
+            <BackButton onClick={handleBackClick}>목록으로</BackButton>
+          </LeftButtonContainer>
+          <RightButtonContainer>
+            <Button onClick={handleEditClick}>수정</Button>
+            <Button onClick={handleDeleteClick}>삭제</Button>
+          </RightButtonContainer>
         </ButtonContainer>
       )}
     </>
