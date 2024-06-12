@@ -3,23 +3,26 @@ import { Calendar, momentLocalizer, Views } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import CustomToolbar from "./CustomToolbar";
-import "./CalendarComponent.css";
-import ReactModal from "react-modal";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
+import "react-big-calendar/lib/addons/dragAndDrop/styles.css";  // 필요한 스타일 추가
+import "./CalendarComponent.css"
 
 const localizer = momentLocalizer(moment);
 const DragAndDropCalendar = withDragAndDrop(Calendar);
+
 const formats = {
   weekdayFormat: (date) => ["일", "월", "화", "수", "목", "금", "토"][date.getDay()],
   monthHeaderFormat: "YYYY년 MM월",
-};
+};  
 
 const eventStyleGetter = (event) => {
   let style = {
     borderRadius: "5px",
+    padding:"4px 14px",
     opacity: 0.8,
-    border: "0px",
+    border: "5px",
     display: "block",
+    fontWeight: "bold" // 폰트를 굵게 설정
   };
 
   if (event.color) {
@@ -94,9 +97,11 @@ const CalendarComponent = ({
         components={components}
         onEventDrop={onEventDrop}
         onEventResize={onEventResize}
-        resizable
+        resizableAccessor={(event) => event.type !== "holiday"}
+        draggableAccessor={(event) => event.type !== "holiday"}
         onShowMore={handleShowMore}
-        draggableAccessor={(event) => true}
+        showMultiDayTimes
+        popup
       />
     </div>
   );

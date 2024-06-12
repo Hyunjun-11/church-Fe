@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import moment from "moment";
-import "./CustomToolbar.css"; // Custom styles for the toolbar
+
 import { Navigate } from "react-big-calendar";
 
 const CustomToolbar = ({ date, view, views, label, onView, onNavigate, localizer }) => {
