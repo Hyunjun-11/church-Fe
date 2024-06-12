@@ -89,7 +89,7 @@ const BoardLayout = ({ title }) => {
   useEffect(() => {
     const fetchBoardList = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/board/`);
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/board/`);
         // 날짜 기준으로 내림차순 정렬
         const sortedList = response.data.data.sort((a, b) => new Date(b.createAt) - new Date(a.createAt));
         console.log(response.data.data);

@@ -103,7 +103,7 @@ const BoardDetail = () => {
   useEffect(() => {
     const fetchBoardDetail = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/board/${id}`);
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/board/${id}`);
         setSelectedItem(response.data.data);
       } catch (error) {
         setError('게시글을 불러오는데 실패했습니다.');
