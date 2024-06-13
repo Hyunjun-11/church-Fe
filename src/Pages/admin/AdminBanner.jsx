@@ -84,7 +84,6 @@ const AdminBanner = () => {
           style={{ display: "none" }}
           onChange={handleFileChange}
         />
-        <Button title={"삭제"} />
       </div>
     </div>
   );

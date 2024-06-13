@@ -24,3 +24,8 @@
   cursor: pointer;
   text-decoration: underline;
 }
+/* Header.css */
+.Header_ .Home img {
+  width: 50px; /* 원하는 너비로 조정 */
+  height: auto; /* 높이는 자동으로 조정 */
+}
