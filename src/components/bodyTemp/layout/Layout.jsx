@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Layout.css";
 import { Outlet } from "react-router-dom";
+import axios from 'axios';
 
-const Layout = ({ ListComponent }) => {
+const Layout = ({ name, ListComponent }) => {
+  const [bannerUrl, setBannerUrl] = useState("");
+
+  useEffect(() => {
+    const fetchCategoryBanner = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/banner/${name}`);
+        setBannerUrl(response.data.data.url);
+      } catch (error) {
+        console.error('Error fetching banner:', error);
+      }
+    };
+
+    fetchCategoryBanner();
+  }, [name]);
+
   return (
     <div className="Layout">
       <div className="Banner">
-        <img src="https://storage.googleapis.com/church_image_demo_11/3d3d6fe3-1c5b-49b6-9ad2-e8e9ed0db849" alt="" />
+        <img src={bannerUrl} alt={`${name} 배너`} />
       </div>
       <div className="BodyTemp">
         <div className="List">
