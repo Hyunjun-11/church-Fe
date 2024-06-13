@@ -173,7 +173,7 @@ const SignUp = () => {
     const finalPosition = position === "기타" ? otherPosition : position;
 
     try {
-      const response = await axios.post(`${import.meta.env.REACT_APP_API_URL}/member/signUp`, {
+      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/api/member/signUp`, {
         name,
         memberId,
         password,
