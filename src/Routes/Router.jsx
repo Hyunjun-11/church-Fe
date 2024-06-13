@@ -74,7 +74,7 @@ const Router = () => {
         </Route>
 
         {/* churchInfo */}
-        <Route path="info" element={<Layout ListComponent={InfoList} />}>
+        <Route path="info" element={<Layout name={"교회소개"} ListComponent={InfoList} />}>
           <Route path="intro" element={<ChurchInfo />}></Route>
           <Route path="organization" element={<ChurchOrganization />}></Route>
           <Route path="parking" element={<DirectionsParking />}></Route>
@@ -83,7 +83,7 @@ const Router = () => {
           <Route path="guide" element={<ChurchGuide />}></Route>
         </Route>
         {/* Community */}
-        <Route path="community" element={<Layout ListComponent={CommunityList} />}>
+        <Route path="community" element={<Layout name={"커뮤니티"} ListComponent={CommunityList} />}>
           <Route path="news" element={<ChurchNews />}></Route>
           <Route path="gallery" element={<ImageResource />}></Route>
           <Route path="videos" element={<VideoResource />}></Route>
@@ -92,7 +92,7 @@ const Router = () => {
           <Route path="dailybible" element={<Dailybible />}></Route>
         </Route>
         {/* worship */}
-        <Route path="worship" element={<Layout ListComponent={WorshipInfoList} />}>
+        <Route path="worship" element={<Layout name={"예배안내"} ListComponent={WorshipInfoList} />}>
           <Route path="vision" element={<Vision />} />
           <Route path="slogan" element={<Slogan />} />
           <Route path="event-album" element={<EventAlbum />} />
@@ -100,7 +100,7 @@ const Router = () => {
           <Route path="bulletin" element={<Bulletin />} />
         </Route>
         {/*  education evangelism  */}
-        <Route path="education-evangelism" element={<Layout ListComponent={EducationEvangelismList} />}>
+        <Route path="education-evangelism" element={<Layout name={"교육·전도"} ListComponent={EducationEvangelismList} />}>
           <Route path="samuel" element={<Samuel />} />
           <Route path="daniel" element={<Daniel />} />
           <Route path="youth" element={<Youth />} />
@@ -110,14 +110,14 @@ const Router = () => {
           <Route path="men2" element={<Men2 />} />
         </Route>
         {/* gospel resources */}
-        <Route path="gospel-resources" element={<Layout ListComponent={GospelResourcesList} />}>
+        <Route path="gospel-resources" element={<Layout name={"복음자료실"} ListComponent={GospelResourcesList} />}>
           <Route path="about" element={<About />} />
           <Route path="materials" element={<Materials />} />
           <Route path="evangelism-materials" element={<EvangelismMaterials />} />
           <Route path="mission-materials" element={<MissionMaterials />} />
         </Route>
         {/*prayerSermonList */}
-        <Route path="prayerSermonList" element={<Layout ListComponent={PrayerSermonList} />}>
+        <Route path="prayerSermonList" element={<Layout  name={"말씀·기도"} ListComponent={PrayerSermonList} />}>
           <Route path="sunday-worship" element={<SundayWorship />} />
           <Route path="wednesday-worship" element={<WednesdayWorship />} />
           <Route path="sunday-school-worship" element={<SundaySchoolWorship />} />
@@ -129,8 +129,8 @@ const Router = () => {
           <Route path="prayer" element={<Prayer />} />
           <Route path="pastor-materials" element={<PastorMaterials />} />
         </Route>
-        {/*prayerSermonList */}
-        <Route path="test" element={<Layout ListComponent={TestList} />}>
+        {/*test */}
+        <Route path="test" element={<Layout name={"교회소개"} ListComponent={TestList} />}>
           <Route path="board" element={<BoardTest />} />
           <Route path="board/:id" element={<BoardDetail />} />
           <Route path="board/write" element={<BoardWrite />} />
