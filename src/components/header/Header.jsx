@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import NavigatorBar from "./NavigatorBar";
-import { Apitest } from "../bodyTemp/testBar/ServerApiTest";
 import logo from "../../assets/PCK_Logo.png";
 
 const Header = () => {
@@ -17,8 +16,8 @@ const Header = () => {
         <Home onClick={() => onClick("/")}>
           <Logo src={logo} alt="PCK Logo" />
           <TextContainer>
+            <EnglishText>대한 예수교 장로회</EnglishText>
             <div>함께섬기는 교회</div>
-            <EnglishText>Together Serve</EnglishText>
           </TextContainer>
         </Home>
         <HeaderMenu>
@@ -66,10 +65,14 @@ const Logo = styled.img`
 const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
+  height: 80%;
 `;
 
 const EnglishText = styled.div`
-  opacity: 0.5; /* 불투명도 조정 */
+  // opacity: 0.5; /* 불투명도 조정 */
+  font-weight: 700;
+  font-size: 18px;
 `;
 
 const HeaderMenu = styled.div`
