@@ -3,13 +3,14 @@ import styled from "styled-components";
 import BodyTitle from "../../common/BodyTitle";
 
 const Container = styled.div`
-  background-color: #f9f9f9;
+  // background-color: #f9f9f9;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
 `;
 
 const Section = styled.div`
+padding: 12px;
   margin-top: 20px;
 `;
 
