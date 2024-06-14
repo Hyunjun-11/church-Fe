@@ -16,8 +16,8 @@ const Header = () => {
         <Home onClick={() => onClick("/")}>
           <Logo src={logo} alt="PCK Logo" />
           <TextContainer>
-            <EnglishText>대한 예수교 장로회</EnglishText>
-            <div>함께섬기는 교회</div>
+            <EnglishText>함께섬기는 교회</EnglishText>
+            <LogoText>대한예수교장로회</LogoText>
           </TextContainer>
         </Home>
         <HeaderMenu>
@@ -73,6 +73,11 @@ const EnglishText = styled.div`
   // opacity: 0.5; /* 불투명도 조정 */
   font-weight: 700;
   font-size: 18px;
+`;
+const LogoText = styled.div`
+  // opacity: 0.5; /* 불투명도 조정 */
+  font-weight: 500;
+  font-size: 14px;
 `;
 
 const HeaderMenu = styled.div`
