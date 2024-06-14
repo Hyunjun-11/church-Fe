@@ -19,6 +19,7 @@ const AdminLayout = () => {
             <li onClick={() => handleClick("posts")}>게시물 관리</li>
             <li onClick={() => handleClick("users")}>유저 관리</li>
             <li onClick={() => handleClick("banner")}>배너 관리</li>
+            <li onClick={() => handleClick("schedule")}>일정 관리</li>
             <li onClick={() => handleClick("/")}>유저페이지</li>
           </ul>
         </nav>

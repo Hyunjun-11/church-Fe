@@ -6,22 +6,34 @@ import Button from "../../components/common/Button";
 import axios from "axios";
 
 const AdminBanner = () => {
-  const categoryList = ["교회소개", "예배안내", "말씀·기도", "교육·전도", "복음자료실", "커뮤니티"];
+  const categoryList = [
+    "교회소개",
+    "예배안내",
+    "말씀·기도",
+    "교육·전도",
+    "복음자료실",
+    "커뮤니티",
+  ];
   const [selectedCategory, setSelectedCategory] = useState(categoryList[0]);
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
   const [bannerUrl, setBannerUrl] = useState({
     url: "",
-    id: ""
+    id: "",
   });
 
   useEffect(() => {
     const fetchCategoryBanner = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}banner/${selectedCategory}`);
-        setBannerUrl({ url: response.data.data.url, id: response.data.data.id });
+        const response = await axios.get(
+          `${import.meta.env.VITE_REACT_APP_API_URL}banner/${selectedCategory}`
+        );
+        setBannerUrl({
+          url: response.data.data.url,
+          id: response.data.data.id,
+        });
       } catch (error) {
-        console.error('Error fetching banner:', error);
+        console.error("Error fetching banner:", error);
       }
     };
 
@@ -36,7 +48,9 @@ const AdminBanner = () => {
     const file = event.target.files[0];
     setSelectedFile(file);
 
-    const userConfirmed = window.confirm(`'${file.name}' 파일을 업로드하시겠습니까?`);
+    const userConfirmed = window.confirm(
+      `'${file.name}' 파일을 업로드하시겠습니까?`
+    );
     if (userConfirmed) {
       uploadFile(file);
     } else {
@@ -57,13 +71,16 @@ const AdminBanner = () => {
     formData.append("imageFile", file);
 
     try {
-      const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}banner/${bannerUrl.id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(
+        `${import.meta.env.VITE_REACT_APP_API_URL}banner/${bannerUrl.id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       setBannerUrl({ ...bannerUrl, url: response.data.data.url });
-      console.log("파일 업로드 성공", response.data);
     } catch (error) {
       console.error("파일 업로드 중 오류 발생", error);
     }
@@ -74,7 +91,11 @@ const AdminBanner = () => {
       <BodyTitle title={"배너관리"} />
       <Category list={categoryList} onCategoryChange={handleCategoryChange} />
       <div className="BannerImg">
-        <img className="AdminBannerInfo" src={bannerUrl.url} alt={selectedCategory} />
+        <img
+          className="AdminBannerInfo"
+          src={bannerUrl.url}
+          alt={selectedCategory}
+        />
       </div>
       <div className="AdminButton">
         <Button title={"수정"} onClick={handleModifyClick} />

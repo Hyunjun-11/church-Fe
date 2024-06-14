@@ -89,13 +89,16 @@ const BoardLayout = ({ title }) => {
   useEffect(() => {
     const fetchBoardList = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}board/`);
+        const response = await axios.get(
+          `${import.meta.env.VITE_REACT_APP_API_URL}board/`
+        );
         // 날짜 기준으로 내림차순 정렬
-        const sortedList = response.data.data.sort((a, b) => new Date(b.createAt) - new Date(a.createAt));
-        console.log(response.data.data);
+        const sortedList = response.data.data.sort(
+          (a, b) => new Date(b.createAt) - new Date(a.createAt)
+        );
         setBoardList(sortedList);
       } catch (error) {
-        console.error('There was an error fetching the board list!', error);
+        console.error("There was an error fetching the board list!", error);
       }
     };
 
@@ -104,7 +107,6 @@ const BoardLayout = ({ title }) => {
 
   const handleClick = (id) => {
     navigate(`${id}`);
-    console.log(id);
   };
 
   const handleWriteClick = (path) => {
@@ -124,16 +126,24 @@ const BoardLayout = ({ title }) => {
         {boardList.map((item, index) => (
           <BoardBody key={item.boardId}>
             <BoardColumn className="number">{index + 1}</BoardColumn>
-            <BoardColumn className="title" onClick={() => handleClick(item.boardId)}>
+            <BoardColumn
+              className="title"
+              onClick={() => handleClick(item.boardId)}>
               {item.title}
             </BoardColumn>
             <BoardColumn className="author">{item.author}</BoardColumn>
-              <BoardColumn className="date">{new Date(item.createAt).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })}</BoardColumn>
+            <BoardColumn className="date">
+              {new Date(item.createAt).toLocaleString("ko-KR", {
+                timeZone: "Asia/Seoul",
+              })}
+            </BoardColumn>
           </BoardBody>
         ))}
       </Board>
       <ButtonContainer>
-        <WriteButton onClick={() => handleWriteClick("write")}>글쓰기</WriteButton>
+        <WriteButton onClick={() => handleWriteClick("write")}>
+          글쓰기
+        </WriteButton>
       </ButtonContainer>
     </BoardLayoutContainer>
   );
