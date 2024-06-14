@@ -1,8 +1,22 @@
 import React from "react";
 import ReactModal from "react-modal";
-import { Button, Box, Typography, Container, CssBaseline, Divider } from "@mui/material";
+import {
+  Button,
+  Box,
+  Typography,
+  Container,
+  CssBaseline,
+  Divider,
+} from "@mui/material";
 
-const CalInfoModal = ({ isOpen, selectedEvent, onRequestClose, onEditEvent, onDeleteEvent }) => {
+const CalInfoModal = ({
+  isOpen,
+  selectedEvent,
+  onRequestClose,
+  onEditEvent,
+  onDeleteEvent,
+  readOnly,
+}) => {
   const formatDateRange = (start, end) => {
     const startDate = new Date(start);
     const endDate = new Date(end);
@@ -15,7 +29,9 @@ const CalInfoModal = ({ isOpen, selectedEvent, onRequestClose, onEditEvent, onDe
     const startDateString = startDate.toLocaleDateString();
     const endDateString = endDate.toLocaleDateString();
 
-    return startDateString === endDateString ? startDateString : `${startDateString} ~ ${endDateString}`;
+    return startDateString === endDateString
+      ? startDateString
+      : `${startDateString} ~ ${endDateString}`;
   };
 
   return (
@@ -43,8 +59,7 @@ const CalInfoModal = ({ isOpen, selectedEvent, onRequestClose, onEditEvent, onDe
           borderRadius: "8px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         },
-      }}
-    >
+      }}>
       <CssBaseline />
       <Container component="main" maxWidth="xs">
         <Box
@@ -52,8 +67,7 @@ const CalInfoModal = ({ isOpen, selectedEvent, onRequestClose, onEditEvent, onDe
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-          }}
-        >
+          }}>
           <Typography component="h1" variant="h5" sx={{ mb: 2 }}>
             일정 상세
           </Typography>
@@ -79,7 +93,13 @@ const CalInfoModal = ({ isOpen, selectedEvent, onRequestClose, onEditEvent, onDe
               <Typography variant="h6" gutterBottom>
                 내용
               </Typography>
-              <Box sx={{ maxHeight: "144px", overflowY: "auto", mb: 2, padding: "0 8px" }}>
+              <Box
+                sx={{
+                  maxHeight: "144px",
+                  overflowY: "auto",
+                  mb: 2,
+                  padding: "0 8px",
+                }}>
                 <Typography variant="body1" paragraph>
                   {selectedEvent.content}
                 </Typography>
@@ -87,29 +107,33 @@ const CalInfoModal = ({ isOpen, selectedEvent, onRequestClose, onEditEvent, onDe
             </Box>
           )}
 
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              gap: 2,
-              width: "100%",
-              pt: 3,
-            }}
-          >
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                onEditEvent(selectedEvent);
-              }}
-              sx={{ flex: 1 }}
-            >
-              수정
-            </Button>
-            <Button variant="outlined" color="secondary" onClick={() => onDeleteEvent(selectedEvent)} sx={{ flex: 1 }}>
-              삭제
-            </Button>
-          </Box>
+          {readOnly.current && (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                gap: 2,
+                width: "100%",
+                pt: 3,
+              }}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => {
+                  onEditEvent(selectedEvent);
+                }}
+                sx={{ flex: 1 }}>
+                수정
+              </Button>
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={() => onDeleteEvent(selectedEvent)}
+                sx={{ flex: 1 }}>
+                삭제
+              </Button>
+            </Box>
+          )}
         </Box>
       </Container>
     </ReactModal>

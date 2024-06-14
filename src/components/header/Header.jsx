@@ -24,9 +24,9 @@ const Header = () => {
         <HeaderMenu>
           <MenuItem onClick={() => onClick("/login")}>로그인</MenuItem>
           <MenuItem onClick={() => onClick("/signup")}>회원가입</MenuItem>
-          <MenuItem onClick={() => onClick("/signup-success")}>회원가입완료페이지</MenuItem>
-          <Apitest />
-          <MenuItem onClick={() => onClick("/admin")}>관리자페이지(임시)</MenuItem>
+          <MenuItem onClick={() => onClick("/admin")}>
+            관리자페이지(임시)
+          </MenuItem>
         </HeaderMenu>
       </HeaderInner>
       <NavigatorBar />
@@ -78,6 +78,7 @@ const HeaderMenu = styled.div`
 `;
 
 const MenuItem = styled.div`
+  height: fit-content;
   cursor: pointer;
   &:hover {
     text-decoration: underline;

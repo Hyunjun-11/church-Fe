@@ -12,7 +12,6 @@ const Category = ({ list, onCategoryChange }) => {
   }, []);
 
   const handleCategoryClick = (category) => {
-    // console.log(category);
     setSelectedCategory(category);
     onCategoryChange(category);
   };
@@ -25,8 +24,7 @@ const Category = ({ list, onCategoryChange }) => {
         <div
           key={item}
           className={selectedCategory === item ? "selected" : ""}
-          onClick={() => handleCategoryClick(item)}
-        >
+          onClick={() => handleCategoryClick(item)}>
           {item}
         </div>
       ))}

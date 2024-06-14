@@ -1,23 +1,19 @@
-
-.rbc-addons-dnd-resize-ew-anchor{
-  
-margin: 0px -8px; /* 음수 margin 값 설정 */
-
-
-
+.rbc-addons-dnd-resize-ew-anchor {
+  margin: 0px -8px;
 }
-.rbc-addons-dnd .rbc-addons-dnd-resize-ew-anchor .rbc-addons-dnd-resize-ew-icon {
-    display: none;
-    border-left: 6px  double rgb(82, 168, 238);
-    margin-top: auto;
-    margin-bottom: auto;
-    height: 18px;
-    cursor: ew-resize;
-    
+.rbc-addons-dnd
+  .rbc-addons-dnd-resize-ew-anchor
+  .rbc-addons-dnd-resize-ew-icon {
+  display: none;
+  border-left: 6px double rgb(223, 98, 191);
+  margin-top: auto;
+  margin-bottom: auto;
+  height: 18px;
+  cursor: ew-resize;
 }
 
 .rbc-addons-dnd .rbc-addons-dnd-resize-ew-anchor {
-    position: absolute;
-    top: 1;
-    bottom: 0;
+  position: absolute;
+  top: 1.5px;
+  bottom: 0;
 }
