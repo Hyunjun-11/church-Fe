@@ -9,7 +9,8 @@ const Layout = ({ name, ListComponent }) => {
   useEffect(() => {
     const fetchCategoryBanner = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/banner/${name}`);
+        const encodedName = encodeURIComponent(name);
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}banner/${encodedName}`);
         setBannerUrl(response.data.data.url);
       } catch (error) {
         console.error('Error fetching banner:', error);

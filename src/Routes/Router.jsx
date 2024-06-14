@@ -66,7 +66,7 @@ const Router = () => {
     <>
       {!isAuthPage && <Header />}
       <Routes>
-        <Route path="/" element={<Layout ListComponent={TestList} />}></Route>
+        <Route path="/" element={<Layout name={"교회소개"} ListComponent={TestList} />}></Route>
         <Route path="/">
           <Route path="login" element={<Login />}></Route>
           <Route path="signup" element={<Signup />}></Route>

@@ -18,7 +18,7 @@ const AdminBanner = () => {
   useEffect(() => {
     const fetchCategoryBanner = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/banner/${selectedCategory}`);
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}banner/${selectedCategory}`);
         setBannerUrl({ url: response.data.data.url, id: response.data.data.id });
       } catch (error) {
         console.error('Error fetching banner:', error);
@@ -57,7 +57,7 @@ const AdminBanner = () => {
     formData.append("imageFile", file);
 
     try {
-      const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}/api/banner/${bannerUrl.id}`, formData, {
+      const response = await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}banner/${bannerUrl.id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

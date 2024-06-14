@@ -104,7 +104,7 @@ const BoardWrite = () => {
       // 수정 모드일 경우 기존 데이터를 불러오기
       const fetchBoardDetail = async () => {
         try {
-          const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/board/${id}`);
+          const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}board/${id}`);
           const { author, title, content } = response.data.data;
           setAuthor(author);
           setTitle(title);
@@ -138,7 +138,7 @@ const BoardWrite = () => {
     try {
       if (isEditing) {
         // 수정 모드일 경우 PUT 요청
-        await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}/api/board/${id}`, {
+        await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}board/${id}`, {
           title,
           author,
           content
@@ -146,7 +146,7 @@ const BoardWrite = () => {
         alert('게시글이 수정되었습니다.');
       } else {
         // 새 글 작성 모드일 경우 POST 요청
-        await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/api/board/`, {
+        await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}board/`, {
           title,
           author,
           content

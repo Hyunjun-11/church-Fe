@@ -26,7 +26,7 @@ const CalTest = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/calendar/`);
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}calendar/`);
         const fetchedEvents = response.data.data.map(event => {
           const { startTime, endTime, ...item } = event;
           return {
@@ -51,7 +51,7 @@ const CalTest = () => {
       );
 
       try {
-        await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}/api/calendar/${event.id}`, {
+        await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}calendar/${event.id}`, {
           ...updatedEvent,
           startTime: start,
           endTime: end
@@ -74,7 +74,7 @@ const CalTest = () => {
       );
 
       try {
-        await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}/api/calendar/${event.id}`, {
+        await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}calendar/${event.id}`, {
           ...updatedEvent,
           startTime: start,
           endTime: end
@@ -121,7 +121,7 @@ const CalTest = () => {
         color: eventColor,
       };
       try {
-        const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/api/calendar/`, newEvent);
+        const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}calendar/`, newEvent);
         const { id, startTime, endTime, ...rest } = response.data.data;
         const formattedEvent = {
           ...rest,
@@ -158,7 +158,7 @@ const CalTest = () => {
           color: eventColor,
         };
         try {
-          await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}/api/calendar/${selectedEvent.id}`, updatedEvent);
+          await axios.put(`${import.meta.env.VITE_REACT_APP_API_URL}calendar/${selectedEvent.id}`, updatedEvent);
           setEvents((prevEvents) =>
             prevEvents.map((e) => (e.id === selectedEvent.id ? {
               ...updatedEvent,
@@ -191,7 +191,7 @@ const CalTest = () => {
   const deleteEvent = useCallback(async () => {
     if (window.confirm("이 이벤트를 삭제하시겠습니까?")) {
       try {
-        await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}/api/calendar/${selectedEvent.id}`);
+        await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}calendar/${selectedEvent.id}`);
         setEvents((prevEvents) => prevEvents.filter((e) => e.id !== selectedEvent.id));
       } catch (error) {
         console.error("Error deleting event:", error);

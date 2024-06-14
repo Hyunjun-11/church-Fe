@@ -103,7 +103,7 @@ const BoardDetail = () => {
   useEffect(() => {
     const fetchBoardDetail = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/board/${id}`);
+        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}board/${id}`);
         setSelectedItem(response.data.data);
       } catch (error) {
         setError('게시글을 불러오는데 실패했습니다.');
@@ -122,7 +122,7 @@ const BoardDetail = () => {
 
   const handleDeleteClick = async () => {
     try {
-      await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}/board/${id}`);
+      await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}board/${id}`);
       alert('게시글이 삭제되었습니다.');
       navigate('/test/board'); // 삭제 후 게시판 목록으로 이동
     } catch (error) {

@@ -10,7 +10,7 @@ const AdminDashboard = () => {
     const fetchVisitorData = async () => {
       try {
         // API를 호출하여 방문자 수 데이터를 가져옴
-        const response = await fetch("/api/visitor-data");
+        const response = await fetch(" visitor-data");
         const data = await response.json();
         setVisitorCount(data.visitorCount);
         setTotalVisitorCount(data.totalVisitorCount);
