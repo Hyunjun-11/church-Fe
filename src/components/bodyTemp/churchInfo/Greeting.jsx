@@ -22,9 +22,25 @@ const Greeting = () => {
       <BodyTitle title={"섬기는 사람들"} />
       <br />
       <Category list={categoryList} onCategoryChange={handleCategoryChange} />
-      <div>
-        <div>1</div>
-        <div>2</div>
+      <div style={{ display: "flex", gap: "12px", padding: "20px" }}>
+        <div
+          style={{
+            width: "220px",
+            height: "340px",
+            border: "solid 1px",
+            padding: "12px",
+          }}>
+          사진
+        </div>
+        <div
+          style={{
+            width: "220px",
+            height: "340px",
+            border: "solid 1px",
+            padding: "12px",
+          }}>
+          소개
+        </div>
       </div>
     </div>
   );
