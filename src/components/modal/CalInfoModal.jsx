@@ -51,7 +51,7 @@ const CalInfoModal = ({
           bottom: "auto",
           marginRight: "-50%",
           transform: "translate(-50%, -50%)",
-          width: "400px",
+          width: "600px",
           maxHeight: "80vh",
           padding: "20px",
           display: "flex",
@@ -74,12 +74,14 @@ const CalInfoModal = ({
 
           {selectedEvent && (
             <Box sx={{ mt: 1, width: "100%" }}>
-              <Typography variant="h6" gutterBottom>
-                제목
-              </Typography>
-              <Typography variant="body1" paragraph>
-                {selectedEvent.title}
-              </Typography>
+              <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                <Typography variant="h6" sx={{ mr: 1 }}>
+                  제목
+                </Typography>
+                <Typography variant="body1" sx={{ alignSelf: "center" }}>
+                  {selectedEvent.title}
+                </Typography>
+              </Box>
               <Divider sx={{ my: 2 }} />
               <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
                 <Typography variant="h6" sx={{ mr: 1 }}>

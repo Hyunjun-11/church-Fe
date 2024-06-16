@@ -1,6 +1,13 @@
 import React from "react";
 import ReactModal from "react-modal";
-import { TextField, Button, Box, Typography, Container, CssBaseline } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Box,
+  Typography,
+  Container,
+  CssBaseline,
+} from "@mui/material";
 
 const EventModal = ({
   isOpen,
@@ -28,7 +35,9 @@ const EventModal = ({
     const startDateString = startDate.toLocaleDateString();
     const endDateString = endDate.toLocaleDateString();
 
-    return startDateString === endDateString ? startDateString : `${startDateString} ~ ${endDateString}`;
+    return startDateString === endDateString
+      ? startDateString
+      : `${startDateString} ~ ${endDateString}`;
   };
 
   return (
@@ -52,8 +61,7 @@ const EventModal = ({
           height: "auto",
           padding: "20px",
         },
-      }}
-    >
+      }}>
       <CssBaseline />
       <Container component="main" maxWidth="xs">
         <Box
@@ -61,12 +69,17 @@ const EventModal = ({
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-          }}
-        >
+          }}>
           <Typography component="h1" variant="h5">
-            {selectedStartDate ? formatDateRange(selectedStartDate, selectedEndDate) : ""}
+            {selectedStartDate
+              ? formatDateRange(selectedStartDate, selectedEndDate)
+              : ""}
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 3 }}>
             <TextField
               margin="normal"
               required
@@ -108,12 +121,21 @@ const EventModal = ({
                 />
               ))}
             </Box>
-            <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3, mb: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                mt: 3,
+                mb: 2,
+              }}>
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={onRequestClose}>
+                취소
+              </Button>
               <Button type="submit" variant="contained" color="primary">
                 등록
-              </Button>
-              <Button variant="outlined" color="secondary" onClick={onRequestClose}>
-                취소
               </Button>
             </Box>
           </Box>

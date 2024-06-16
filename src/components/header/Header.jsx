@@ -28,10 +28,10 @@ const Header = () => {
         <HeaderMenu>
           <MenuItem onClick={() => onClick("/login")}>로그인</MenuItem>
           <MenuItem onClick={() => onClick("/signup")}>회원가입</MenuItem>
-          <MenuItem onClick={() => onClick("/admin")}>
+          {/* <MenuItem onClick={() => onClick("/admin")}>
             관리자페이지(임시)
           </MenuItem>
-          <button onClick={testSubmit}>테스트버튼</button>
+          <button onClick={testSubmit}>테스트버튼</button> */}
         </HeaderMenu>
       </HeaderInner>
       <NavigatorBar />
@@ -84,17 +84,22 @@ const LogoText = styled.div`
   // opacity: 0.5; /* 불투명도 조정 */
   font-weight: 500;
   font-size: 14px;
+  letter-spacing: 2.3px;
 `;
 
 const HeaderMenu = styled.div`
   display: flex;
   gap: 20px;
+  align-items: center;
 `;
 
 const MenuItem = styled.div`
   height: fit-content;
   cursor: pointer;
   &:hover {
-    text-decoration: underline;
+    // text-decoration: underline;
+    // opacity: 0.5;
+    color: #0697e6;
+    transition: color 0.4s ease;
   }
 `;

@@ -11,9 +11,26 @@
   height: 18px;
   cursor: ew-resize;
 }
+.rbc-header {
+  padding: 4px;
+}
 
 .rbc-addons-dnd .rbc-addons-dnd-resize-ew-anchor {
   position: absolute;
   top: 1.5px;
   bottom: 0;
+}
+.rbc-toolbar {
+  margin-bottom: 1rem;
+}
+.rbc-toolbar-label {
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+.rbc-off-range-bg {
+  background-color: #f7f7f7;
+}
+
+div.rbc-off-range > span {
+  opacity: 0.5;
 }

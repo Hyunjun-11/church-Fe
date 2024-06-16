@@ -12,26 +12,33 @@
 }
 .nav_list {
   padding-top: 12px;
+  height: 100%;
+  font-size: 1.2rem;
   background-color: #26a1e4;
-  height: 200px;
+  /* height: 200px; */
   display: none;
   overflow: hidden; /* 추가 */
 }
 .nav_list > div {
-  padding: 2px;
+  padding: 5px 0px;
+  width: 100%;
+  margin-bottom: 5px;
+  font-weight: 200;
+}
+.nav_list > div:hover {
+  background-color: #1287c5;
+  cursor: pointer;
+  font-weight: 400;
+  transition: color 0.4s ease;
+  text-decoration: 0.5s ease;
 }
 .nav_list > div > a {
   min-width: fit-content;
+
   color: white;
-  text-decoration: none; /* 밑줄 제거 */
+  text-decoration: none;
   padding: 10px 0;
   /* min-width: max-content; */
-}
-.nav_list > div > a:hover {
-  color: rgb(219, 148, 16);
-  text-decoration: underline;
-  cursor: pointer;
-  transition: color 0.4s ease, text-decoration 0.5s ease;
 }
 
 .nav_list:hover {

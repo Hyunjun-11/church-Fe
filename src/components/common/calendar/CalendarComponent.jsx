@@ -71,7 +71,7 @@ const CalendarComponent = ({
           moment(holiday.start).isSame(date, "day")
         );
         let style = {
-          color: day === 0 || isHoliday ? "red" : "black",
+          color: day === 0 || isHoliday ? "red" : null,
         };
         if (day === 6) {
           style = {

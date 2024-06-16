@@ -53,17 +53,6 @@ const DirectionsParking = () => {
         <SectionTitle>주소</SectionTitle>
         <InfoText>전라북도 전주시 완산구 백제대로 115번지</InfoText>
 
-        <SectionTitle>대중교통 : 버스</SectionTitle>
-        <InfoText>효자광진맨션아파트 하차후 도보 5분이내</InfoText>
-        <BusInfo>
-          <BusLabel>상행 -</BusLabel>
-          <p>87, 89, 383, 420, 810, 2001, 2002, 6002</p>
-        </BusInfo>
-        <BusInfo>
-          <BusLabel>하행 -</BusLabel>
-          <p>383, 420, 513, 514, 522, 999, 2001, 2002, 6001</p>
-        </BusInfo>
-
         <SectionTitle>주차 정보</SectionTitle>
         <InfoText>아직 정보 없음.</InfoText>
 
