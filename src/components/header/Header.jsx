@@ -3,11 +3,16 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import NavigatorBar from "./NavigatorBar";
 import logo from "../../assets/PCK_Logo.png";
+import api from "../../api/api";
 
 const Header = () => {
   const nav = useNavigate();
   const onClick = (path) => {
     nav(path);
+  };
+
+  const testSubmit = async () => {
+    await api.get("/member/user");
   };
 
   return (
@@ -26,6 +31,7 @@ const Header = () => {
           <MenuItem onClick={() => onClick("/admin")}>
             관리자페이지(임시)
           </MenuItem>
+          <button onClick={testSubmit}>테스트버튼</button>
         </HeaderMenu>
       </HeaderInner>
       <NavigatorBar />

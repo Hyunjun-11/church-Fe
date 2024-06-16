@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+import api from "../../../api/api";
 
 const BoardDetailContainer = styled.div`
   padding: 20px;
-  height:100%;
+  height: 100%;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
@@ -28,7 +29,7 @@ const Info = styled.div`
 `;
 
 const Author = styled.div`
-padding-top:20px;
+  padding-top: 20px;
   font-weight: bold;
 `;
 
@@ -103,11 +104,14 @@ const BoardDetail = () => {
   useEffect(() => {
     const fetchBoardDetail = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}board/${id}`);
+        // const response = await axios.get(
+        //   `${import.meta.env.VITE_REACT_APP_API_URL}board/${id}`
+        // );
+        const response = await api.get(`/board/${id}`);
         setSelectedItem(response.data.data);
       } catch (error) {
-        setError('게시글을 불러오는데 실패했습니다.');
-        console.error('There was an error fetching the board detail!', error);
+        setError("게시글을 불러오는데 실패했습니다.");
+        console.error("There was an error fetching the board detail!", error);
       } finally {
         setLoading(false);
       }
@@ -122,16 +126,18 @@ const BoardDetail = () => {
 
   const handleDeleteClick = async () => {
     try {
-      await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}board/${id}`);
-      alert('게시글이 삭제되었습니다.');
-      navigate('/test/board'); // 삭제 후 게시판 목록으로 이동
+      await axios.delete(
+        `${import.meta.env.VITE_REACT_APP_API_URL}board/${id}`
+      );
+      alert("게시글이 삭제되었습니다.");
+      navigate("/test/board"); // 삭제 후 게시판 목록으로 이동
     } catch (error) {
-      console.error('There was an error deleting the board!', error);
-      alert('게시글 삭제에 실패했습니다.');
+      console.error("There was an error deleting the board!", error);
+      alert("게시글 삭제에 실패했습니다.");
     }
   };
 
-    const handleBackClick = () => {
+  const handleBackClick = () => {
     navigate(-1); // 게시판 목록 페이지로 이동
   };
 
@@ -139,7 +145,7 @@ const BoardDetail = () => {
   if (error) return <div>{error}</div>;
 
   const formatDate = (dateString) => {
-    const date = new window.Date(dateString);  // 명시적으로 window 객체에서 Date 생성
+    const date = new window.Date(dateString); // 명시적으로 window 객체에서 Date 생성
     return date.toLocaleString(); // 날짜와 시간을 로컬 형식으로 변환
   };
 
@@ -153,14 +159,16 @@ const BoardDetail = () => {
               <Author>작성자: {selectedItem.author}</Author>
               <DateStyled>{formatDate(selectedItem.createAt)}</DateStyled>
             </Info>
-            <Content dangerouslySetInnerHTML={{ __html: selectedItem.content }} />
+            <Content
+              dangerouslySetInnerHTML={{ __html: selectedItem.content }}
+            />
           </>
         ) : (
           <div>게시글을 찾을 수 없습니다.</div>
         )}
       </BoardDetailContainer>
       {selectedItem && (
-       <ButtonContainer>
+        <ButtonContainer>
           <LeftButtonContainer>
             <BackButton onClick={handleBackClick}>목록으로</BackButton>
           </LeftButtonContainer>
