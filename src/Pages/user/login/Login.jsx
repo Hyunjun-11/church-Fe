@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../../../api/api";
 
 const FormContainer = styled.div`
   display: flex;
@@ -79,7 +80,7 @@ const Login = () => {
     }
 
     try {
-      const response = await axios.post(`${import.meta.env.REACT_APP_API_URL}/member/login`, {
+      const response = await api.post("/member/signIn", {
         memberId,
         password,
       });
@@ -99,7 +100,13 @@ const Login = () => {
       <Form onSubmit={handleSubmit}>
         <Title>로그인</Title>
         {error && <ErrorMessage>{error}</ErrorMessage>}
-        <Input type="text" placeholder="Id" value={memberId} onChange={(e) => setUsername(e.target.value)} required />
+        <Input
+          type="text"
+          placeholder="Id"
+          value={memberId}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
         <Input
           type="password"
           placeholder="Password"
