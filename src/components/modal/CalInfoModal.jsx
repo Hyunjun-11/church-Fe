@@ -61,18 +61,16 @@ const CalInfoModal = ({
         <Label>내용</Label>
         <Content>{selectedEvent?.content}</Content>
         <ButtonContainer>
-          {readOnly && (
-            <Button onClick={() => onEditEvent(selectedEvent)}>수정</Button>
-          )}
-          {!readOnly && (
+          {readOnly ? (
             <>
               <Button onClick={() => onEditEvent(selectedEvent)}>수정</Button>
               <Button onClick={() => onDeleteEvent(selectedEvent)} secondary>
                 삭제
               </Button>
             </>
+          ) : (
+            <Button onClick={onRequestClose}>닫기</Button>
           )}
-          <Button onClick={onRequestClose}>닫기</Button>
         </ButtonContainer>
       </Container>
     </ReactModal>

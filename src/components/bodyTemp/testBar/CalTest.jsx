@@ -128,7 +128,7 @@ const CalTest = () => {
           holidays={holidays}
           handleSelectEvent={handleSelectEvent}
           handleNavigate={handleNavigate}
-          readOnly={readOnly}
+          readOnly={readOnly.current}
         />
       )}
 
@@ -145,7 +145,7 @@ const CalTest = () => {
         setEventColor={setEventColor}
       />
       <CalInfoModal
-        readOnly={readOnly}
+        readOnly={readOnly.current}
         isOpen={infoModalIsOpen}
         selectedEvent={selectedEvent}
         onEditEvent={() => editEvent(selectedEvent)}
