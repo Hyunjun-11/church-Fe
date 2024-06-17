@@ -1,13 +1,6 @@
 import React from "react";
 import ReactModal from "react-modal";
-import {
-  Button,
-  Box,
-  Typography,
-  Container,
-  CssBaseline,
-  Divider,
-} from "@mui/material";
+import styled from "styled-components";
 
 const CalInfoModal = ({
   isOpen,
@@ -21,7 +14,6 @@ const CalInfoModal = ({
     const startDate = new Date(start);
     const endDate = new Date(end);
 
-    // Adjust end date by subtracting one day if start and end are not the same
     if (startDate.getTime() !== endDate.getTime()) {
       endDate.setDate(endDate.getDate() - 1);
     }
@@ -41,105 +33,90 @@ const CalInfoModal = ({
       contentLabel="Event Details"
       style={{
         overlay: {
-          backgroundColor: "rgba(0, 0, 0, 0.75)",
-          zIndex: "10",
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          zIndex: 10,
         },
         content: {
           top: "50%",
           left: "50%",
           right: "auto",
           bottom: "auto",
-          marginRight: "-50%",
           transform: "translate(-50%, -50%)",
-          width: "600px",
-          maxHeight: "80vh",
+          width: "400px",
           padding: "20px",
-          display: "flex",
-          flexDirection: "column",
+          border: "none",
           borderRadius: "8px",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          background: "#fff",
         },
       }}>
-      <CssBaseline />
-      <Container component="main" maxWidth="xs">
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}>
-          <Typography component="h1" variant="h5" sx={{ mb: 2 }}>
-            일정 상세
-          </Typography>
-
-          {selectedEvent && (
-            <Box sx={{ mt: 1, width: "100%" }}>
-              <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-                <Typography variant="h6" sx={{ mr: 1 }}>
-                  제목
-                </Typography>
-                <Typography variant="body1" sx={{ alignSelf: "center" }}>
-                  {selectedEvent.title}
-                </Typography>
-              </Box>
-              <Divider sx={{ my: 2 }} />
-              <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-                <Typography variant="h6" sx={{ mr: 1 }}>
-                  날짜
-                </Typography>
-                <Typography variant="body1" sx={{ alignSelf: "center" }}>
-                  {formatDateRange(selectedEvent.start, selectedEvent.end)}
-                </Typography>
-              </Box>
-              <Divider sx={{ my: 2 }} />
-              <Typography variant="h6" gutterBottom>
-                내용
-              </Typography>
-              <Box
-                sx={{
-                  maxHeight: "144px",
-                  overflowY: "auto",
-                  mb: 2,
-                  padding: "0 8px",
-                }}>
-                <Typography variant="body1" paragraph>
-                  {selectedEvent.content}
-                </Typography>
-              </Box>
-            </Box>
+      <Container>
+        <Label>제목</Label>
+        <Content>{selectedEvent?.title}</Content>
+        <Label>날짜</Label>
+        <Content>
+          {selectedEvent &&
+            formatDateRange(selectedEvent.start, selectedEvent.end)}
+        </Content>
+        <Label>내용</Label>
+        <Content>{selectedEvent?.content}</Content>
+        <ButtonContainer>
+          {readOnly && (
+            <Button onClick={() => onEditEvent(selectedEvent)}>수정</Button>
           )}
-
-          {readOnly.current && (
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                gap: 2,
-                width: "100%",
-                pt: 3,
-              }}>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                  onEditEvent(selectedEvent);
-                }}
-                sx={{ flex: 1 }}>
-                수정
-              </Button>
-              <Button
-                variant="outlined"
-                color="secondary"
-                onClick={() => onDeleteEvent(selectedEvent)}
-                sx={{ flex: 1 }}>
+          {!readOnly && (
+            <>
+              <Button onClick={() => onEditEvent(selectedEvent)}>수정</Button>
+              <Button onClick={() => onDeleteEvent(selectedEvent)} secondary>
                 삭제
               </Button>
-            </Box>
+            </>
           )}
-        </Box>
+          <Button onClick={onRequestClose}>닫기</Button>
+        </ButtonContainer>
       </Container>
     </ReactModal>
   );
 };
 
 export default CalInfoModal;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const Label = styled.div`
+  font-weight: bold;
+  margin-bottom: 5px;
+`;
+
+const Content = styled.div`
+  background: #f0f2f5;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+`;
+
+const Button = styled.button`
+  background: ${(props) => (props.secondary ? "#f44336" : "#007bff")};
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+  flex: 1;
+
+  &:hover {
+    background: ${(props) => (props.secondary ? "#d32f2f" : "#0056b3")};
+  }
+`;

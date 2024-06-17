@@ -1,13 +1,6 @@
 import React from "react";
 import ReactModal from "react-modal";
-import {
-  TextField,
-  Button,
-  Box,
-  Typography,
-  Container,
-  CssBaseline,
-} from "@mui/material";
+import styled from "styled-components";
 
 const EventModal = ({
   isOpen,
@@ -55,94 +48,139 @@ const EventModal = ({
           left: "50%",
           right: "auto",
           bottom: "auto",
-          marginRight: "-50%",
           transform: "translate(-50%, -50%)",
           width: "400px",
           height: "auto",
           padding: "20px",
+          background: "#fff",
+          borderRadius: "8px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         },
       }}>
-      <CssBaseline />
-      <Container component="main" maxWidth="xs">
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}>
-          <Typography component="h1" variant="h5">
-            {selectedStartDate
-              ? formatDateRange(selectedStartDate, selectedEndDate)
-              : ""}
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 3 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="title"
-              label="제목"
-              name="title"
-              autoComplete="off"
-              autoFocus
-              value={eventTitle}
-              onChange={(e) => setEventTitle(e.target.value)}
-            />
-            <TextField
-              margin="normal"
-              fullWidth
-              id="content"
-              label="내용"
-              name="content"
-              autoComplete="off"
-              value={eventContent}
-              onChange={(e) => setEventContent(e.target.value)}
-              multiline
-              rows={3}
-            />
-            <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-              {colors.map((color) => (
-                <Box
-                  key={color}
-                  sx={{
-                    width: 24,
-                    height: 24,
-                    borderRadius: "50%",
-                    backgroundColor: color,
-                    margin: 1,
-                    cursor: "pointer",
-                    border: eventColor === color ? "2px solid black" : "none",
-                  }}
-                  onClick={() => setEventColor(color)}
-                />
-              ))}
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                mt: 3,
-                mb: 2,
-              }}>
-              <Button
-                variant="outlined"
-                color="secondary"
-                onClick={onRequestClose}>
-                취소
-              </Button>
-              <Button type="submit" variant="contained" color="primary">
-                등록
-              </Button>
-            </Box>
-          </Box>
-        </Box>
-      </Container>
+      <FormContainer>
+        <Title>
+          {selectedStartDate
+            ? formatDateRange(selectedStartDate, selectedEndDate)
+            : ""}
+        </Title>
+        <Form onSubmit={handleSubmit} noValidate>
+          <Input
+            type="text"
+            placeholder="제목"
+            value={eventTitle}
+            onChange={(e) => setEventTitle(e.target.value)}
+            required
+          />
+          <Textarea
+            placeholder="내용"
+            value={eventContent}
+            onChange={(e) => setEventContent(e.target.value)}
+            rows={3}
+          />
+          <ColorContainer>
+            {colors.map((color) => (
+              <ColorCircle
+                key={color}
+                color={color}
+                selected={eventColor === color}
+                onClick={() => setEventColor(color)}
+              />
+            ))}
+          </ColorContainer>
+          <ButtonContainer>
+            <Button type="button" onClick={onRequestClose} secondary>
+              취소
+            </Button>
+            <Button type="submit">등록</Button>
+          </ButtonContainer>
+        </Form>
+      </FormContainer>
     </ReactModal>
   );
 };
 
 export default EventModal;
+
+const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+const Title = styled.h1`
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+const Input = styled.input`
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+
+  &:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+`;
+
+const Textarea = styled.textarea`
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  resize: none;
+  min-height: 130px;
+
+  &:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+`;
+
+const ColorContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+`;
+
+const ColorCircle = styled.div`
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: ${(props) => props.color};
+  margin: 0 5px;
+  cursor: pointer;
+  border: ${(props) => (props.selected ? "2px solid black" : "none")};
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+`;
+
+const Button = styled.button`
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  flex: 1;
+  background: ${(props) => (props.secondary ? "#EEE" : "#007bff")};
+  color: ${(props) => (props.secondary ? "black" : "white")};
+
+  &:hover {
+    background: ${(props) => (props.secondary ? "#d3d3d3" : "#0056b3")};
+  }
+`;

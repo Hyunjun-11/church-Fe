@@ -3,7 +3,15 @@ import moment from "moment";
 
 import { Navigate } from "react-big-calendar";
 
-const CustomToolbar = ({ date, view, views, label, onView, onNavigate, localizer }) => {
+const CustomToolbar = ({
+  date,
+  view,
+  views,
+  label,
+  onView,
+  onNavigate,
+  localizer,
+}) => {
   const [selectedYear, setSelectedYear] = useState(moment(date).year());
   const [selectedMonth, setSelectedMonth] = useState(moment(date).month());
 
@@ -40,7 +48,20 @@ const CustomToolbar = ({ date, view, views, label, onView, onNavigate, localizer
     years.push(i);
   }
 
-  const months = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
+  const months = [
+    "1월",
+    "2월",
+    "3월",
+    "4월",
+    "5월",
+    "6월",
+    "7월",
+    "8월",
+    "9월",
+    "10월",
+    "11월",
+    "12월",
+  ];
 
   return (
     <div className="rbc-toolbar">
@@ -57,14 +78,20 @@ const CustomToolbar = ({ date, view, views, label, onView, onNavigate, localizer
       </span>
       <span className="rbc-toolbar-label">{label}</span>
       <span className="rbc-toolbar-datepicker">
-        <select value={selectedYear} onChange={handleYearChange} className="rbc-select">
+        <select
+          value={selectedYear}
+          onChange={handleYearChange}
+          className="rbc-select">
           {years.map((year) => (
             <option key={year} value={year}>
               {year}년
             </option>
           ))}
         </select>
-        <select value={selectedMonth} onChange={handleMonthChange} className="rbc-select">
+        <select
+          value={selectedMonth}
+          onChange={handleMonthChange}
+          className="rbc-select">
           {months.map((month, index) => (
             <option key={month} value={index}>
               {month}

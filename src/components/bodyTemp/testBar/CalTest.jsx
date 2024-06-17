@@ -52,12 +52,6 @@ const CalTest = () => {
     fetchEvents();
   }, []);
 
-  const openModal = useCallback((start, end) => {
-    setSelectedStartDate(start);
-    setSelectedEndDate(end);
-    setModalIsOpen(true);
-  }, []);
-
   const closeModal = useCallback(() => {
     setModalIsOpen(false);
     setSelectedStartDate(null);

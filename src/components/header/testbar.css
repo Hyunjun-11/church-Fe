@@ -5,8 +5,5 @@
 }
 
 .testbar:hover > div > div {
-}
-
-.testbar:hover > div > div {
   display: none;
 }
