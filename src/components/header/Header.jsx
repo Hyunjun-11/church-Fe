@@ -1,18 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import NavigatorBar from "./NavigatorBar";
 import logo from "../../assets/PCK_Logo.png";
-import api from "../../api/api";
+import LoginModal from "../modal/LoginModal";
+import SignUpModal from "../modal/SignUpModal";
 
 const Header = () => {
   const nav = useNavigate();
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
+
   const onClick = (path) => {
     nav(path);
   };
 
-  const testSubmit = async () => {
-    await api.get("/member/user");
+  const openLoginModal = () => {
+    setIsLoginModalOpen(true);
+  };
+
+  const closeLoginModal = () => {
+    setIsLoginModalOpen(false);
+  };
+
+  const openSignUpModal = () => {
+    setIsSignUpModalOpen(true);
+  };
+
+  const closeSignUpModal = () => {
+    setIsSignUpModalOpen(false);
   };
 
   return (
@@ -26,15 +42,17 @@ const Header = () => {
           </TextContainer>
         </Home>
         <HeaderMenu>
-          <MenuItem onClick={() => onClick("/login")}>로그인</MenuItem>
-          <MenuItem onClick={() => onClick("/signup")}>회원가입</MenuItem>
-          {/* <MenuItem onClick={() => onClick("/admin")}>
-            관리자페이지(임시)
-          </MenuItem>
-          <button onClick={testSubmit}>테스트버튼</button> */}
+          <div></div>
+          <MenuItem onClick={openLoginModal}>로그인</MenuItem>
+          <MenuItem onClick={openSignUpModal}>회원가입</MenuItem>
         </HeaderMenu>
       </HeaderInner>
       <NavigatorBar />
+      <LoginModal isOpen={isLoginModalOpen} onRequestClose={closeLoginModal} />
+      <SignUpModal
+        isOpen={isSignUpModalOpen}
+        onRequestClose={closeSignUpModal}
+      />
     </HeaderContainer>
   );
 };
@@ -76,12 +94,11 @@ const TextContainer = styled.div`
 `;
 
 const EnglishText = styled.div`
-  // opacity: 0.5; /* 불투명도 조정 */
   font-weight: 700;
   font-size: 18px;
 `;
+
 const LogoText = styled.div`
-  // opacity: 0.5; /* 불투명도 조정 */
   font-weight: 500;
   font-size: 14px;
   letter-spacing: 2.3px;
@@ -97,8 +114,6 @@ const MenuItem = styled.div`
   height: fit-content;
   cursor: pointer;
   &:hover {
-    // text-decoration: underline;
-    // opacity: 0.5;
     color: #0697e6;
     transition: color 0.4s ease;
   }
