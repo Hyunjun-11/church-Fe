@@ -1,6 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import Login from "../Pages/user/login/Login";
-import Signup from "../Pages/user/login/Signup";
+import SignUpSuccess from "../Pages/user/login/SignUpSuccess";
 import ChurchGuide from "../components/bodyTemp/churchInfo/ChurchGuide";
 import ChurchInfo from "../components/bodyTemp/churchInfo/ChurchInfo";
 import ChurchOrganization from "../components/bodyTemp/churchInfo/ChurchOrganization";
@@ -50,11 +49,10 @@ import Slogan from "../components/bodyTemp/worshipInfo/Slogan";
 import Vision from "../components/bodyTemp/worshipInfo/Vision";
 import WorshipInfoList from "../components/bodyTemp/worshipInfo/WorshipInfoList";
 import BoardDetail from "../components/common/board/BoardDetail";
+import BoardWrite from "../components/common/board/BoardWrite";
 import ImageBoardDetail from "../components/common/imageBoard/ImageBoardDetail";
 import Footer from "../components/footer/Footer";
 import Header from "../components/header/Header";
-import SignUpSuccess from "../Pages/user/login/SignUpSuccess";
-import BoardWrite from "../components/common/board/BoardWrite";
 
 const Router = () => {
   const location = useLocation();
@@ -70,8 +68,8 @@ const Router = () => {
             <Layout name={"교회소개"} ListComponent={TestList} />
           }></Route>
         <Route path="/">
-          <Route path="login" element={<Login />}></Route>
-          <Route path="signup" element={<Signup />}></Route>
+          {/* <Route path="login" element={<Login />}></Route> */}
+          {/* <Route path="signup" element={<Signup />}></Route> */}
           <Route path="signup-success" element={<SignUpSuccess />} />
         </Route>
 

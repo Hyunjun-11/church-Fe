@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./Layout.css";
 import { Outlet } from "react-router-dom";
 import axios from "axios";
-import PopupModal from "../../modal/PopupModal";
 
 const Layout = ({ name, ListComponent }) => {
   const [bannerUrl, setBannerUrl] = useState("");
@@ -30,7 +29,6 @@ const Layout = ({ name, ListComponent }) => {
 
   return (
     <div className="Layout">
-      {/* <PopupModal isOpen={isOpen} onRequestClose={closeModal} /> */}
       <div className="Banner">
         <img src={bannerUrl} alt={`${name} 배너`} />
       </div>
