@@ -1,6 +1,7 @@
+import ListBar from "../../common/ListBar";
 import NavBarList from "../../common/NavBarList";
 
-const WorshipInfoList = ({ type }) => {
+const WorshipInfoList = ({ isOpen, onItemClick, type }) => {
   const list = [
     {
       name: "교회비전",
@@ -24,6 +25,14 @@ const WorshipInfoList = ({ type }) => {
     },
   ];
 
-  return <NavBarList title="예배안내" list={list} type={type} />;
+  return (
+    <ListBar
+      title="예배안내"
+      list={list}
+      isOpen={isOpen}
+      onItemClick={onItemClick}
+      type={type}
+    />
+  );
 };
 export default WorshipInfoList;

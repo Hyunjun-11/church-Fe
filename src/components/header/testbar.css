@@ -8,5 +8,5 @@
 }
 
 .testbar:hover > div > div {
-  display: block;
+  display: none;
 }

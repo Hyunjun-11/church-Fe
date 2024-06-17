@@ -1,12 +1,5 @@
 .NavigatorBar {
   display: flex;
   justify-content: space-around;
-  min-height: fit-content;
-  max-height: 270px;
-  z-index: 1;
-  min-width: fit-content;
-  padding: 20p;
-}
-.NavigatorBar:hover > div > div {
-  display: block;
+  width: 100%;
 }

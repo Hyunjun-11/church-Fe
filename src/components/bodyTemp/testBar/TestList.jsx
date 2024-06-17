@@ -1,6 +1,7 @@
+import ListBar from "../../common/ListBar";
 import NavBarList from "../../common/NavBarList";
 
-const TestList = ({ type }) => {
+const TestList = ({ isOpen, onItemClick, type }) => {
   const list = [
     {
       name: "일반 게시판",
@@ -16,6 +17,14 @@ const TestList = ({ type }) => {
     },
   ];
 
-  return <NavBarList title="테스트목록" list={list} type={type} />;
+  return (
+    <ListBar
+      title="테스트목록"
+      list={list}
+      isOpen={isOpen}
+      onItemClick={onItemClick}
+      type={type}
+    />
+  );
 };
 export default TestList;

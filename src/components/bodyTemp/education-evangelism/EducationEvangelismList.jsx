@@ -1,6 +1,7 @@
-import NavBarList from "../../common/NavBarList";
+import React from "react";
+import ListBar from "../../common/ListBar";
 
-const EducationEvangelismList = ({ type }) => {
+const EducationEvangelismList = ({ isOpen, onItemClick, type }) => {
   const list = [
     {
       name: "사무엘 부서",
@@ -32,6 +33,15 @@ const EducationEvangelismList = ({ type }) => {
     },
   ];
 
-  return <NavBarList title="교육·전도" list={list} type={type} />;
+  return (
+    <ListBar
+      title="교육·전도"
+      list={list}
+      isOpen={isOpen}
+      onItemClick={onItemClick}
+      type={type}
+    />
+  );
 };
+
 export default EducationEvangelismList;

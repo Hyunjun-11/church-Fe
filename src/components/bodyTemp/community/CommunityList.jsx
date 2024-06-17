@@ -1,6 +1,7 @@
-import NavBarList from "../../common/NavBarList";
+import React from "react";
+import ListBar from "../../common/ListBar";
 
-const CommunityList = ({ type }) => {
+const CommunityList = ({ isOpen, onItemClick, type }) => {
   const list = [
     {
       name: "교회소식",
@@ -28,6 +29,15 @@ const CommunityList = ({ type }) => {
     },
   ];
 
-  return <NavBarList title="커뮤니티" list={list} type={type} />;
+  return (
+    <ListBar
+      title="커뮤니티"
+      list={list}
+      isOpen={isOpen}
+      onItemClick={onItemClick}
+      type={type}
+    />
+  );
 };
+
 export default CommunityList;

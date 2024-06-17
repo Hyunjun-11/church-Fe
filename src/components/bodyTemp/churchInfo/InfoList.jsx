@@ -1,6 +1,7 @@
-import NavBarList from "../../common/NavBarList";
+import React from "react";
+import ListBar from "../../common/ListBar";
 
-const InfoList = ({ type }) => {
+const InfoList = ({ isOpen, onItemClick, type }) => {
   const list = [
     {
       name: "인사말",
@@ -28,6 +29,15 @@ const InfoList = ({ type }) => {
     },
   ];
 
-  return <NavBarList title="교회소개" list={list} type={type} />;
+  return (
+    <ListBar
+      title="교회소개"
+      list={list}
+      isOpen={isOpen}
+      onItemClick={onItemClick}
+      type={type}
+    />
+  );
 };
+
 export default InfoList;

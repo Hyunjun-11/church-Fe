@@ -1,6 +1,7 @@
+import ListBar from "../../common/ListBar";
 import NavBarList from "../../common/NavBarList";
 
-const PrayerSermonList = ({ type }) => {
+const PrayerSermonList = ({ isOpen, onItemClick, type }) => {
   const list = [
     {
       name: "주일예배",
@@ -46,7 +47,15 @@ const PrayerSermonList = ({ type }) => {
     },
   ];
 
-  return <NavBarList title="말씀 · 기도" list={list} type={type} />;
+  return (
+    <ListBar
+      title="말씀 · 기도"
+      list={list}
+      isOpen={isOpen}
+      onItemClick={onItemClick}
+      type={type}
+    />
+  );
 };
 
 export default PrayerSermonList;

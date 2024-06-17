@@ -1,6 +1,7 @@
+import ListBar from "../../common/ListBar";
 import NavBarList from "../../common/NavBarList";
 
-const GospelResourcesList = ({ type }) => {
+const GospelResourcesList = ({ isOpen, onItemClick, type }) => {
   const list = [
     {
       name: "복음에 대하여",
@@ -20,6 +21,14 @@ const GospelResourcesList = ({ type }) => {
     },
   ];
 
-  return <NavBarList title="복음자료실" list={list} type={type} />;
+  return (
+    <ListBar
+      title="복음자료실"
+      list={list}
+      isOpen={isOpen}
+      onItemClick={onItemClick}
+      type={type}
+    />
+  );
 };
 export default GospelResourcesList;

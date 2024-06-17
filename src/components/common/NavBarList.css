@@ -17,8 +17,9 @@
   background-color: #26a1e4;
   /* height: 200px; */
   display: none;
-  overflow: hidden; /* 추가 */
+  /* overflow: hidden;  */
 }
+
 .nav_list > div {
   padding: 5px 0px;
   width: 100%;
@@ -71,3 +72,4 @@
   cursor: pointer;
   transition: color 0.4s ease, text-decoration 0.5s ease;
 }
+/*=========================================================*/
