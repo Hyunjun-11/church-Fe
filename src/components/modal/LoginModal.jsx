@@ -3,36 +3,38 @@ import ReactModal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import api from "../../api/api";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../Store/store";
 
 const LoginModal = ({ isOpen, onRequestClose }) => {
   const navi = useNavigate();
+  const dispatch = useDispatch();
   const [memberId, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
-      //   document.body.style.overflow = "auto";
+      document.body.style.overflow = "auto";
+      resetForm(); // 모달이 닫힐 때 폼을 초기화
     }
 
     return () => {
-      //   document.body.style.overflow = "auto";
+      document.body.style.overflow = "auto";
     };
   }, [isOpen]);
+
+  const resetForm = () => {
+    setUsername("");
+    setPassword("");
+    setError("");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
-    if (memberId.length > 15) {
-      setError("잘못된 회원정보 입니다.");
-      return;
-    }
-
-    if (password.length < 6) {
-      setError("잘못된 회원정보 입니다.");
-      return;
-    }
 
     try {
       const response = await api.post("/member/signIn", {
@@ -41,6 +43,11 @@ const LoginModal = ({ isOpen, onRequestClose }) => {
       });
 
       if (response.status === 200) {
+        const user = response.data.data;
+
+        dispatch(setUser(user));
+        alert("로그인 성공");
+        onRequestClose(); // 로그인 성공 후 모달 창 닫기
         navi("/");
       } else {
         setError("로그인에 실패했습니다. 다시 시도해주세요.");
@@ -50,10 +57,15 @@ const LoginModal = ({ isOpen, onRequestClose }) => {
     }
   };
 
+  const handleModalClose = () => {
+    resetForm(); // 상태 초기화
+    onRequestClose();
+  };
+
   return (
     <ReactModal
       isOpen={isOpen}
-      onRequestClose={onRequestClose}
+      onRequestClose={handleModalClose}
       style={{
         overlay: {
           backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -145,7 +157,7 @@ const Button = styled.button`
   transition: background 0.3s;
 
   &:hover {
-    // background: linear-gradient(90deg, #0056b3, #007bff);
+    background: #0056b3;
   }
 `;
 

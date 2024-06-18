@@ -5,12 +5,14 @@ import NavigatorBar from "./NavigatorBar";
 import logo from "../../assets/PCK_Logo.png";
 import LoginModal from "../modal/LoginModal";
 import SignUpModal from "../modal/SignUpModal";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const nav = useNavigate();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
-
+  const user = useSelector((state) => state.user);
+  console.log(user);
   const onClick = (path) => {
     nav(path);
   };
@@ -42,9 +44,14 @@ const Header = () => {
           </TextContainer>
         </Home>
         <HeaderMenu>
-          <div></div>
-          <MenuItem onClick={openLoginModal}>로그인</MenuItem>
-          <MenuItem onClick={openSignUpModal}>회원가입</MenuItem>
+          {user ? (
+            <UserName> {user.name}님</UserName>
+          ) : (
+            <>
+              <MenuItem onClick={openLoginModal}>로그인</MenuItem>
+              <MenuItem onClick={openSignUpModal}>회원가입</MenuItem>
+            </>
+          )}
         </HeaderMenu>
       </HeaderInner>
       <NavigatorBar />
@@ -112,6 +119,15 @@ const HeaderMenu = styled.div`
 
 const MenuItem = styled.div`
   height: fit-content;
+  cursor: pointer;
+  &:hover {
+    color: #0697e6;
+    transition: color 0.4s ease;
+  }
+`;
+const UserName = styled.div`
+  height: fit-content;
+  padding: 0.3rem;
   cursor: pointer;
   &:hover {
     color: #0697e6;
