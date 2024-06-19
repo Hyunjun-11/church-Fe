@@ -9,10 +9,9 @@ import { useDispatch } from "react-redux";
 const App = () => {
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith("/admin");
-  const dispatch = useDispatch();
   useEffect(() => {
     fetchCurrentUser();
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className="app">{isAdminPage ? <AdminRoutes /> : <Router />}</div>

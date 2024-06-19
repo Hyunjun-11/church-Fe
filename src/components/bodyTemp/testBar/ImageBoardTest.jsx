@@ -30,7 +30,7 @@ const ImageBoardTest = () => {
   ];
   return (
     <div>
-      <ImageBoardLayout title={"이미지테스트"} imageList={imgList} />
+      <ImageBoardLayout title={"이미지 게시판"} imageList={imgList} />
     </div>
   );
 };

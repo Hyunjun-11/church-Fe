@@ -41,7 +41,7 @@ const Header = () => {
       await api.delete("/member/signOut");
       dispatch(clearUser());
       nav("/"); // 로그아웃 후 홈으로 리디렉션
-      alert("로그아웃성공");
+      alert("로그아웃 되었습니다.");
     } catch (error) {
       console.error("로그아웃 실패:", error);
     }

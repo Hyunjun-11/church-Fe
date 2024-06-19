@@ -5,6 +5,8 @@ import styled from "styled-components";
 import BodyTitle from "../BodyTitle";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import api from "../../../api/api";
 
 // Styled-components for styling
 const Container = styled.div`
@@ -18,7 +20,7 @@ const FormSection = styled.div`
   margin-bottom: 20px;
 `;
 
-const InputField = styled.input`
+const TitleInputField = styled.input`
   width: 100%;
   padding: 15px;
   margin-bottom: 10px;
@@ -30,7 +32,20 @@ const InputField = styled.input`
 
   &:focus {
     outline: none;
-    border-bottom: 2px solid #007bff;
+    border-bottom: 1px solid #007bff;
+  }
+`;
+const AuthorInputField = styled.input`
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 10px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  font-size: 18px;
+  font-weight: bold;
+  box-sizing: border-box;
+  &:focus {
+    outline: none;
   }
 `;
 
@@ -99,15 +114,16 @@ const BoardWrite = () => {
   const titleRef = useRef(null);
   const quillRef = useRef(null);
   const [isEditing, setIsEditing] = useState(false); // 수정 모드인지 여부를 판단하는 상태
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
+    if (!user) return; // user가 없으면 반환
+
     if (id) {
       // 수정 모드일 경우 기존 데이터를 불러오기
       const fetchBoardDetail = async () => {
         try {
-          const response = await axios.get(
-            `${import.meta.env.VITE_REACT_APP_API_URL}board/${id}`
-          );
+          const response = await api.get(`board/${id}`);
           const { author, title, content } = response.data.data;
           setAuthor(author);
           setTitle(title);
@@ -119,8 +135,10 @@ const BoardWrite = () => {
       };
 
       fetchBoardDetail();
+    } else {
+      setAuthor(user.name); // 작성 모드일 경우 현재 로그인한 사용자의 이름을 작성자로 설정
     }
-  }, [id]);
+  }, [id, user]);
 
   const handleContentChange = (content) => {
     setContent(content);
@@ -141,18 +159,15 @@ const BoardWrite = () => {
     try {
       if (isEditing) {
         // 수정 모드일 경우 PUT 요청
-        await axios.put(
-          `${import.meta.env.VITE_REACT_APP_API_URL}board/${id}`,
-          {
-            title,
-            author,
-            content,
-          }
-        );
+        await api.put(`board/${id}`, {
+          title,
+          author,
+          content,
+        });
         alert("게시글이 수정되었습니다.");
       } else {
         // 새 글 작성 모드일 경우 POST 요청
-        await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}board/`, {
+        await api.post(`board/`, {
           title,
           author,
           content,
@@ -219,18 +234,18 @@ const BoardWrite = () => {
     <Container>
       <BodyTitle title={isEditing ? "글 수정" : "글 작성"} />
       <FormSection>
-        <InputField
+        <TitleInputField
           type="text"
           placeholder="제목을 입력하세요"
           value={title}
           ref={titleRef}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <InputField
+        <AuthorInputField
           type="text"
           placeholder="작성자"
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
+          value={`작성자: ${author}`}
+          readOnly // 수정 불가능하도록 설정
         />
       </FormSection>
       <EditorContainer>

@@ -48,7 +48,6 @@ const LoginModal = ({ isOpen, onRequestClose }) => {
         dispatch(setUser(user));
         alert("로그인 성공");
         onRequestClose(); // 로그인 성공 후 모달 창 닫기
-        navi("/");
       } else {
         setError("로그인에 실패했습니다. 다시 시도해주세요.");
       }

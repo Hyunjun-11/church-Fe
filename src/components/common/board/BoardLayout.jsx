@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import BodyTitle from "../BodyTitle";
 import axios from "axios";
+import api from "../../../api/api";
 
 // Styled-components for styling
 const BoardLayoutContainer = styled.div`
@@ -89,9 +90,7 @@ const BoardLayout = ({ title }) => {
   useEffect(() => {
     const fetchBoardList = async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_REACT_APP_API_URL}board/`
-        );
+        const response = await api.get(`board/`);
         // 날짜 기준으로 내림차순 정렬
         const sortedList = response.data.data.sort(
           (a, b) => new Date(b.createAt) - new Date(a.createAt)

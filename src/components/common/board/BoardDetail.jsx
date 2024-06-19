@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import api from "../../../api/api";
+import { useSelector } from "react-redux";
 
 const BoardDetailContainer = styled.div`
   padding: 20px;
@@ -100,18 +101,16 @@ const BoardDetail = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchBoardDetail = async () => {
       try {
-        // const response = await axios.get(
-        //   `${import.meta.env.VITE_REACT_APP_API_URL}board/${id}`
-        // );
         const response = await api.get(`/board/${id}`);
         setSelectedItem(response.data.data);
       } catch (error) {
         setError("게시글을 불러오는데 실패했습니다.");
-        console.error("There was an error fetching the board detail!", error);
+        console.error("board detail! error", error);
       } finally {
         setLoading(false);
       }
@@ -121,14 +120,15 @@ const BoardDetail = () => {
   }, [id]);
 
   const handleEditClick = () => {
-    navigate(`/test/board/edit/${id}`);
+    if (selectedItem && user && selectedItem.memberId === user.id) {
+      navigate(`/test/board/edit/${id}`);
+    } else {
+      alert("작성자만 수정할 수 있습니다.");
+    }
   };
-
   const handleDeleteClick = async () => {
     try {
-      await axios.delete(
-        `${import.meta.env.VITE_REACT_APP_API_URL}board/${id}`
-      );
+      await api.delete(`board/${id}`);
       alert("게시글이 삭제되었습니다.");
       navigate("/test/board"); // 삭제 후 게시판 목록으로 이동
     } catch (error) {
