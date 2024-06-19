@@ -68,8 +68,6 @@ const Router = () => {
             <Layout name={"교회소개"} ListComponent={TestList} />
           }></Route>
         <Route path="/">
-          {/* <Route path="login" element={<Login />}></Route> */}
-          {/* <Route path="signup" element={<Signup />}></Route> */}
           <Route path="signup-success" element={<SignUpSuccess />} />
         </Route>
 

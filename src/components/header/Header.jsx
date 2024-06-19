@@ -5,10 +5,13 @@ import NavigatorBar from "./NavigatorBar";
 import logo from "../../assets/PCK_Logo.png";
 import LoginModal from "../modal/LoginModal";
 import SignUpModal from "../modal/SignUpModal";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import api from "../../api/api";
+import { clearUser } from "../../Store/store";
 
 const Header = () => {
   const nav = useNavigate();
+  const dispatch = useDispatch();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
   const user = useSelector((state) => state.user);
@@ -33,6 +36,18 @@ const Header = () => {
     setIsSignUpModalOpen(false);
   };
 
+  const logout = async () => {
+    window.confirm("로그아웃 하시겠습니까?");
+    try {
+      await api.delete("/member/signOut");
+      dispatch(clearUser());
+      nav("/"); // 로그아웃 후 홈으로 리디렉션
+      alert("로그아웃성공");
+    } catch (error) {
+      console.error("로그아웃 실패:", error);
+    }
+  };
+
   return (
     <HeaderContainer>
       <HeaderInner>
@@ -45,7 +60,10 @@ const Header = () => {
         </Home>
         <HeaderMenu>
           {user ? (
-            <UserName> {user.name}님</UserName>
+            <>
+              <UserName> {user.name}님</UserName>
+              <MenuItem onClick={logout}>로그아웃</MenuItem>
+            </>
           ) : (
             <>
               <MenuItem onClick={openLoginModal}>로그인</MenuItem>

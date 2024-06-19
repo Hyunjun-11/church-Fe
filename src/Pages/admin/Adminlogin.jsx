@@ -77,7 +77,7 @@ const AdminLogin = () => {
       );
 
       if (response.status === 200) {
-        console.log("Login successful:", response.data);
+        // console.log("Login successful:", response.data);
         // Redirect to the admin dashboard or another page
       } else {
         setError("Invalid credentials");
