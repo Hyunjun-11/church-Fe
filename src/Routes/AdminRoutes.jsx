@@ -6,6 +6,7 @@ import AdminPost from "../Pages/admin/AdminPost";
 import AdminBanner from "../Pages/admin/AdminBanner";
 import AdminSchedule from "../Pages/admin/AdminSchedule";
 import AdminLogin from "../Pages/admin/Adminlogin";
+import AdminPostDetail from "../Pages/admin/AdminPostDetail";
 
 const AdminRoutes = () => {
   return (
@@ -15,6 +16,7 @@ const AdminRoutes = () => {
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="users" element={<AdminUsers />} />
         <Route path="posts" element={<AdminPost />} />
+        <Route path="posts/:id" element={<AdminPostDetail />} />
         <Route path="banner" element={<AdminBanner />} />
         <Route path="schedule" element={<AdminSchedule />} />
       </Route>

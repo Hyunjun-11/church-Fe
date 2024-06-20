@@ -122,7 +122,7 @@ const AdminDashboard = () => {
 export default AdminDashboard;
 
 const Container = styled.div`
-  padding: 20px;
+  // padding: 20px;
 `;
 
 const Section = styled.div`
@@ -136,7 +136,7 @@ const ChartRow = styled.div`
 
 const ChartCard = styled.div`
   background: #fff;
-  padding: 20px;
+  padding: 20px 0px;
   border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   flex: 1;
