@@ -130,7 +130,7 @@ const BoardWrite = () => {
           setContent(content);
           setIsEditing(true);
         } catch (error) {
-          console.error("There was an error fetching the board detail!", error);
+          console.error(error);
         }
       };
 
@@ -163,6 +163,7 @@ const BoardWrite = () => {
           title,
           author,
           content,
+          category: "DANIEL",
         });
         alert("게시글이 수정되었습니다.");
       } else {
@@ -171,6 +172,7 @@ const BoardWrite = () => {
           title,
           author,
           content,
+          category: "DANIEL",
         });
         alert("게시글이 작성되었습니다.");
       }
@@ -190,17 +192,29 @@ const BoardWrite = () => {
     input.onchange = async () => {
       const file = input.files[0];
       if (file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => {
+        console.log(file);
+        const formData = new FormData();
+        formData.append("imgFile", file);
+
+        try {
+          const response = await api.post("/upload/image", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+
+          const imageUrl = response.data;
           const quill = quillRef.current.getEditor();
           const range = quill.getSelection();
           if (range) {
-            quill.insertEmbed(range.index, "image", reader.result);
-            quill.setSelection(range.index + 2); // 이미지 삽입 후 커서 위치 조정
+            quill.insertEmbed(range.index, "image", imageUrl);
+            quill.setSelection(range.index + 1);
           }
-          setContent(quill.root.innerHTML); // State 업데이트
-        };
+          setContent(quill.root.innerHTML);
+        } catch (error) {
+          console.error("Image upload failed:", error);
+          alert("Failed to upload image");
+        }
       }
     };
   };
