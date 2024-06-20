@@ -1,7 +1,9 @@
+import BodyTitle from "../../common/BodyTitle";
+
 const VideoResource = () => {
   return (
     <div>
-      <div>VideoResource</div>
+      <BodyTitle title={"함섬 영상자료실"} />
     </div>
   );
 };

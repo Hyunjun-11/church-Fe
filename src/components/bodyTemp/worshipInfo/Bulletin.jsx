@@ -1,7 +1,9 @@
+import BodyTitle from "../../common/BodyTitle";
+
 const Bulletin = () => {
   return (
     <div>
-      <div>Bulletin</div>
+      <BodyTitle title={"주보"} />
     </div>
   );
 };

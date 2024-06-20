@@ -1,7 +1,9 @@
+import BodyTitle from "../../common/BodyTitle";
+
 const ChurchNews = () => {
   return (
     <div>
-      <div>ChurchNews</div>
+      <BodyTitle title={"교회소식"} />
     </div>
   );
 };

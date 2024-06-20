@@ -9,18 +9,18 @@ import WorshipInfoList from "../bodyTemp/worshipInfo/WorshipInfoList";
 import "./NavigatorBar.css";
 
 const NavigatorBar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const handleMouseEnter = () => {
-    setIsOpen(true);
+    setIsOpen(false);
   };
 
   const handleMouseLeave = () => {
-    setIsOpen(false);
+    setIsOpen(true);
   };
 
   const handleItemClick = () => {
-    setIsOpen(false);
+    setIsOpen(true);
   };
 
   return (

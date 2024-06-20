@@ -1,7 +1,9 @@
+import BodyTitle from "../../common/BodyTitle";
+
 const PastorMaterials = () => {
   return (
     <div>
-      <div>PastorMaterials</div>
+      <BodyTitle title={"목회자 자료실"} />
     </div>
   );
 };

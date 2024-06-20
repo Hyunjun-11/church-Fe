@@ -1,7 +1,9 @@
+import BodyTitle from "../../common/BodyTitle";
+
 const Dailybible = () => {
   return (
     <div>
-      <div>Dailybible</div>
+      <BodyTitle title={"매일성경"} />
     </div>
   );
 };

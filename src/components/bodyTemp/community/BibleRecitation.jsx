@@ -1,7 +1,9 @@
+import BodyTitle from "../../common/BodyTitle";
+
 const BibleRecitation = () => {
   return (
     <div>
-      <div>BibleRecitation</div>
+      <BodyTitle title={"말씀암송"} />
     </div>
   );
 };

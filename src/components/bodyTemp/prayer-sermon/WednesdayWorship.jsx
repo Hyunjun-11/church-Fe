@@ -1,7 +1,9 @@
+import BodyTitle from "../../common/BodyTitle";
+
 const WednesdayWorship = () => {
   return (
     <div>
-      <div>WednesdayWorship</div>
+      <BodyTitle title={"수요예배"} />
     </div>
   );
 };

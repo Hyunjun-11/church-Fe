@@ -1,7 +1,9 @@
+import BodyTitle from "../../common/BodyTitle";
+
 const MissionMaterials = () => {
   return (
     <div>
-      <div>MissionMaterials</div>
+      <BodyTitle title={"선교 자료실"} />
     </div>
   );
 };

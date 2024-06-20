@@ -1,7 +1,9 @@
+import BodyTitle from "../../common/BodyTitle";
+
 const Esther = () => {
   return (
     <div>
-      <div>Esther</div>
+      <BodyTitle title={"에스더 부서"} />
     </div>
   );
 };

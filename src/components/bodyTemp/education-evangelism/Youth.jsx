@@ -1,7 +1,9 @@
+import BodyTitle from "../../common/BodyTitle";
+
 const Youth = () => {
   return (
     <div>
-      <div>Youth</div>
+      <BodyTitle title={"청년부 부서"} />
     </div>
   );
 };

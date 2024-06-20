@@ -1,7 +1,9 @@
+import BodyTitle from "../../common/BodyTitle";
+
 const About = () => {
   return (
     <div>
-      <div>About</div>
+      <BodyTitle title={"복음에 대하여"} />
     </div>
   );
 };

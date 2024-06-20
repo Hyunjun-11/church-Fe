@@ -1,7 +1,9 @@
+import BodyTitle from "../../common/BodyTitle";
+
 const Vision = () => {
   return (
     <div>
-      <div>Vision</div>
+      <BodyTitle title={"교회 비전"} />
     </div>
   );
 };

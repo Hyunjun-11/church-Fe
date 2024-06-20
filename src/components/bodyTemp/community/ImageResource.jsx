@@ -1,7 +1,9 @@
+import BodyTitle from "../../common/BodyTitle";
+
 const ImageResource = () => {
   return (
     <div>
-      <div>ImageResource</div>
+      <BodyTitle title={"함섬갤러리"} />
     </div>
   );
 };
