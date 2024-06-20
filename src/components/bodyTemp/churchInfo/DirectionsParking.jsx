@@ -3,7 +3,7 @@ import BodyTitle from "../../common/BodyTitle";
 import styled from "styled-components";
 
 const Container = styled.div`
-  padding: 20px;
+  // padding: 20px;
   max-width: 800px;
   font-family: Arial, sans-serif;
 `;

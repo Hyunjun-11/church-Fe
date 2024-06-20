@@ -1,5 +1,4 @@
 import ListBar from "../../common/ListBar";
-import NavBarList from "../../common/NavBarList";
 
 const WorshipInfoList = ({ isOpen, onItemClick, type }) => {
   const list = [
