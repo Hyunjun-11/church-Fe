@@ -81,7 +81,8 @@ const SignUpModal = ({ isOpen, onRequestClose }) => {
         }
       );
       if (response.status === 200) {
-        navi("/signup-success");
+        navi("/");
+        alert("회원가입이 완료되었습니다.");
       }
     } catch (error) {
       setError("회원가입 중 오류가 발생했습니다.");
@@ -358,7 +359,7 @@ const Button = styled.button`
   margin-top: 20px;
 
   &:hover {
-    background: #02b354;
+    background: #40a7e2;
   }
 `;
 
