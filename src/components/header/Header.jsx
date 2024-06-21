@@ -69,6 +69,12 @@ const Header = () => {
               <MenuItem onClick={openSignUpModal}>회원가입</MenuItem>
             </>
           )}
+          <MenuItem
+            onClick={() => {
+              onClick("/admin");
+            }}>
+            관리자
+          </MenuItem>
         </HeaderMenu>
       </HeaderInner>
       <NavigatorBar />
@@ -88,8 +94,8 @@ const HeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  border: solid 2px tomato;
-  padding: 20px;
+  // border: solid 2px tomato;
+  // padding: 20px;
   height: 150px;
 `;
 

@@ -1,9 +1,10 @@
+import styled from "styled-components";
 import "./Footer.css";
-
+import logo from "../../assets/PCK_Logo.png";
 const Footer = () => {
   return (
     <div className="Footer">
-      <div>
+      <div className="Footer_text">
         <div className="inquiry">
           <div>Home</div>
           <div>약도 / 주차안내</div>
@@ -17,8 +18,8 @@ const Footer = () => {
           <div>주소 : 전라북도 전주시 완산구 백제대로 115번지</div>
         </div>
       </div>
-      <div>
-        <div>링크1</div>
+      <div className="link">
+        <Logo src={logo} alt="PCK Logo" />
         <div>링크2</div>
       </div>
     </div>
@@ -26,3 +27,7 @@ const Footer = () => {
 };
 
 export default Footer;
+const Logo = styled.img`
+  width: 50px; /* 원하는 너비로 조정 */
+  height: auto; /* 높이는 자동으로 조정 */
+`;

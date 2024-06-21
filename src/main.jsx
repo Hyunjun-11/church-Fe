@@ -7,13 +7,19 @@ import store from "./Store/store";
 import App from "./App";
 import "./index.css";
 import { Chart as ChartJS, registerables } from "chart.js";
+
+import { ThemeProvider } from "styled-components";
+import { theme } from "./theme";
+
 // 모달이 속한 앱의 루트 DOM 요소를 지정
 ReactModal.setAppElement("#root");
 ChartJS.register(...registerables);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ThemeProvider>
   </Provider>
 );

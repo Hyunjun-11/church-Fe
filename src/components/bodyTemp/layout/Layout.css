@@ -1,5 +1,5 @@
 .Layout {
-  border: solid 2px rgb(184, 60, 147);
+  /* border: solid 2px rgb(184, 60, 147); */
   min-height: calc(100vh);
   padding: 20px;
   display: flex;
