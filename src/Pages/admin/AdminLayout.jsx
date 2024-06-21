@@ -22,6 +22,9 @@ const AdminLayout = () => {
             <NavItem onClick={() => handleClick("users")}>유저 관리</NavItem>
             <NavItem onClick={() => handleClick("banner")}>배너 관리</NavItem>
             <NavItem onClick={() => handleClick("schedule")}>일정 관리</NavItem>
+            <NavItem onClick={() => handleClick("bibleRecitation")}>
+              말씀 암송 관리
+            </NavItem>
             <NavItem onClick={() => handleClick("/")}>유저페이지</NavItem>
           </NavList>
         </Nav>

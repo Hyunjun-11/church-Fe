@@ -7,6 +7,8 @@ import AdminBanner from "../Pages/admin/AdminBanner";
 import AdminSchedule from "../Pages/admin/AdminSchedule";
 import AdminLogin from "../Pages/admin/Adminlogin";
 import AdminPostDetail from "../Pages/admin/AdminPostDetail";
+import AdminBibleRecitation from "../Pages/admin/AdminBibleRecitation";
+import AdminBibleRecitationWrite from "../Pages/admin/AdminBibleRecitationWrite";
 
 const AdminRoutes = () => {
   return (
@@ -19,6 +21,11 @@ const AdminRoutes = () => {
         <Route path="posts/:id" element={<AdminPostDetail />} />
         <Route path="banner" element={<AdminBanner />} />
         <Route path="schedule" element={<AdminSchedule />} />
+        <Route path="bibleRecitation" element={<AdminBibleRecitation />} />
+        <Route
+          path="bibleRecitation/write"
+          element={<AdminBibleRecitationWrite />}
+        />
       </Route>
     </Routes>
   );
