@@ -4,7 +4,6 @@ import AdminRoutes from "./Routes/AdminRoutes";
 import Router from "./Routes/Router";
 import { useEffect } from "react";
 import { fetchCurrentUser } from "./api/api";
-import { useDispatch } from "react-redux";
 
 const App = () => {
   const location = useLocation();

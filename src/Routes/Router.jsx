@@ -53,6 +53,7 @@ import BoardWrite from "../components/common/board/BoardWrite";
 import ImageBoardDetail from "../components/common/imageBoard/ImageBoardDetail";
 import Footer from "../components/footer/Footer";
 import Header from "../components/header/Header";
+import MainPage from "../components/main/MainPage";
 
 const Router = () => {
   const location = useLocation();
@@ -62,14 +63,7 @@ const Router = () => {
     <>
       {!isAuthPage && <Header />}
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Layout name={"교회소개"} ListComponent={TestList} />
-          }></Route>
-        <Route path="/">
-          <Route path="signup-success" element={<SignUpSuccess />} />
-        </Route>
+        <Route path="/" element={<MainPage />}></Route>
 
         {/* churchInfo */}
         <Route

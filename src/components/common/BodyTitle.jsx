@@ -12,7 +12,7 @@ const BodyTitleContainer = styled.div`
 
 const Line = styled.span`
   padding: 2px;
-  background-color: #4b83e9;
+  background-color: ${({ theme }) => theme.primaryColor};
 `;
 
 const BodyTitle = ({ title }) => {

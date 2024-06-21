@@ -14,7 +14,7 @@ const Container = styled.div`
 const Title = styled.div`
   cursor: pointer;
   padding: 1rem 0px;
-  background-color: #0697e6;
+  background-color: ${({ theme }) => theme.primaryColor};
   font-weight: 500;
   transition: background-color 0.3s ease;
 `;
