@@ -12,6 +12,7 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
+  letter-spacing: 2.2px;
   cursor: pointer;
   padding: 1rem 0px;
   background-color: ${({ theme }) => theme.primaryColor};

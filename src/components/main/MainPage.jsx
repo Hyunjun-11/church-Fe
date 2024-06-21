@@ -74,14 +74,12 @@ const MainPage = () => {
           나타나실 그 때에 너희도 그와 함께 영광 중에 나타나리라(골3:1~4절)
         </div>
       </BibleRecitation>
-      <Box1>
-        <Title>박스1</Title>
-      </Box1>
-      <Box2>
-        <Title>박스2</Title>
-      </Box2>
+      <Calendar>
+        <Title>달력</Title>
+      </Calendar>
+
       <Vision>
-        <Title>교회비전</Title>
+        <Title>함께섬기는 교회 비전(vision)</Title>
       </Vision>
       <Imgae>
         <Title>이미지</Title>
@@ -113,7 +111,7 @@ const Title = styled.div`
 `;
 
 const Banner = styled.div`
-  background-color: white;
+  background-color: #f2f2f2;
   padding: 2rem;
   text-align: center;
   border-radius: 4px;
@@ -157,22 +155,19 @@ const NewBoards = styled(Section)`
 
 const BibleRecitation = styled(Section)`
   grid-column: 3 / 5;
-  grid-row: 2 / 3;
+  grid-row: 3 / 4;
 `;
 
 const Vision = styled(Section)`
   grid-column: 1 / 3;
+  grid-row: 2 / 4;
+`;
+
+const Calendar = styled(Section)`
+  grid-column: 3 / 5;
   grid-row: 2 / 3;
 `;
 
-const Box1 = styled(Section)`
-  grid-column: 1 / 3;
-  grid-row: 3 / 4;
-`;
-const Box2 = styled(Section)`
-  grid-column: 3 / 5;
-  grid-row: 3 / 4;
-`;
 const Imgae = styled(Section)`
   grid-column: 1 / 7;
   grid-row: 4 / 5;
