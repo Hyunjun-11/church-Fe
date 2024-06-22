@@ -69,13 +69,7 @@ const MainPage = () => {
       </NewBoards>
       <BibleRecitation>
         <Title>이번주 말씀 암송</Title>
-        <div>
-          그러므로 너희가 그리스도와 함께 다시 살리심을 받았으면 위엣 것을
-          찾으라 거기는 그리스도께서 하나님 우편에 앉아 계시느니라 위엣 것을
-          생각하고 땅엣 것을 생각지 말라 이는 너희가 죽었고 너희 생명이
-          그리스도와 함께 하나님 안에 감취었음이니라 우리 생명이신 그리스도께서
-          나타나실 그 때에 너희도 그와 함께 영광 중에 나타나리라(골3:1~4절)
-        </div>
+        <div></div>
       </BibleRecitation>
       <Calendar>
         <MiniCalendar />
