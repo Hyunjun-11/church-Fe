@@ -13,7 +13,7 @@ const MiniCalendar = () => {
   const [activeStartDate, setActiveStartDate] = useState(today);
   const nav = useNavigate();
   const [events, setEvents] = useState([]);
-  const [startTimes, setStartTimes] = useState([]);
+  const [eventDates, setEventDates] = useState({});
   console.log(events);
 
   useEffect(() => {
@@ -25,18 +25,30 @@ const MiniCalendar = () => {
           const formattedStartTime = moment(event.startTime).format(
             "YYYY-MM-DD"
           );
+          const formattedEndTime = moment(event.endTime).format("YYYY-MM-DD");
           return {
             ...event,
             startTime: formattedStartTime,
+            endTime: formattedEndTime,
           };
         });
 
-        const formattedStartTimes = fetchedEvents.map(
-          (event) => event.startTime
-        );
+        const allEventDates = fetchedEvents.reduce((acc, event) => {
+          const start = moment(event.startTime);
+          const end = moment(event.endTime);
+          while (start <= end) {
+            const dateStr = start.format("YYYY-MM-DD");
+            if (!acc[dateStr]) {
+              acc[dateStr] = [];
+            }
+            acc[dateStr].push(event);
+            start.add(1, "days");
+          }
+          return acc;
+        }, {});
 
         setEvents(fetchedEvents);
-        setStartTimes(formattedStartTimes);
+        setEventDates(allEventDates);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
@@ -46,12 +58,11 @@ const MiniCalendar = () => {
 
   const handleDateChange = (newDate) => {
     console.log(newDate);
-    alert("상세일정으로 이동합니다.");
+    // window.confirm("상세일정으로 이동하시겠습니까?");
     nav("worship/church-schedule");
   };
 
   const handleTodayClick = () => {
-    console.log("33");
     const today = new Date();
     setActiveStartDate(today);
     setDate(today);
@@ -70,14 +81,14 @@ const MiniCalendar = () => {
         next2Label={null}
         prev2Label={null}
         minDetail="year"
-        // 오늘 날짜로 돌아오는 기능을 위해 필요한 옵션 설정
         activeStartDate={activeStartDate}
         onActiveStartDateChange={({ activeStartDate }) =>
           setActiveStartDate(activeStartDate)
         }
-        // 오늘 날짜에 '오늘' 텍스트 삽입하고 출석한 날짜에 점 표시를 위한 설정
         tileContent={({ date, view }) => {
           let html = [];
+          const dateStr = moment(date).format("YYYY-MM-DD");
+
           if (
             view === "month" &&
             date.getMonth() === today.getMonth() &&
@@ -85,9 +96,41 @@ const MiniCalendar = () => {
           ) {
             html.push(<StyledToday key={"today"}>Today</StyledToday>);
           }
-          if (startTimes.find((x) => x === moment(date).format("YYYY-MM-DD"))) {
-            html.push(<StyledDot key={moment(date).format("YYYY-MM-DD")} />);
+
+          const eventsForDate = eventDates[dateStr] || [];
+          if (eventsForDate.length > 0) {
+            eventsForDate.forEach((event, index) => {
+              const isStart = dateStr === event.startTime;
+              const isEnd = dateStr === event.endTime;
+              const isMiddle = !isStart && !isEnd;
+
+              if (isStart) {
+                html.push(
+                  <StyledDot
+                    key={`dot-start-${index}`}
+                    color={event.color}
+                    isStart={true}
+                  />
+                );
+              } else if (isMiddle) {
+                html.push(
+                  <StyledLine
+                    key={`line-middle-${index}`}
+                    color={event.color}
+                  />
+                );
+              } else if (isEnd) {
+                html.push(
+                  <StyledDot
+                    key={`dot-end-${index}`}
+                    color={event.color}
+                    isEnd={true}
+                  />
+                );
+              }
+            });
           }
+
           return <>{html}</>;
         }}
       />
@@ -107,7 +150,7 @@ export default MiniCalendar;
 
 const StyledCalendarWrapper = styled.div`
   width: 100%;
-  height:360px;
+  height: 360px;
   display: flex;
   justify-content: center;
   position: relative;
@@ -269,13 +312,21 @@ export const StyledToday = styled.div`
   transform: translateX(-50%);
 `;
 
-/* 출석한 날짜에 점 표시 스타일 */
 export const StyledDot = styled.div`
-  background-color: blue;
+  background-color: lightblue;
   width: 1rem;
-  height: 0.2rem;
+  height: 0.1rem;
   position: absolute;
   top: 55%;
-  left: 52%;
+  left: ${(props) => (props.isStart || props.isEnd ? "50%" : "0")};
   transform: translateX(-50%);
+`;
+
+export const StyledLine = styled.div`
+  background-color: lightblue;
+  height: 0.1rem;
+  position: absolute;
+  top: 55%;
+  width: 100%;
+  left: 0;
 `;
