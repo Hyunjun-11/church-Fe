@@ -14,13 +14,11 @@ const MiniCalendar = () => {
   const nav = useNavigate();
   const [events, setEvents] = useState([]);
   const [eventDates, setEventDates] = useState({});
-  console.log(events);
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const response = await api.get("calendar/");
-        console.log(response.data.data);
         const fetchedEvents = response.data.data.map((event) => {
           const formattedStartTime = moment(event.startTime).format(
             "YYYY-MM-DD"
@@ -57,7 +55,6 @@ const MiniCalendar = () => {
   }, []);
 
   const handleDateChange = (newDate) => {
-    console.log(newDate);
     // window.confirm("상세일정으로 이동하시겠습니까?");
     nav("worship/church-schedule");
   };
