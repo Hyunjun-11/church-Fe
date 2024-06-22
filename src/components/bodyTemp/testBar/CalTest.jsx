@@ -13,6 +13,7 @@ import CalInfoModal from "../../modal/CalInfoModal";
 import BodyTitle from "../../common/BodyTitle";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import api from "../../../api/api";
 
 const CalTest = () => {
   const initialDate = new Date();
@@ -33,9 +34,7 @@ const CalTest = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_REACT_APP_API_URL}calendar/`
-        );
+        const response = await api.get(`calendar/`);
         const fetchedEvents = response.data.data.map((event) => {
           const { startTime, endTime, ...item } = event;
           return {

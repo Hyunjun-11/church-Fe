@@ -2,19 +2,56 @@ import moment from "moment";
 import styled from "styled-components";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css"; // css import
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import api from "../../../api/api";
 
 const MiniCalendar = () => {
   const today = new Date();
   const [date, setDate] = useState(today);
   const [activeStartDate, setActiveStartDate] = useState(today);
-  const attendDay = ["2024-06-03", "2023-12-13"]; // 출석한 날짜 예시
+  const nav = useNavigate();
+  const [events, setEvents] = useState([]);
+  const [startTimes, setStartTimes] = useState([]);
+  console.log(events);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await api.get("calendar/");
+        console.log(response.data.data);
+        const fetchedEvents = response.data.data.map((event) => {
+          const formattedStartTime = moment(event.startTime).format(
+            "YYYY-MM-DD"
+          );
+          return {
+            ...event,
+            startTime: formattedStartTime,
+          };
+        });
+
+        const formattedStartTimes = fetchedEvents.map(
+          (event) => event.startTime
+        );
+
+        setEvents(fetchedEvents);
+        setStartTimes(formattedStartTimes);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+    fetchEvents();
+  }, []);
 
   const handleDateChange = (newDate) => {
-    setDate(newDate);
+    console.log(newDate);
+    alert("상세일정으로 이동합니다.");
+    nav("worship/church-schedule");
   };
 
   const handleTodayClick = () => {
+    console.log("33");
     const today = new Date();
     setActiveStartDate(today);
     setDate(today);
@@ -48,7 +85,7 @@ const MiniCalendar = () => {
           ) {
             html.push(<StyledToday key={"today"}>Today</StyledToday>);
           }
-          if (attendDay.find((x) => x === moment(date).format("YYYY-MM-DD"))) {
+          if (startTimes.find((x) => x === moment(date).format("YYYY-MM-DD"))) {
             html.push(<StyledDot key={moment(date).format("YYYY-MM-DD")} />);
           }
           return <>{html}</>;
@@ -56,6 +93,12 @@ const MiniCalendar = () => {
       />
 
       <StyledDate onClick={handleTodayClick}>Today</StyledDate>
+      <GotoCalendar
+        onClick={() => {
+          nav("worship/church-schedule");
+        }}>
+        전체일정
+      </GotoCalendar>
     </StyledCalendarWrapper>
   );
 };
@@ -64,6 +107,7 @@ export default MiniCalendar;
 
 const StyledCalendarWrapper = styled.div`
   width: 100%;
+  height:360px;
   display: flex;
   justify-content: center;
   position: relative;
@@ -196,6 +240,23 @@ const StyledDate = styled.div`
   font-weight: 800;
   cursor: pointer;
 `;
+const GotoCalendar = styled.div`
+  position: absolute;
+  right: 5%;
+  top: 6%;
+  background-color: ${(props) => props.theme.hover};
+  color: black;
+  width: 18%;
+  min-width: fit-content;
+  height: 1.5rem;
+  text-align: center;
+  margin: 0 auto;
+  line-height: 1.6rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  cursor: pointer;
+`;
 
 /* 오늘 날짜에 텍스트 삽입 스타일 */
 export const StyledToday = styled.div`
@@ -203,19 +264,18 @@ export const StyledToday = styled.div`
   color: ${(props) => props.theme.br_2};
   font-weight: 600;
   position: absolute;
-  top: 50%;
+  top: 60%;
   left: 50%;
   transform: translateX(-50%);
 `;
 
 /* 출석한 날짜에 점 표시 스타일 */
 export const StyledDot = styled.div`
-  background-color: ${(props) => props.theme.primary_2};
-  border-radius: 50%;
-  width: 0.3rem;
-  height: 0.3rem;
+  background-color: blue;
+  width: 1rem;
+  height: 0.2rem;
   position: absolute;
-  top: 60%;
-  left: 50%;
+  top: 55%;
+  left: 52%;
   transform: translateX(-50%);
 `;

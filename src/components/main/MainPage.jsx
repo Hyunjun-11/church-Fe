@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import api from "../../api/api";
+import MiniCalendar from "../common/calendar/MiniCalendar";
 
 const MainPage = () => {
   const [boards, setBoards] = useState([]);
@@ -22,10 +23,12 @@ const MainPage = () => {
 
   return (
     <Container>
-      <Banner>
-        <div>2024표어</div>
-        <div>믿음의 주요 온전하게 하시는 이인 예수님을 바라보는 교회</div>
-      </Banner>
+      <Slogan>
+        <Image
+          src="https://storage.googleapis.com/church_image_demo_11/vison.jpg"
+          alt=""
+        />
+      </Slogan>
       <Schedule>
         <Title>예배일정</Title>
         <ScheduleContent>
@@ -58,7 +61,7 @@ const MainPage = () => {
       </Schedule>
       <NewBoards>
         <Title>최근 게시물</Title>
-        {boards.slice(0, 10).map((item) => (
+        {boards.slice(0, 12).map((item) => (
           <BoardBody key={item.boardId}>
             <BoardColumn className="title">{item.title}</BoardColumn>
           </BoardBody>
@@ -75,18 +78,18 @@ const MainPage = () => {
         </div>
       </BibleRecitation>
       <Calendar>
-        <Title>달력</Title>
+        <MiniCalendar />
       </Calendar>
 
       <Vision>
-        <Title>함께섬기는 교회 비전(vision)</Title>
+        <Image
+          src="https://storage.googleapis.com/church_image_demo_11/vision2.jpg"
+          alt=""
+        />
       </Vision>
-      <Imgae>
+      <ImgaeBoard>
         <Title>이미지</Title>
-      </Imgae>
-      <Imgae>
-        <Title>이미지</Title>
-      </Imgae>
+      </ImgaeBoard>
     </Container>
   );
 };
@@ -99,7 +102,13 @@ const Container = styled.div`
   // padding: 1.5rem;
   // background-color: #f0f0f0;
   grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 0.5fr);
+`;
+const Section = styled.div`
+  padding: 1rem;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 `;
 
 const Title = styled.div`
@@ -110,7 +119,7 @@ const Title = styled.div`
   margin-bottom: 1rem;
 `;
 
-const Banner = styled.div`
+const Slogan = styled.div`
   background-color: #f2f2f2;
   padding: 2rem;
   text-align: center;
@@ -118,13 +127,22 @@ const Banner = styled.div`
   grid-column: 1 / 5;
   border: 1px solid #ccc;
   grid-row: 1 / 2;
+  position: relative;
+  overflow: hidden;
 `;
-
-const Section = styled.div`
-  padding: 1rem;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+const Vision = styled(Section)`
+  grid-column: 1 / 3;
+  grid-row: 2 / 4;
+  position: relative;
+  overflow: hidden;
+`;
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: fill; /* 이미지를 부모 요소에 맞게 비율 무시하고 꽉 차게 함 */
+  position: absolute;
+  top: 0;
+  left: 0;
 `;
 
 const Schedule = styled(Section)`
@@ -158,19 +176,15 @@ const BibleRecitation = styled(Section)`
   grid-row: 3 / 4;
 `;
 
-const Vision = styled(Section)`
-  grid-column: 1 / 3;
-  grid-row: 2 / 4;
-`;
-
 const Calendar = styled(Section)`
+  padding: 0;
   grid-column: 3 / 5;
   grid-row: 2 / 3;
 `;
 
-const Imgae = styled(Section)`
+const ImgaeBoard = styled(Section)`
   grid-column: 1 / 7;
-  grid-row: 4 / 5;
+  grid-row: 4 / 10;
 `;
 
 //board
