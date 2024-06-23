@@ -2,8 +2,78 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import BodyTitle from "../BodyTitle";
-import axios from "axios";
 import api from "../../../api/api";
+
+const BoardLayout = ({ title, category }) => {
+  const [boardList, setBoardList] = useState([]);
+  const navigate = useNavigate();
+  const [categoryParam, setCategoryParam] = useState(category);
+
+  useEffect(() => {
+    const endpoint = `board/category?category=${categoryParam}`;
+    const fetchBoardList = async () => {
+      try {
+        const response = await api.get(endpoint);
+        // 날짜 기준으로 내림차순 정렬
+        const sortedList = response.data.data.sort(
+          (a, b) => new Date(b.createAt) - new Date(a.createAt)
+        );
+        setBoardList(sortedList);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    5;
+    fetchBoardList();
+  }, []);
+
+  const handleClick = (id) => {
+    navigate(`${id}`);
+  };
+
+  const handleWriteClick = (path) => {
+    navigate(path); // 글쓰기 페이지로 이동하는 경로 설정
+  };
+
+  return (
+    <BoardLayoutContainer>
+      <BodyTitle title={title} />
+      <Board>
+        <BoardHeader>
+          <BoardColumn className="number">번호</BoardColumn>
+          <BoardColumn className="title">제목</BoardColumn>
+          <BoardColumn className="author">작성자</BoardColumn>
+          <BoardColumn className="date">날짜</BoardColumn>
+        </BoardHeader>
+        {boardList.map((item, index) => (
+          <BoardBody key={item.boardId}>
+            <BoardColumn className="number">{index + 1}</BoardColumn>
+            <BoardColumn
+              className="title"
+              onClick={() => handleClick(item.boardId)}>
+              {item.title}
+            </BoardColumn>
+            <BoardColumn className="author">{item.author}</BoardColumn>
+            <BoardColumn className="date">
+              {new Date(item.createAt).toLocaleString("ko-KR", {
+                timeZone: "Asia/Seoul",
+              })}
+            </BoardColumn>
+          </BoardBody>
+        ))}
+      </Board>
+      <ButtonContainer>
+        <WriteButton
+          onClick={() => handleWriteClick("write")}
+          category={category}>
+          글쓰기
+        </WriteButton>
+      </ButtonContainer>
+    </BoardLayoutContainer>
+  );
+};
+
+export default BoardLayout;
 
 // Styled-components for styling
 const BoardLayoutContainer = styled.div`
@@ -82,70 +152,3 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
-
-const BoardLayout = ({ title }) => {
-  const [boardList, setBoardList] = useState([]);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchBoardList = async () => {
-      try {
-        const response = await api.get(`board/`);
-        // 날짜 기준으로 내림차순 정렬
-        const sortedList = response.data.data.sort(
-          (a, b) => new Date(b.createAt) - new Date(a.createAt)
-        );
-        setBoardList(sortedList);
-      } catch (error) {
-        console.error("There was an error fetching the board list!", error);
-      }
-    };
-
-    fetchBoardList();
-  }, []);
-
-  const handleClick = (id) => {
-    navigate(`${id}`);
-  };
-
-  const handleWriteClick = (path) => {
-    navigate(path); // 글쓰기 페이지로 이동하는 경로 설정
-  };
-
-  return (
-    <BoardLayoutContainer>
-      <BodyTitle title={title} />
-      <Board>
-        <BoardHeader>
-          <BoardColumn className="number">번호</BoardColumn>
-          <BoardColumn className="title">제목</BoardColumn>
-          <BoardColumn className="author">작성자</BoardColumn>
-          <BoardColumn className="date">날짜</BoardColumn>
-        </BoardHeader>
-        {boardList.map((item, index) => (
-          <BoardBody key={item.boardId}>
-            <BoardColumn className="number">{index + 1}</BoardColumn>
-            <BoardColumn
-              className="title"
-              onClick={() => handleClick(item.boardId)}>
-              {item.title}
-            </BoardColumn>
-            <BoardColumn className="author">{item.author}</BoardColumn>
-            <BoardColumn className="date">
-              {new Date(item.createAt).toLocaleString("ko-KR", {
-                timeZone: "Asia/Seoul",
-              })}
-            </BoardColumn>
-          </BoardBody>
-        ))}
-      </Board>
-      <ButtonContainer>
-        <WriteButton onClick={() => handleWriteClick("write")}>
-          글쓰기
-        </WriteButton>
-      </ButtonContainer>
-    </BoardLayoutContainer>
-  );
-};
-
-export default BoardLayout;

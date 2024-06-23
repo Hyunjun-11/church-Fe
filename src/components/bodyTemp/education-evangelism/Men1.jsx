@@ -1,9 +1,9 @@
-import BodyTitle from "../../common/BodyTitle";
+import BoardLayout from "../../common/board/BoardLayout";
 
 const Men1 = () => {
   return (
     <div>
-      <BodyTitle title={"남전도회 부서 Ⅰ"} />
+      <BoardLayout title={"남전도회 부서 Ⅰ"} category={"MEN1"} />
     </div>
   );
 };

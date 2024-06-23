@@ -1,9 +1,9 @@
-import BodyTitle from "../../common/BodyTitle";
+import BoardLayout from "../../common/board/BoardLayout";
 
 const Esther = () => {
   return (
     <div>
-      <BodyTitle title={"에스더 부서"} />
+      <BoardLayout title={"사무엘 부서"} category={"ESTHER"} />
     </div>
   );
 };

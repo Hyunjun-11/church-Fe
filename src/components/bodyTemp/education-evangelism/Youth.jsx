@@ -1,9 +1,9 @@
-import BodyTitle from "../../common/BodyTitle";
+import BoardLayout from "../../common/board/BoardLayout";
 
 const Youth = () => {
   return (
     <div>
-      <BodyTitle title={"청년부 부서"} />
+      <BoardLayout title={"청년부 부서"} category={"YOUTH"} />
     </div>
   );
 };

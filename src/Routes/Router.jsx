@@ -115,6 +115,8 @@ const Router = () => {
           <Route path="women" element={<Women />} />
           <Route path="men1" element={<Men1 />} />
           <Route path="men2" element={<Men2 />} />
+          <Route path=":category/write" element={<BoardWrite />} />
+          <Route path=":category/:id" element={<BoardDetail />} />
         </Route>
         {/* gospel resources */}
         <Route

@@ -13,7 +13,6 @@ const Container = styled.div`
   padding: 20px;
   background: #fff;
   border-radius: 10px;
-  // font-family: "Georgia, serif";
 `;
 
 const FormSection = styled.div`
@@ -54,8 +53,6 @@ const EditorContainer = styled.div`
     height: 400px; // Approx. 20 rows height
     border: solid 1px #ddd;
     background: #fff;
-    // border-radius: 8px;
-    // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   }
 
   .ql-editor {
@@ -107,7 +104,8 @@ const SubmitButton = styled.button`
 
 const BoardWrite = () => {
   const navigate = useNavigate();
-  const { id } = useParams(); // URL 파라미터에서 id 가져오기
+  const { id, category } = useParams(); // URL 파라미터에서 id와 category 가져오기
+  const upperCategory = category.toUpperCase(); // URL 파라미터에서 id와 category 가져오기
   const [author, setAuthor] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -163,7 +161,7 @@ const BoardWrite = () => {
           title,
           author,
           content,
-          category: "DANIEL",
+          category: upperCategory,
         });
         alert("게시글이 수정되었습니다.");
       } else {
@@ -172,11 +170,11 @@ const BoardWrite = () => {
           title,
           author,
           content,
-          category: "DANIEL",
+          category: upperCategory,
         });
         alert("게시글이 작성되었습니다.");
       }
-      navigate("/test/board");
+      navigate(-1); // 필요한 경로로 이동
     } catch (error) {
       console.error("There was an error submitting the form!", error);
       alert("Failed to submit content");
@@ -192,7 +190,6 @@ const BoardWrite = () => {
     input.onchange = async () => {
       const file = input.files[0];
       if (file) {
-        console.log(file);
         const formData = new FormData();
         formData.append("imgFile", file);
 
@@ -225,7 +222,7 @@ const BoardWrite = () => {
   }, []);
 
   const handleBackClick = () => {
-    navigate("/test/board"); // 게시판 목록 페이지로 이동
+    navigate("/education-evangelism"); // 게시판 목록 페이지로 이동
   };
 
   const modules = {
