@@ -16,4 +16,5 @@
   background-color: #d3e4f7;
   transition: background-color 0.4s ease;
   border-bottom: solid 2px;
+  user-select: none;
 }

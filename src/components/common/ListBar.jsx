@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import styled, { css } from "styled-components";
 import "./NavBarList.css";
 
@@ -31,12 +31,13 @@ const Dropdown = styled.div.attrs(({ isHighlighted, isOpen }) => ({
   width: 100%;
   height: 320px;
   overflow-y: auto;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
   opacity: ${({ isOpen }) => (isOpen ? "1" : "0")};
   transform: ${({ isOpen }) =>
     isOpen ? "translateY(0)" : "translateY(-20px)"};
   ${({ "data-highlighted": isHighlighted }) =>
     isHighlighted &&
+    // 오버시에 칸 배경색
     css`
       background-color: #0697e6;
     `}
@@ -55,6 +56,7 @@ const DropdownItem = styled.div`
 
 const ListBar = ({ title, list, isOpen, onItemClick = () => {}, type }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isHighlighted, setIsHighlighted] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
 
@@ -66,20 +68,27 @@ const ListBar = ({ title, list, isOpen, onItemClick = () => {}, type }) => {
   const handleItemClick = (navi) => {
     navigate(navi);
     setActiveItem(navi);
+    resetDropdownColor();
     if (onItemClick) {
       onItemClick();
     }
   };
+
   const handleTitleClick = () => {
     if (list && list.length > 0) {
       handleItemClick(list[0].navi); // 리스트의 첫 번째 항목으로 이동
     }
   };
+
   const handleMouseEnter = () => {
     setIsHighlighted(true);
   };
 
   const handleMouseLeave = () => {
+    setIsHighlighted(false);
+  };
+
+  const resetDropdownColor = () => {
     setIsHighlighted(false);
   };
 
