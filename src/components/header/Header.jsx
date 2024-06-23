@@ -67,6 +67,7 @@ const Header = () => {
             <>
               <MenuItem onClick={openLoginModal}>로그인</MenuItem>
               <MenuItem onClick={openSignUpModal}>회원가입</MenuItem>
+              {/* <Temporary>임시 - Id : test / PW : 1234</Temporary> */}
             </>
           )}
           <MenuItem
@@ -102,6 +103,9 @@ const HeaderContainer = styled.div`
 const HeaderInner = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+const Temporary = styled.div`
+  user-select: none;
 `;
 
 const Home = styled.div`

@@ -54,6 +54,7 @@ import ImageBoardDetail from "../components/common/imageBoard/ImageBoardDetail";
 import Footer from "../components/footer/Footer";
 import Header from "../components/header/Header";
 import MainPage from "../components/main/MainPage";
+import GoWith from "../components/bodyTemp/community/GoWith";
 
 const Router = () => {
   const location = useLocation();
@@ -86,6 +87,7 @@ const Router = () => {
           <Route path="bibleRecitation" element={<BibleRecitation />}></Route>
           <Route path="bibleReading" element={<BibleReading />}></Route>
           <Route path="dailybible" element={<Dailybible />}></Route>
+          <Route path="gowith" element={<GoWith />}></Route>
         </Route>
         {/* worship */}
         <Route
@@ -152,7 +154,7 @@ const Router = () => {
           <Route path="prayer" element={<Prayer />} />
           <Route path="pastor-materials" element={<PastorMaterials />} />
         </Route>
-        {/*test */}
+
         <Route
           path="test"
           element={<Layout name={"교회소개"} ListComponent={TestList} />}>
