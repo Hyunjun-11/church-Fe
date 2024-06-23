@@ -56,8 +56,10 @@ const DropdownItem = styled.div`
 const ListBar = ({ title, list, isOpen, onItemClick = () => {}, type }) => {
   const navigate = useNavigate();
   const [isHighlighted, setIsHighlighted] = useState(false);
+  const [activeItem, setActiveItem] = useState(null);
 
   const handleItemClick = (navi) => {
+    setActiveItem(navi);
     navigate(navi);
     if (onItemClick) {
       onItemClick();
@@ -96,7 +98,10 @@ const ListBar = ({ title, list, isOpen, onItemClick = () => {}, type }) => {
           <div className="list_title">{title}</div>
           <div className="list_list">
             {list.map((item) => (
-              <div key={item.navi} onClick={() => handleItemClick(item.navi)}>
+              <div
+                key={item.navi}
+                onClick={() => handleItemClick(item.navi)}
+                className={activeItem === item.navi ? "active" : ""}>
                 {item.name}
               </div>
             ))}
