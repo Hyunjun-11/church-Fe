@@ -1,5 +1,4 @@
 import ListBar from "../../common/ListBar";
-import NavBarList from "../../common/NavBarList";
 
 const PrayerSermonList = ({ isOpen, onItemClick, type }) => {
   const list = [

@@ -97,6 +97,7 @@ const Container = styled.div`
   // background-color: #f0f0f0;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(4, 0.5fr);
+  user-select: none;
 `;
 const Section = styled.div`
   padding: 1rem;
@@ -142,6 +143,7 @@ const Image = styled.img`
 const Schedule = styled(Section)`
   grid-column: 5 / 7;
   grid-row: 1 / 2;
+  user-select: none;
 `;
 
 const ScheduleContent = styled.div`

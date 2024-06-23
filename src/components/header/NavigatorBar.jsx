@@ -4,7 +4,6 @@ import CommunityList from "../bodyTemp/community/CommunityList";
 import EducationEvangelismList from "../bodyTemp/education-evangelism/EducationEvangelismList";
 import GospelResourcesList from "../bodyTemp/gospelResources/GospelResourcesList";
 import PrayerSermonList from "../bodyTemp/prayer-sermon/PrayerSermonList";
-import TestList from "../bodyTemp/testBar/TestList";
 import WorshipInfoList from "../bodyTemp/worshipInfo/WorshipInfoList";
 import "./NavigatorBar.css";
 
@@ -28,7 +27,7 @@ const NavigatorBar = () => {
       className="NavigatorBar"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}>
-      <TestList isOpen={isOpen} onItemClick={handleItemClick} type={"NAV"} />
+      {/* <TestList isOpen={isOpen} onItemClick={handleItemClick} type={"NAV"} /> */}
       <InfoList isOpen={isOpen} onItemClick={handleItemClick} type={"NAV"} />
       <WorshipInfoList
         isOpen={isOpen}

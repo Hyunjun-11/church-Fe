@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import "./NavBarList.css";
@@ -58,14 +58,23 @@ const ListBar = ({ title, list, isOpen, onItemClick = () => {}, type }) => {
   const [isHighlighted, setIsHighlighted] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
 
+  useEffect(() => {
+    // 현재 경로를 가져와서 activeItem을 설정합니다.
+    setActiveItem(location.pathname);
+  }, [location.pathname]);
+
   const handleItemClick = (navi) => {
-    setActiveItem(navi);
     navigate(navi);
+    setActiveItem(navi);
     if (onItemClick) {
       onItemClick();
     }
   };
-
+  const handleTitleClick = () => {
+    if (list && list.length > 0) {
+      handleItemClick(list[0].navi); // 리스트의 첫 번째 항목으로 이동
+    }
+  };
   const handleMouseEnter = () => {
     setIsHighlighted(true);
   };
@@ -80,7 +89,7 @@ const ListBar = ({ title, list, isOpen, onItemClick = () => {}, type }) => {
         <Container
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}>
-          <Title>{title}</Title>
+          <Title onClick={handleTitleClick}>{title}</Title>
           {isOpen && list && (
             <Dropdown isHighlighted={isHighlighted} isOpen={isOpen}>
               {list.map((item) => (
