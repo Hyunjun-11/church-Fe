@@ -4,14 +4,16 @@ import BodyTitle from "../../common/BodyTitle";
 import api from "../../../api/api";
 import GoWithWrite from "../../modal/GoWithWrite";
 import Button from "../../common/Button";
+import GoWithInfo from "../../modal/GoWithInfo";
 
 const ITEMS_PER_PAGE = 14;
 
 const GoWith = () => {
   const [boardList, setBoardList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isOpen, setIsOpen] = useState(false);
-  console.log(boardList);
+  const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false); // 상세 모달 상태
+  const [selectedBoardId, setSelectedBoardId] = useState(null); // 선택된 게시물 ID
 
   useEffect(() => {
     const fetchBoardList = async () => {
@@ -20,7 +22,7 @@ const GoWith = () => {
         const sortedList = response.data.data.sort(
           (a, b) => new Date(b.createAt) - new Date(a.createAt)
         );
-        setBoardList(response.data.data);
+        setBoardList(sortedList);
       } catch (error) {
         console.error(error);
       }
@@ -29,23 +31,44 @@ const GoWith = () => {
     fetchBoardList();
   }, []);
 
-  const openModal = () => {
-    setIsOpen(true);
+  const openWriteModal = () => {
+    setIsWriteModalOpen(true);
   };
 
-  const closeModal = () => {
-    setIsOpen(false);
+  const closeWriteModal = () => {
+    setIsWriteModalOpen(false);
   };
 
-  const handleClick = (id) => {
-    // 상세 페이지로 이동하는 로직
+  const openDetailModal = (boardId) => {
+    setSelectedBoardId(boardId);
+    setIsDetailModalOpen(true);
+  };
+
+  const closeDetailModal = () => {
+    setIsDetailModalOpen(false);
+    setSelectedBoardId(null);
   };
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear().toString().slice(-2);
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    const weekDays = ["일", "월", "화", "수", "목", "금", "토"];
+    const dayOfWeek = weekDays[date.getDay()];
+
+    return `${year}-${month}-${day} (${dayOfWeek})`;
+  };
+
   const renderBoardItems = () => {
+    if (boardList.length === 0) {
+      return <div>Loading...</div>; // 데이터가 로드되기 전 로딩 메시지 표시
+    }
+
     const items = [];
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
@@ -70,30 +93,35 @@ const GoWith = () => {
 
     let boardIndex = 0;
     for (let i = 0; i < 14; i++) {
-      if (boardIndex < currentItems.length) {
-        items.push(
-          <BoardItem
-            key={currentItems[boardIndex].boardId}
-            style={{ gridColumn: positions[i].col, gridRow: positions[i].row }}
-            onClick={() => handleClick(currentItems[boardIndex].boardId)}>
-            <TitleItem>
-              <div>{currentItems[boardIndex].title}</div>
-              <Separator />
-            </TitleItem>
-            <div>{currentItems[boardIndex].content}</div>
-          </BoardItem>
-        );
+      if (boardIndex < currentItems.length && currentItems[boardIndex]) {
+        // IIFE를 사용하여 현재의 boardIndex를 캡처
+        ((currentItem) => {
+          items.push(
+            <BoardItem
+              key={currentItem.boardId}
+              style={{
+                gridColumn: positions[i].col,
+                gridRow: positions[i].row,
+              }}
+              onClick={() => {
+                openDetailModal(currentItem.boardId);
+              }}>
+              <TitleItem>{currentItem.title}</TitleItem>
+              <UserInfo>
+                <div>{currentItem.author}</div>
+                <div>{formatDate(currentItem.createAt)}</div>
+              </UserInfo>
+              <ItemContent>{currentItem.content}</ItemContent>
+            </BoardItem>
+          );
+        })(currentItems[boardIndex]); // 현재 아이템을 IIFE에 전달
         boardIndex++;
       } else {
         items.push(
           <BoardItem
             key={i}
             style={{ gridColumn: positions[i].col, gridRow: positions[i].row }}>
-            <TitleItem>
-              <div>제목</div>
-              <Separator />
-            </TitleItem>
-            <div>여기에 게시판 최근글 {i + 1}번글</div>
+            <TitleItem></TitleItem>
           </BoardItem>
         );
       }
@@ -107,7 +135,7 @@ const GoWith = () => {
     <GoWithContainer>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <BodyTitle title={"예수님과 동행 일기 게시판"} />
-        <Button onClick={openModal} title={"글쓰기"} />
+        <Button onClick={openWriteModal} title={"글쓰기"} />
       </div>
       <BoardGrid>
         {renderBoardItems()}
@@ -125,10 +153,7 @@ const GoWith = () => {
           {"<<"}
         </PageButton>
         {Array.from({ length: totalPages }, (_, i) => (
-          <PageButton
-            key={i}
-            onClick={() => handlePageChange(i + 1)}
-            active={currentPage === i + 1}>
+          <PageButton key={i} onClick={() => handlePageChange(i + 1)}>
             {i + 1}
           </PageButton>
         ))}
@@ -138,14 +163,17 @@ const GoWith = () => {
           {">>"}
         </PageButton>
       </Pagination>
-      <GoWithWrite isOpen={isOpen} onRequestClose={closeModal} />
+      <GoWithWrite isOpen={isWriteModalOpen} onRequestClose={closeWriteModal} />
+      <GoWithInfo
+        isOpen={isDetailModalOpen}
+        onRequestClose={closeDetailModal}
+        boardId={selectedBoardId}
+      />
     </GoWithContainer>
   );
 };
 
 export default GoWith;
-
-// Styled-components for styling
 const GoWithContainer = styled.div`
   display: grid;
   gap: 20px;
@@ -164,24 +192,40 @@ const BoardGrid = styled.div`
 const BoardItem = styled.div`
   border: 1px solid black;
   display: flex;
+  gap: 4px;
   flex-direction: column;
   align-items: center;
   text-align: center;
   padding: 10px;
+  overflow: hidden;
+  &:hover {
+    cursor: pointer;
+    background-color: #e8f1fa;
+  }
 `;
 
 const TitleItem = styled.div`
   width: 100%;
-  display: flex;
+  max-width: 100%;
   align-items: center;
-  text-align: center;
-  flex-direction: column;
+  justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: start;
 `;
-
-const Separator = styled.div`
-  width: 70%;
-  border-bottom: 1px dashed black;
-  margin: 10px 0;
+const UserInfo = styled.div`
+  display: flex;
+  gap: 2.5rem;
+  color: #ff822f;
+  width: 100%;
+`;
+const ItemContent = styled.div`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  text-align: start;
 `;
 
 const CenterItem = styled.div`

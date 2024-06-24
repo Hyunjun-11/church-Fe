@@ -127,13 +127,15 @@ const BoardDetail = () => {
     }
   };
   const handleDeleteClick = async () => {
-    try {
-      await api.delete(`board/${id}`);
-      alert("게시글이 삭제되었습니다.");
-      navigate("/test/board"); // 삭제 후 게시판 목록으로 이동
-    } catch (error) {
-      console.error("There was an error deleting the board!", error);
-      alert("게시글 삭제에 실패했습니다.");
+    if (selectedItem && user && selectedItem.memberId === user.id) {
+      try {
+        await api.delete(`board/${id}`);
+        alert("게시글이 삭제되었습니다.");
+        navigate("/test/board"); // 삭제 후 게시판 목록으로 이동
+      } catch (error) {
+        console.error("There was an error deleting the board!", error);
+        alert("게시글 삭제에 실패했습니다.");
+      }
     }
   };
 
