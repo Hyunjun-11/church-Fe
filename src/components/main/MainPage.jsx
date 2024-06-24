@@ -98,7 +98,7 @@ const MainPage = () => {
               더보기
             </SeeMore>
           </Title>
-          {goWithBoards.slice(0, 6).map((item) => (
+          {goWithBoards.slice(0, 7).map((item) => (
             <BoardBody key={item.boardId}>
               <BoardColumn className="title">{item.title}</BoardColumn>
             </BoardBody>
@@ -142,6 +142,7 @@ const Section = styled.div`
   border-radius: 4px;
 `;
 const Title = styled.div`
+  font-size: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -216,10 +217,7 @@ const StyledListItem = styled.li`
 const NewBoards = styled.div`
   grid-column: 5 / 7;
   grid-row: 2 / 4;
-  display: grid;
   grid-auto-rows: 1fr;
-  gap: 12px;
-  grid-auto-flow: dense;
 `;
 const Box2 = styled(Section)``;
 
@@ -243,7 +241,7 @@ const ImgaeBoard = styled(Section)`
 const BoardBody = styled.div`
   display: flex;
   align-items: center;
-  padding: 6px;
+  padding: 5.7px;
   border-bottom: 1px solid #eee;
   transition: background-color 0.2s;
 

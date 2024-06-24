@@ -136,6 +136,8 @@ const BoardDetail = () => {
         console.error("There was an error deleting the board!", error);
         alert("게시글 삭제에 실패했습니다.");
       }
+    } else {
+      alert("작성자만 삭제할 수 있습니다.");
     }
   };
 
