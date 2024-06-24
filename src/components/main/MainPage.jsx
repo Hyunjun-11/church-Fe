@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import api from "../../api/api";
 import MiniCalendar from "../common/calendar/MiniCalendar";
+import { useNavigate } from "react-router-dom";
 
 const MainPage = () => {
   const [boards, setBoards] = useState([]);
+  const [goWithBoards, setGoWithBoards] = useState([]);
+  const navi = useNavigate();
   useEffect(() => {
     const fetchCategoryBoard = async () => {
       try {
@@ -12,7 +15,14 @@ const MainPage = () => {
         const sortedList = response.data.data.sort(
           (a, b) => new Date(b.createAt) - new Date(a.createAt)
         );
-        setBoards(sortedList);
+        const filteredBoards = sortedList.filter(
+          (board) => board.category !== "GOWITH"
+        );
+        const filterdGoWithBoards = sortedList.filter(
+          (board) => board.category === "GOWITH"
+        );
+        setBoards(filteredBoards);
+        setGoWithBoards(filterdGoWithBoards);
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
@@ -20,6 +30,7 @@ const MainPage = () => {
 
     fetchCategoryBoard();
   }, []);
+  console.log(boards.filter((item) => item.category === "GOWITH"));
 
   return (
     <Container>
@@ -34,38 +45,65 @@ const MainPage = () => {
         <ScheduleContent>
           <StyledList>
             <StyledListItem>
-              <span style={{ letterSpacing: "6.5px" }}>주일 예배:</span>
+              <span style={{ letterSpacing: "0.45rem" }}>주일 예배:</span>
               오전 11:00
             </StyledListItem>
-            <StyledListItem>주일 합심 기도: 오후 12:30</StyledListItem>
-            <StyledListItem>주일 중보 기도: 오전 10:30</StyledListItem>
-            <StyledListItem>주일 영성 모임: 오후 12:20</StyledListItem>
-            <StyledListItem>수요 주제 강해: 오후 8:20</StyledListItem>
-            <StyledListItem>수요 중보 모임: 오전 10:30</StyledListItem>
+            <StyledListItem>주일 합심 기도 : 오후 12:30</StyledListItem>
+            <StyledListItem>주일 중보 기도 : 오전 10:30</StyledListItem>
+            <StyledListItem>주일 영성 모임 : 오후 12:20</StyledListItem>
+            <StyledListItem>수요 주제 강해 : 오후 8:20</StyledListItem>
+            <StyledListItem>수요 중보 모임 : 오전 10:30</StyledListItem>
           </StyledList>
           <StyledList>
-            <StyledListItem>사무엘 (주일): 오전 11:00</StyledListItem>
-            <StyledListItem>다니엘 (주일): 오전 09:00</StyledListItem>
-            <StyledListItem>청년부 (주일): 오전 09:00</StyledListItem>
+            <StyledListItem>사무엘 (주일) : 오전 11:00</StyledListItem>
+            <StyledListItem>다니엘 (주일) : 오전 09:00</StyledListItem>
+            <StyledListItem>청년부 (주일) : 오전 09:00</StyledListItem>
             <StyledListItem>
-              <span style={{ letterSpacing: "1.9px" }}>금요 기도회:</span>
+              <span style={{ letterSpacing: "1.9px" }}>금요 기도회 : </span>
               오후 09:00
             </StyledListItem>
             <StyledListItem>
-              <span style={{ letterSpacing: "3.1px" }}>새벽기도회:</span>
+              <span style={{ letterSpacing: "3.1px" }}>새벽기도회 : </span>
               오전 06:00
             </StyledListItem>
-            <StyledListItem>일 대 일 양 육: 상황에 맞게</StyledListItem>
+            <StyledListItem>일 대 일 양 육 : 상황에 맞게</StyledListItem>
           </StyledList>
         </ScheduleContent>
       </Schedule>
       <NewBoards>
-        <Title>최근 게시물</Title>
-        {boards.slice(0, 12).map((item) => (
-          <BoardBody key={item.boardId}>
-            <BoardColumn className="title">{item.title}</BoardColumn>
-          </BoardBody>
-        ))}
+        <Box2>
+          <Title>
+            최근 게시물
+            <SeeMore
+              onClick={() => {
+                navi("/education-evangelism/samuel");
+              }}>
+              더보기
+            </SeeMore>
+          </Title>
+          {boards.slice(0, 7).map((item) => (
+            <BoardBody key={item.boardId}>
+              <BoardColumn className="title">{item.title}</BoardColumn>
+            </BoardBody>
+          ))}
+        </Box2>
+
+        <Box2>
+          <Title>
+            동행일기
+            <SeeMore
+              onClick={() => {
+                navi("/community/gowith");
+              }}>
+              더보기
+            </SeeMore>
+          </Title>
+          {goWithBoards.slice(0, 6).map((item) => (
+            <BoardBody key={item.boardId}>
+              <BoardColumn className="title">{item.title}</BoardColumn>
+            </BoardBody>
+          ))}
+        </Box2>
       </NewBoards>
       <BibleRecitation>
         <Title>이번주 말씀 암송</Title>
@@ -93,25 +131,36 @@ const Container = styled.div`
   min-height: 80vh;
   display: grid;
   gap: 1rem;
-  // padding: 1.5rem;
-  // background-color: #f0f0f0;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(4, 0.5fr);
   user-select: none;
 `;
 const Section = styled.div`
-  padding: 1rem;
+  padding: 0.5rem;
   background-color: white;
-  border: 1px solid #ccc;
+  // border: 1px solid #ccc;
   border-radius: 4px;
 `;
-
 const Title = styled.div`
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.2rem;
   // color: #0697e6;
   border-bottom: 1px solid rgb(139 137 137 / 50%);
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
+`;
+//더보기
+const SeeMore = styled.div`
+  cursor: pointer;
+  font-size: 0.8rem;
+  border: solid 1px #d6d1d1;
+  padding: 6px 12px;
+  border-radius: 24px;
+  &:hover {
+    background-color: #e8f1fa;
+  }
 `;
 
 const Slogan = styled.div`
@@ -147,8 +196,8 @@ const Schedule = styled(Section)`
 `;
 
 const ScheduleContent = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  justify-content: space-between;
   gap: 12px;
 `;
 
@@ -159,13 +208,20 @@ const StyledList = styled.ul`
 `;
 
 const StyledListItem = styled.li`
+  display: flex;
+  justify-content: space-between;
   padding: 4px 0;
 `;
 
-const NewBoards = styled(Section)`
+const NewBoards = styled.div`
   grid-column: 5 / 7;
   grid-row: 2 / 4;
+  display: grid;
+  grid-auto-rows: 1fr;
+  gap: 12px;
+  grid-auto-flow: dense;
 `;
+const Box2 = styled(Section)``;
 
 const BibleRecitation = styled(Section)`
   grid-column: 3 / 5;
@@ -187,7 +243,7 @@ const ImgaeBoard = styled(Section)`
 const BoardBody = styled.div`
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 6px;
   border-bottom: 1px solid #eee;
   transition: background-color 0.2s;
 
@@ -204,6 +260,5 @@ const BoardColumn = styled.div`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 250px; /* 최대 너비 설정 */
   }
 `;
