@@ -82,6 +82,7 @@ const SignUpModal = ({ isOpen, onRequestClose }) => {
       );
       if (response.status === 200) {
         navi("/");
+        onRequestClose();
         alert("회원가입이 완료되었습니다.");
       }
     } catch (error) {
