@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -12,6 +12,7 @@ const BoardDetail = () => {
   const [error, setError] = useState(null);
   const [fileListOpen, setFileListOpen] = useState(false); // 파일 목록 토글 상태
   const user = useSelector((state) => state.user);
+  const userRef = useRef("");
 
   useEffect(() => {
     const fetchBoardDetail = async () => {
