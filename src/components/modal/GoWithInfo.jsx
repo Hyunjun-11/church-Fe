@@ -7,23 +7,34 @@ import { useSelector } from "react-redux";
 
 ReactModal.setAppElement("#root");
 
-const GoWithInfo = ({ isOpen, onRequestClose, boardId }) => {
+const GoWithInfo = ({ isOpen, onRequestClose, boardId, onUpdate }) => {
   const [detail, setDetail] = useState(null);
-  const [isWriteModalOpen, setIsWriteModalOpen] = useState(false); // 상태 추가
+  const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
+  const [likes, setLikes] = useState(0);
+  const [hearts, setHearts] = useState(0);
+  const [amens, setAmens] = useState(0);
   const user = useSelector((state) => state.user);
 
-  useEffect(() => {
-    const fetchDetail = async () => {
-      if (boardId) {
-        try {
-          const response = await api.get(`board/${boardId}`);
-          setDetail(response.data.data);
-        } catch (error) {
-          console.error("Error fetching detail:", error);
-        }
+  const fetchDetail = async () => {
+    if (boardId) {
+      try {
+        const response = await api.get(`board/${boardId}`);
+        const data = response.data.data;
+        setDetail(data);
+        setLikes(data.likes || 0);
+        setHearts(data.hearts || 0);
+        setAmens(data.amens || 0);
+      } catch (error) {
+        console.error("Error fetching detail:", error);
       }
-    };
+    }
+  };
 
+  useEffect(() => {
+    fetchDetail();
+  }, [boardId]);
+
+  useEffect(() => {
     fetchDetail();
   }, [boardId]);
 
@@ -37,6 +48,7 @@ const GoWithInfo = ({ isOpen, onRequestClose, boardId }) => {
       onRequestClose();
     } else alert("작성자만 수정할 수 있습니다.");
   };
+
   const handleDeleteClick = async () => {
     if (detail.memberId === user.id) {
       const isConfirmed = window.confirm("게시글을 삭제하시겠습니까?");
@@ -54,8 +66,37 @@ const GoWithInfo = ({ isOpen, onRequestClose, boardId }) => {
       alert("작성자만 삭제할 수 있습니다.");
     }
   };
-  const closeWriteModal = () => {
+
+  const closeWriteModal = async () => {
     setIsWriteModalOpen(false);
+    await fetchDetail();
+    onUpdate();
+  };
+  const handleLikeClick = async () => {
+    try {
+      await api.post(`board/${boardId}/like`);
+      setLikes(likes + 1);
+    } catch (error) {
+      console.error("Error liking post:", error);
+    }
+  };
+
+  const handleHeartClick = async () => {
+    try {
+      await api.post(`board/${boardId}/heart`);
+      setHearts(hearts + 1);
+    } catch (error) {
+      console.error("Error hearting post:", error);
+    }
+  };
+
+  const handleAmenClick = async () => {
+    try {
+      await api.post(`board/${boardId}/amen`);
+      setAmens(amens + 1);
+    } catch (error) {
+      console.error("Error amening post:", error);
+    }
   };
 
   return (
@@ -77,21 +118,34 @@ const GoWithInfo = ({ isOpen, onRequestClose, boardId }) => {
             <Content>{detail.content}</Content>
           </ContentWrapper>
           {user && (
-            <ButtonContainer>
-              <Button type="button" onClick={openWriteModal}>
-                수정
-              </Button>
-              <Button type="button" onClick={handleDeleteClick} cancel>
-                삭제
-              </Button>
-            </ButtonContainer>
+            <FooterButton>
+              <InteractionContainer>
+                <InteractionButton onClick={handleLikeClick}>
+                  👍 {likes}
+                </InteractionButton>
+                <InteractionButton onClick={handleHeartClick}>
+                  ❤️ {hearts}
+                </InteractionButton>
+                <InteractionButton onClick={handleAmenClick}>
+                  🙏 {amens}
+                </InteractionButton>
+              </InteractionContainer>
+              <ButtonContainer>
+                <Button type="button" onClick={openWriteModal}>
+                  수정
+                </Button>
+                <Button type="button" onClick={handleDeleteClick} cancel>
+                  삭제
+                </Button>
+              </ButtonContainer>
+            </FooterButton>
           )}
         </ModalContent>
       </ReactModal>
       <GoWithWrite
         isOpen={isWriteModalOpen}
         onRequestClose={closeWriteModal}
-        boardId={boardId}
+        boardId={detail.boardId}
       />
     </>
   );
@@ -127,6 +181,7 @@ const ModalContent = styled.div`
   border-radius: 20px;
   display: flex;
   flex-direction: column;
+  gap: 1rem;
   justify-content: space-between;
   height: 100%;
   animation: fadeIn 0.3s ease-in-out;
@@ -158,7 +213,7 @@ const ModalHeader = styled.div`
 
 const ContentWrapper = styled.div`
   flex-grow: 1;
-  overflow-y: auto;
+
   width: 100%;
 `;
 
@@ -181,12 +236,16 @@ const UserInfo = styled.div`
 `;
 
 const Content = styled.div`
+  overflow-y: auto;
   min-height: 200px;
+  max-height: 30rem;
   margin-top: 20px;
   width: 100%;
   text-align: start;
   color: #333;
   line-height: 1.6;
+  white-space: pre-wrap; /* 줄 바꿈을 인식하도록 설정 */
+  word-wrap: break-word; /* 단어를 넘어가는 경우 줄 바꿈 */
 `;
 
 const ButtonContainer = styled.div`
@@ -194,6 +253,12 @@ const ButtonContainer = styled.div`
   justify-content: flex-end;
   gap: 10px;
   width: 100%;
+`;
+
+const FooterButton = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const Button = styled.button`
@@ -208,5 +273,29 @@ const Button = styled.button`
 
   &:hover {
     background-color: ${(props) => (props.cancel ? "#ff4d4d" : "#45a049")};
+  }
+`;
+//좋아요 , 하트 아이콘들
+const InteractionContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-top: 20px;
+`;
+
+const InteractionButton = styled.button`
+  min-width: fit-content;
+  display: flex;
+  padding: 8px 16px;
+  font-size: 16px; /* 폰트 크기를 16px로 설정하여 이모티콘이 잘 보이도록 함 */
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  background-color: #f0f0f0; /* 버튼 배경색 설정 */
+  color: #333; /* 버튼 텍스트 색상 설정 */
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #e0e0e0; /* 호버 시 배경색 변경 */
   }
 `;
