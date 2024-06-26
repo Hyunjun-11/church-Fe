@@ -3,9 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import api from "../../../api/api";
 
-const MAX_FILES = 2;
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-const FileUpload = () => {
+const FileUpload = ({ onFilesChange, maxFiles, maxSize }) => {
   const [files, setFiles] = useState([]);
   const fileInputRef = useRef(null);
   const [totalFileSize, setTotalFileSize] = useState(0);
@@ -16,14 +14,16 @@ const FileUpload = () => {
 
     for (let file of newFiles) {
       newTotalFileSize += file.size;
-      if (newTotalFileSize > MAX_FILE_SIZE) {
-        alert("전체 파일 크기는 5MB를 초과할 수 없습니다.");
+      if (newTotalFileSize > maxSize * 1024 * 1024) {
+        alert(
+          `전체 파일 크기는 ${maxSize / 1024 / 1024}MB를 초과할 수 없습니다.`
+        );
         return;
       }
     }
 
-    if (files.length + newFiles.length > MAX_FILES) {
-      alert("파일은 최대 2개까지만 업로드할 수 있습니다.");
+    if (files.length + newFiles.length > maxFiles) {
+      alert(`파일은 최대 ${maxFiles}개까지만 업로드할 수 있습니다.`);
       return;
     }
 
@@ -49,8 +49,12 @@ const FileUpload = () => {
 
     // 성공적으로 업로드된 파일만 상태 업데이트
     if (successfullyUploadedFiles.length > 0) {
-      setFiles((prevFiles) => [...prevFiles, ...successfullyUploadedFiles]);
-      setTotalFileSize(newTotalFileSize);
+      setFiles((prevFiles) => {
+        const newFileList = [...prevFiles, ...successfullyUploadedFiles]; // 여기에서 prevFiles 사용
+        onFilesChange(newFileList.map((fileObj) => fileObj.url)); // URL만 추출하여 전달
+        setTotalFileSize(newTotalFileSize);
+        return newFileList; // 새로운 파일 목록 반환
+      });
     }
   };
 
@@ -91,6 +95,9 @@ const FileUpload = () => {
         ))}
       </FileList>
       <FileSizeInfo>
+        <div>
+          {files.length}/{maxFiles}
+        </div>
         총 파일 크기: {(totalFileSize / 1024 / 1024).toFixed(2)} MB / 5 MB
       </FileSizeInfo>
     </Container>
@@ -140,6 +147,8 @@ const FileListItem = styled.li`
   border-radius: 5px;
 `;
 const FileSizeInfo = styled.div`
+  display: flex;
+  gap: 1rem;
   margin-top: 10px;
   font-size: 14px;
   color: #666;

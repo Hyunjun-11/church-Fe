@@ -76,14 +76,16 @@ const GoWithInfo = ({ isOpen, onRequestClose, boardId }) => {
             </UserInfo>
             <Content>{detail.content}</Content>
           </ContentWrapper>
-          <ButtonContainer>
-            <Button type="button" onClick={openWriteModal}>
-              수정
-            </Button>
-            <Button type="button" onClick={handleDeleteClick} cancel>
-              삭제
-            </Button>
-          </ButtonContainer>
+          {user && (
+            <ButtonContainer>
+              <Button type="button" onClick={openWriteModal}>
+                수정
+              </Button>
+              <Button type="button" onClick={handleDeleteClick} cancel>
+                삭제
+              </Button>
+            </ButtonContainer>
+          )}
         </ModalContent>
       </ReactModal>
       <GoWithWrite

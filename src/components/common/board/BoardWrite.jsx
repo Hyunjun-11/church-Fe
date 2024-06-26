@@ -10,47 +10,55 @@ import FileUpload from "../fileUpload/FileUpload";
 
 const BoardWrite = () => {
   const navigate = useNavigate();
-  const { id, category } = useParams(); // URL 파라미터에서 id와 category 가져오기
-  const upperCategory = category.toUpperCase(); // URL 파라미터에서 id와 category 가져오기
-  const [author, setAuthor] = useState("");
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const { id, category } = useParams();
+  const upperCategory = category.toUpperCase();
+  const [formData, setFormData] = useState({
+    author: "",
+    title: "",
+    content: "",
+    isEditing: false,
+    files: [],
+  });
   const titleRef = useRef(null);
-  const [isEditing, setIsEditing] = useState(false); // 수정 모드인지 여부를 판단하는 상태
-  const user = useSelector((state) => state.user);
-
-  //quill에디터
   const quillRef = useRef(null);
+  const user = useSelector((state) => state.user);
+  console.log(formData);
 
   useEffect(() => {
-    if (!user) return; // user가 없으면 반환
-
-    if (id) {
-      // 수정 모드일 경우 기존 데이터를 불러오기
-      const fetchBoardDetail = async () => {
+    const fetchBoardDetail = async () => {
+      if (id) {
         try {
           const response = await api.get(`board/${id}`);
           const { author, title, content } = response.data.data;
-          setAuthor(author);
-          setTitle(title);
-          setContent(content);
-          setIsEditing(true);
+          setFormData({ author, title, content, isEditing: true });
         } catch (error) {
           console.error(error);
         }
-      };
+      } else if (user) {
+        setFormData((prevData) => ({ ...prevData, author: user.name }));
+      }
+    };
 
-      fetchBoardDetail();
-    } else {
-      setAuthor(user.name); // 작성 모드일 경우 현재 로그인한 사용자의 이름을 작성자로 설정
+    fetchBoardDetail();
+
+    const addImageHandler = () => {
+      const quill = quillRef.current.getEditor();
+      const toolbar = quill.getModule("toolbar");
+      toolbar.addHandler("image", handleImageUpload);
+    };
+
+    if (quillRef.current) {
+      addImageHandler();
     }
   }, [id, user]);
 
   const handleContentChange = (content) => {
-    setContent(content);
+    setFormData((prevData) => ({ ...prevData, content }));
   };
 
   const handleSubmit = async () => {
+    const { title, author, content, isEditing, files } = formData;
+
     if (title.trim() === "") {
       alert("제목을 입력해주세요.");
       titleRef.current.focus();
@@ -63,26 +71,23 @@ const BoardWrite = () => {
     }
 
     try {
+      const payload = {
+        title,
+        author,
+        content,
+        category: upperCategory,
+        files,
+      };
+      console.log(payload);
+
       if (isEditing) {
-        // 수정 모드일 경우 PUT 요청
-        await api.put(`board/${id}`, {
-          title,
-          author,
-          content,
-          category: upperCategory,
-        });
+        await api.put(`board/${id}`, payload);
         alert("게시글이 수정되었습니다.");
       } else {
-        // 새 글 작성 모드일 경우 POST 요청
-        await api.post(`board/`, {
-          title,
-          author,
-          content,
-          category: upperCategory,
-        });
+        await api.post(`board/`, payload);
         alert("게시글이 작성되었습니다.");
       }
-      navigate(-1); // 필요한 경로로 이동
+      navigate(-1);
     } catch (error) {
       console.error("There was an error submitting the form!", error);
       alert("Failed to submit content");
@@ -115,7 +120,10 @@ const BoardWrite = () => {
             quill.insertEmbed(range.index, "image", imageUrl);
             quill.setSelection(range.index + 1);
           }
-          setContent(quill.root.innerHTML);
+          setFormData((prevData) => ({
+            ...prevData,
+            content: quill.root.innerHTML,
+          }));
         } catch (error) {
           console.error("Image upload failed:", error);
           alert("Failed to upload image");
@@ -123,14 +131,16 @@ const BoardWrite = () => {
       }
     };
   };
-
-  useEffect(() => {
-    const toolbar = quillRef.current.getEditor().getModule("toolbar");
-    toolbar.addHandler("image", handleImageUpload);
-  }, []);
+  const handleFilesChange = (newFiles) => {
+    console.log(newFiles);
+    setFormData((prevData) => ({
+      ...prevData,
+      files: newFiles,
+    }));
+  };
 
   const handleBackClick = () => {
-    navigate("/education-evangelism"); // 게시판 목록 페이지로 이동
+    navigate("/education-evangelism");
   };
 
   const modules = {
@@ -151,28 +161,30 @@ const BoardWrite = () => {
 
   return (
     <Container>
-      <BodyTitle title={isEditing ? "글 수정" : "글 작성"} />
+      <BodyTitle title={formData.isEditing ? "글 수정" : "글 작성"} />
       <FormSection>
         <TitleInputField
           type="text"
           placeholder="제목을 입력하세요"
-          value={title}
+          value={formData.title}
           ref={titleRef}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) =>
+            setFormData((prevData) => ({ ...prevData, title: e.target.value }))
+          }
         />
         <AuthorInputField
           type="text"
           placeholder="작성자"
-          value={`작성자: ${author}`}
-          readOnly // 수정 불가능하도록 설정
+          value={`작성자: ${formData.author}`}
+          readOnly
         />
       </FormSection>
-      <FileUpload />
+      <FileUpload onFilesChange={handleFilesChange} maxFiles={2} maxSize={5} />
       <EditorContainer>
         <ReactQuill
           ref={quillRef}
           theme="snow"
-          value={content}
+          value={formData.content}
           onChange={handleContentChange}
           modules={modules}
         />
@@ -180,7 +192,7 @@ const BoardWrite = () => {
       <ButtonContainer>
         <BackButton onClick={handleBackClick}>목록으로</BackButton>
         <SubmitButton onClick={handleSubmit}>
-          {isEditing ? "수정" : "제출"}
+          {formData.isEditing ? "수정" : "제출"}
         </SubmitButton>
       </ButtonContainer>
     </Container>

@@ -3,11 +3,13 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import BodyTitle from "../BodyTitle";
 import api from "../../../api/api";
+import { useSelector } from "react-redux";
 
 const BoardLayout = ({ title, category }) => {
   const [boardList, setBoardList] = useState([]);
   const navigate = useNavigate();
   const [categoryParam, setCategoryParam] = useState(category);
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     const endpoint = `board/category?category=${categoryParam}`;
@@ -63,11 +65,13 @@ const BoardLayout = ({ title, category }) => {
         ))}
       </Board>
       <ButtonContainer>
-        <WriteButton
-          onClick={() => handleWriteClick("write")}
-          category={category}>
-          글쓰기
-        </WriteButton>
+        {user && (
+          <WriteButton
+            onClick={() => handleWriteClick("write")}
+            category={category}>
+            글쓰기
+          </WriteButton>
+        )}
       </ButtonContainer>
     </BoardLayoutContainer>
   );
