@@ -7,7 +7,6 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../Store/store";
 
 const LoginModal = ({ isOpen, onRequestClose }) => {
-  const navi = useNavigate();
   const dispatch = useDispatch();
   const [memberId, setUsername] = useState("");
   const [password, setPassword] = useState("");

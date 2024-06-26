@@ -20,7 +20,7 @@ api.interceptors.response.use(
 
 export const fetchCurrentUser = async () => {
   try {
-    const response = await api.get("/auth/me");
+    const response = await api.get("auth/me");
     store.dispatch(setUser(response.data.data));
   } catch (error) {
     store.dispatch(clearUser());

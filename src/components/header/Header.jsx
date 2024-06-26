@@ -15,6 +15,7 @@ const Header = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false);
   const user = useSelector((state) => state.user);
+
   const onClick = (path) => {
     nav(path);
   };

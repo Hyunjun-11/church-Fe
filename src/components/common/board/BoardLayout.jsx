@@ -25,7 +25,7 @@ const BoardLayout = ({ title, category }) => {
         console.error(error);
       }
     };
-    5;
+
     fetchBoardList();
   }, []);
 
