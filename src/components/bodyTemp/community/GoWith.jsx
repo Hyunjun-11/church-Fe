@@ -15,19 +15,20 @@ const GoWith = () => {
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false); // 상세 모달 상태
   const [selectedBoardId, setSelectedBoardId] = useState(null); // 선택된 게시물 ID
 
-  useEffect(() => {
-    const fetchBoardList = async () => {
-      try {
-        const response = await api.get("board/category?category=GOWITH");
-        const sortedList = response.data.data.sort(
-          (a, b) => new Date(b.createAt) - new Date(a.createAt)
-        );
-        setBoardList(sortedList);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  const fetchBoardList = async () => {
+    console.log("리렌더");
+    try {
+      const response = await api.get("board/category?category=GOWITH");
+      const sortedList = response.data.data.sort(
+        (a, b) => new Date(b.createAt) - new Date(a.createAt)
+      );
+      setBoardList(sortedList);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
+  useEffect(() => {
     fetchBoardList();
   }, []);
 
@@ -36,6 +37,7 @@ const GoWith = () => {
   };
 
   const closeWriteModal = () => {
+    fetchBoardList(); // 게시물 목록을 다시 가져
     setIsWriteModalOpen(false);
   };
 
@@ -46,6 +48,7 @@ const GoWith = () => {
 
   const closeDetailModal = () => {
     setIsDetailModalOpen(false);
+    fetchBoardList(); // 게시물 목록을 다시 가져
     setSelectedBoardId(null);
   };
 
@@ -168,6 +171,7 @@ const GoWith = () => {
         isOpen={isDetailModalOpen}
         onRequestClose={closeDetailModal}
         boardId={selectedBoardId}
+        onUpdate={fetchBoardList}
       />
     </GoWithContainer>
   );
@@ -194,7 +198,7 @@ const BoardItem = styled.div`
   display: flex;
   gap: 4px;
   flex-direction: column;
-  align-items: center;
+  // align-items: center;
   text-align: center;
   padding: 10px;
   overflow: hidden;

@@ -3,6 +3,7 @@ import ReactModal from "react-modal";
 import styled from "styled-components";
 import api from "../../api/api";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 ReactModal.setAppElement("#root");
 
@@ -29,6 +30,7 @@ const GoWithWrite = ({ isOpen, onRequestClose, boardId }) => {
           setTitle(title);
           setContent(content);
           setIsEditing(true);
+          console.log(response);
         } catch (error) {
           console.error(error);
         }
@@ -40,12 +42,9 @@ const GoWithWrite = ({ isOpen, onRequestClose, boardId }) => {
     }
   }, [boardId, user]);
 
-  const resetForm = () => {
-    setTitle("");
-    setContent("");
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // 폼의 기본 제출 동작을 막음
 
-  const handleSubmit = async () => {
     if (title.trim() === "") {
       alert("제목을 입력해주세요.");
       titleRef.current.focus();
@@ -56,24 +55,32 @@ const GoWithWrite = ({ isOpen, onRequestClose, boardId }) => {
       contentRef.current.focus();
       return;
     }
+    console.log(isEditing);
 
-    if (isEditing) {
-      // 수정 모드일 경우 PUT 요청
-      await api.put(`board/${boardId}`, {
-        title,
-        content,
-        category: "GOWITH",
-      });
-      alert("게시글이 수정되었습니다.");
-    } else {
-      // 새 글 작성 모드일 경우 POST 요청
-      await api.post(`board/`, {
-        title,
-        content,
-        category: "GOWITH",
-      });
-      alert("게시글이 작성되었습니다.");
-      onRequestClose();
+    try {
+      if (isEditing) {
+        // 수정 모드일 경우 PUT 요청
+        await api.put(`board/${boardId}`, {
+          title,
+          content,
+          author,
+          category: "GOWITH",
+        });
+        alert("게시글이 수정되었습니다.");
+        onRequestClose();
+      } else {
+        // 새 글 작성 모드일 경우 POST 요청
+        await api.post(`board/`, {
+          title,
+          content,
+          category: "GOWITH",
+        });
+        alert("게시글이 작성되었습니다.");
+        onRequestClose();
+      }
+    } catch (error) {
+      console.error(error);
+      alert("오류가 발생했습니다. 다시 시도해주세요.");
     }
   };
 
@@ -104,7 +111,7 @@ const GoWithWrite = ({ isOpen, onRequestClose, boardId }) => {
             <Button type="button" onClick={onRequestClose} cancel>
               취소
             </Button>
-            <Button type="submit">작성</Button>
+            <Button type="submit">{isEditing ? "수정" : "제출"}</Button>
           </ButtonContainer>
         </Form>
       </ModalContent>
@@ -206,10 +213,10 @@ const Button = styled.button`
   }
 
   &:first-child {
-    background-color: #28a745;
+    background-color: #ea4f4f;
 
     &:hover {
-      background-color: #218838;
+      background-color: #eb1d1d;
     }
   }
 `;
