@@ -71,7 +71,7 @@ const BoardDetail = () => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement("a");
         link.href = url;
-        link.setAttribute("download", fileName); // download 속성을 설정하여 파일로 다운로드
+        link.setAttribute("download", formatFileName(fileName)); // download 속성을 설정하여 파일로 다운로드
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -86,24 +86,17 @@ const BoardDetail = () => {
     setFileListOpen(!fileListOpen); // 파일 목록 토글
   };
 
-  const handleDownloadAll = async () => {
-    try {
-      for (const fileUrl of selectedItem.files) {
-        const fileName = fileUrl.split("/").pop();
-        await handleDownload(fileName);
-      }
-    } catch (error) {
-      console.error("Error downloading all files", error);
-      alert("전체 파일 다운로드에 실패했습니다.");
-    }
-  };
-
   if (loading) return <div>로딩 중...</div>;
   if (error) return <div>{error}</div>;
 
   const formatDate = (dateString) => {
     const date = new window.Date(dateString); // 명시적으로 window 객체에서 Date 생성
     return date.toLocaleString(); // 날짜와 시간을 로컬 형식으로 변환
+  };
+  const formatFileName = (fileName) => {
+    const uuidLength = 47;
+
+    return fileName.substring(uuidLength);
   };
 
   return (
@@ -126,10 +119,10 @@ const BoardDetail = () => {
                 </DownloadAllButton>
               </FileListHeader> */}
               {selectedItem.files.map((fileUrl, index) => {
-                const fileName = fileUrl.split("/").pop(); // URL에서 파일 이름 추출
+                const fileName = fileUrl.fileName; // URL에서 파일 이름 추출
                 return (
                   <FileItem key={index}>
-                    {fileName}
+                    {formatFileName(fileName)}
                     <DownloadButton onClick={() => handleDownload(fileName)}>
                       다운로드
                     </DownloadButton>

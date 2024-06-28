@@ -22,15 +22,14 @@ const BoardWrite = () => {
   const titleRef = useRef(null);
   const quillRef = useRef(null);
   const user = useSelector((state) => state.user);
-  console.log(formData);
 
   useEffect(() => {
     const fetchBoardDetail = async () => {
       if (id) {
         try {
           const response = await api.get(`board/${id}`);
-          const { author, title, content } = response.data.data;
-          setFormData({ author, title, content, isEditing: true });
+          const { author, title, content, files } = response.data.data;
+          setFormData({ author, title, content, isEditing: true, files });
         } catch (error) {
           console.error(error);
         }
@@ -64,11 +63,6 @@ const BoardWrite = () => {
       titleRef.current.focus();
       return;
     }
-    if (quillRef.current.getEditor().getText().trim() === "") {
-      alert("내용을 입력해주세요.");
-      quillRef.current.getEditor().focus();
-      return;
-    }
 
     try {
       const payload = {
@@ -78,13 +72,16 @@ const BoardWrite = () => {
         category: upperCategory,
         files,
       };
-      console.log(payload);
 
       if (isEditing) {
         await api.put(`board/${id}`, payload);
+        console.log(payload);
+        console.log("수정");
         alert("게시글이 수정되었습니다.");
       } else {
+        console.log(payload);
         await api.post(`board/`, payload);
+        console.log("작성");
         alert("게시글이 작성되었습니다.");
       }
       navigate(-1);
@@ -107,7 +104,7 @@ const BoardWrite = () => {
         formData.append("file", file);
 
         try {
-          const response = await api.post("/upload/", formData, {
+          const response = await api.post("/upload/image", formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
@@ -132,7 +129,6 @@ const BoardWrite = () => {
     };
   };
   const handleFilesChange = (newFiles) => {
-    console.log(newFiles);
     setFormData((prevData) => ({
       ...prevData,
       files: newFiles,
@@ -179,7 +175,12 @@ const BoardWrite = () => {
           readOnly
         />
       </FormSection>
-      <FileUpload onFilesChange={handleFilesChange} maxFiles={2} maxSize={5} />
+      <FileUpload
+        onFilesChange={handleFilesChange}
+        maxFiles={2}
+        maxSize={5}
+        initialFiles={formData.files}
+      />
       <EditorContainer>
         <ReactQuill
           ref={quillRef}
@@ -204,6 +205,7 @@ export default BoardWrite;
 const Container = styled.div`
   padding: 20px;
   background: #fff;
+  // background: #353535;
   border-radius: 10px;
 `;
 

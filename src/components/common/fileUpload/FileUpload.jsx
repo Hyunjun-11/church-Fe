@@ -1,12 +1,31 @@
-import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import api from "../../../api/api";
 
-const FileUpload = ({ onFilesChange, maxFiles, maxSize }) => {
-  const [files, setFiles] = useState([]);
+const FileUpload = ({ onFilesChange, maxFiles, maxSize, initialFiles }) => {
   const fileInputRef = useRef(null);
   const [totalFileSize, setTotalFileSize] = useState(0);
+  const [files, setFiles] = useState([]);
+
+  console.log(files);
+  useEffect(() => {
+    const fetchFileSizes = () => {
+      if (initialFiles && initialFiles.length > 0) {
+        setFiles(
+          initialFiles.map((fileObj) => ({
+            fileName: fileObj.fileName,
+            fileSize: fileObj.fileSize,
+          }))
+        );
+        const initialTotalSize = initialFiles.reduce(
+          (acc, fileObj) => acc + fileObj.fileSize,
+          0
+        );
+        setTotalFileSize(initialTotalSize);
+      }
+    };
+    fetchFileSizes();
+  }, [initialFiles]);
 
   const handleFileChange = async (event) => {
     const newFiles = Array.from(event.target.files);
@@ -32,6 +51,7 @@ const FileUpload = ({ onFilesChange, maxFiles, maxSize }) => {
     for (let file of newFiles) {
       const formData = new FormData();
       formData.append("file", file);
+      console.log(file.size);
 
       try {
         const response = await api.post("upload/", formData, {
@@ -39,22 +59,24 @@ const FileUpload = ({ onFilesChange, maxFiles, maxSize }) => {
             "Content-Type": "multipart/form-data",
           },
         });
-        console.log(response.data);
-        successfullyUploadedFiles.push({ file, url: response.data }); // 성공적으로 업로드된 파일 추가
+        console.log("서버에서온 파일데이터", response.data);
+        successfullyUploadedFiles.push({
+          fileName: response.data,
+          fileSize: file.size,
+        });
       } catch (error) {
         console.error("파일 업로드 중 오류가 발생했습니다.", error);
         alert("파일 업로드 중 오류가 발생했습니다.");
       }
     }
 
-    // 성공적으로 업로드된 파일만 상태 업데이트
     if (successfullyUploadedFiles.length > 0) {
-      setFiles((prevFiles) => {
-        const newFileList = [...prevFiles, ...successfullyUploadedFiles]; // 여기에서 prevFiles 사용
-        onFilesChange(newFileList.map((fileObj) => fileObj.url)); // URL만 추출하여 전달
-        setTotalFileSize(newTotalFileSize);
-        return newFileList; // 새로운 파일 목록 반환
-      });
+      const newFileList = [...files, ...successfullyUploadedFiles];
+      setFiles(newFileList);
+      onFilesChange(newFileList);
+      setTotalFileSize(
+        newFileList.reduce((acc, fileObj) => acc + fileObj.fileSize, 0)
+      );
     }
   };
 
@@ -62,15 +84,25 @@ const FileUpload = ({ onFilesChange, maxFiles, maxSize }) => {
     const fileToRemove = files[index];
     try {
       const response = await api.delete("upload/", {
-        params: { fileUrl: fileToRemove.url },
+        params: { fileUrl: fileToRemove.fileName },
       });
       console.log(response.data);
-      setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
-      setTotalFileSize((prevSize) => prevSize - fileToRemove.file.size);
+
+      const newFiles = files.filter((_, i) => i !== index);
+      setFiles(newFiles);
+      setTotalFileSize(
+        newFiles.reduce((acc, fileObj) => acc + fileObj.fileSize, 0)
+      );
+      onFilesChange(newFiles);
     } catch (error) {
       console.error("파일 삭제 중 오류가 발생했습니다.", error);
       alert("파일 삭제 중 오류가 발생했습니다.");
     }
+  };
+
+  const formatFileName = (fileName) => {
+    const uuidLength = 47;
+    return fileName.substring(uuidLength);
   };
 
   return (
@@ -87,7 +119,8 @@ const FileUpload = ({ onFilesChange, maxFiles, maxSize }) => {
       <FileList>
         {files.map((fileObj, index) => (
           <FileListItem key={index}>
-            {fileObj.file.name} ({(fileObj.file.size / 1024).toFixed(2)} KB)
+            {formatFileName(fileObj.fileName)} (
+            {(fileObj.fileSize / 1024).toFixed(2)} KB)
             <RemoveButton onClick={() => handleFileRemove(index)}>
               x
             </RemoveButton>
@@ -98,7 +131,8 @@ const FileUpload = ({ onFilesChange, maxFiles, maxSize }) => {
         <div>
           {files.length}/{maxFiles}
         </div>
-        총 파일 크기: {(totalFileSize / 1024 / 1024).toFixed(2)} MB / 5 MB
+        총 파일 크기: {(totalFileSize / 1024 / 1024).toFixed(2)} MB / {maxSize}{" "}
+        MB
       </FileSizeInfo>
     </Container>
   );
