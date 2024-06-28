@@ -195,7 +195,7 @@ const BoardWrite = () => {
       <FileUpload
         onFilesChange={handleFilesChange}
         maxFiles={2}
-        maxSize={5}
+        maxSize={10}
         initialFiles={formData.files}
       />
       <EditorContainer>
