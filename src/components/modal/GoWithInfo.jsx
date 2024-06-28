@@ -21,9 +21,9 @@ const GoWithInfo = ({ isOpen, onRequestClose, boardId, onUpdate }) => {
         const response = await api.get(`board/${boardId}`);
         const data = response.data.data;
         setDetail(data);
-        setLikes(data.likes || 0);
-        setHearts(data.hearts || 0);
-        setAmens(data.amens || 0);
+        setLikes(data.likes.likes || 0);
+        setHearts(data.likes.hearts || 0);
+        setAmens(data.likes.prays || 0);
       } catch (error) {
         console.error("Error fetching detail:", error);
       }
@@ -72,30 +72,27 @@ const GoWithInfo = ({ isOpen, onRequestClose, boardId, onUpdate }) => {
     await fetchDetail();
     onUpdate();
   };
-  const handleLikeClick = async () => {
+  const handleInteractionClick = async (type) => {
+    let payload = {};
+    if (type === "like") {
+      payload = { likes: 1, hearts: 0, prays: 0 };
+    } else if (type === "heart") {
+      payload = { likes: 0, hearts: 1, prays: 0 };
+    } else if (type === "pray") {
+      payload = { likes: 0, hearts: 0, prays: 1 };
+    }
+
     try {
-      await api.post(`board/${boardId}/like`);
-      setLikes(likes + 1);
+      await api.post(`board/${boardId}/like`, payload);
+      if (type === "like") {
+        setLikes(likes + 1);
+      } else if (type === "heart") {
+        setHearts(hearts + 1);
+      } else if (type === "pray") {
+        setAmens(amens + 1);
+      }
     } catch (error) {
       console.error("Error liking post:", error);
-    }
-  };
-
-  const handleHeartClick = async () => {
-    try {
-      await api.post(`board/${boardId}/heart`);
-      setHearts(hearts + 1);
-    } catch (error) {
-      console.error("Error hearting post:", error);
-    }
-  };
-
-  const handleAmenClick = async () => {
-    try {
-      await api.post(`board/${boardId}/amen`);
-      setAmens(amens + 1);
-    } catch (error) {
-      console.error("Error amening post:", error);
     }
   };
 
@@ -120,13 +117,16 @@ const GoWithInfo = ({ isOpen, onRequestClose, boardId, onUpdate }) => {
           {user && (
             <FooterButton>
               <InteractionContainer>
-                <InteractionButton onClick={handleLikeClick}>
+                <InteractionButton
+                  onClick={() => handleInteractionClick("like")}>
                   👍 {likes}
                 </InteractionButton>
-                <InteractionButton onClick={handleHeartClick}>
+                <InteractionButton
+                  onClick={() => handleInteractionClick("heart")}>
                   ❤️ {hearts}
                 </InteractionButton>
-                <InteractionButton onClick={handleAmenClick}>
+                <InteractionButton
+                  onClick={() => handleInteractionClick("pray")}>
                   🙏 {amens}
                 </InteractionButton>
               </InteractionContainer>
@@ -252,7 +252,6 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  width: 100%;
 `;
 
 const FooterButton = styled.div`
@@ -280,7 +279,6 @@ const InteractionContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   gap: 10px;
-  margin-top: 20px;
 `;
 
 const InteractionButton = styled.button`

@@ -30,7 +30,6 @@ const GoWithWrite = ({ isOpen, onRequestClose, boardId }) => {
           setTitle(title);
           setContent(content);
           setIsEditing(true);
-          console.log(response);
         } catch (error) {
           console.error(error);
         }

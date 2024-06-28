@@ -16,7 +16,6 @@ const GoWith = () => {
   const [selectedBoardId, setSelectedBoardId] = useState(null); // 선택된 게시물 ID
 
   const fetchBoardList = async () => {
-    console.log("리렌더");
     try {
       const response = await api.get("board/category?category=GOWITH");
       const sortedList = response.data.data.sort(
