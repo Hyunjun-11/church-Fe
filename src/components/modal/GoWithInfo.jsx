@@ -4,6 +4,7 @@ import styled from "styled-components";
 import api from "../../api/api";
 import GoWithWrite from "./GoWithWrite";
 import { useSelector } from "react-redux";
+import useCheckMyBoard from "../../hooks/useCheckUser";
 
 ReactModal.setAppElement("#root");
 
@@ -14,6 +15,7 @@ const GoWithInfo = ({ isOpen, onRequestClose, boardId, onUpdate }) => {
   const [hearts, setHearts] = useState(0);
   const [amens, setAmens] = useState(0);
   const user = useSelector((state) => state.user);
+  const checkMyBoard = useCheckMyBoard(detail?.memberId);
 
   const fetchDetail = async () => {
     if (boardId) {
@@ -34,23 +36,21 @@ const GoWithInfo = ({ isOpen, onRequestClose, boardId, onUpdate }) => {
     fetchDetail();
   }, [boardId]);
 
-  useEffect(() => {
-    fetchDetail();
-  }, [boardId]);
-
   if (!detail) {
     return null;
   }
 
   const openWriteModal = () => {
-    if (detail.memberId === user.id) {
+    if (checkMyBoard) {
       setIsWriteModalOpen(true);
       onRequestClose();
-    } else alert("작성자만 수정할 수 있습니다.");
+    } else {
+      alert("작성자만 수정할 수 있습니다.");
+    }
   };
 
   const handleDeleteClick = async () => {
-    if (detail.memberId === user.id) {
+    if (checkMyBoard) {
       const isConfirmed = window.confirm("게시글을 삭제하시겠습니까?");
       if (isConfirmed) {
         try {
@@ -72,6 +72,7 @@ const GoWithInfo = ({ isOpen, onRequestClose, boardId, onUpdate }) => {
     await fetchDetail();
     onUpdate();
   };
+
   const handleInteractionClick = async (type) => {
     let payload = {};
     if (type === "like") {
@@ -130,14 +131,16 @@ const GoWithInfo = ({ isOpen, onRequestClose, boardId, onUpdate }) => {
                   🙏 {amens}
                 </InteractionButton>
               </InteractionContainer>
-              <ButtonContainer>
-                <Button type="button" onClick={openWriteModal}>
-                  수정
-                </Button>
-                <Button type="button" onClick={handleDeleteClick} cancel>
-                  삭제
-                </Button>
-              </ButtonContainer>
+              {checkMyBoard && (
+                <ButtonContainer>
+                  <Button type="button" onClick={openWriteModal}>
+                    수정
+                  </Button>
+                  <Button type="button" onClick={handleDeleteClick} cancel>
+                    삭제
+                  </Button>
+                </ButtonContainer>
+              )}
             </FooterButton>
           )}
         </ModalContent>

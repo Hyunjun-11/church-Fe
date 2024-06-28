@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import api from "../../../api/api";
+import useCheckMyBoard from "../../../hooks/useCheckUser";
 
 const BoardDetail = () => {
   const { id, category } = useParams();
@@ -12,7 +13,7 @@ const BoardDetail = () => {
   const [error, setError] = useState(null);
   const [fileListOpen, setFileListOpen] = useState(false); // 파일 목록 토글 상태
   const user = useSelector((state) => state.user);
-  const userRef = useRef("");
+  const checkMyBoard = useCheckMyBoard(selectedItem?.memberId);
 
   useEffect(() => {
     const fetchBoardDetail = async () => {
@@ -139,7 +140,7 @@ const BoardDetail = () => {
         <LeftButtonContainer>
           <BackButton onClick={handleBackClick}>목록으로</BackButton>
         </LeftButtonContainer>
-        {user && (
+        {checkMyBoard && (
           <RightButtonContainer>
             <Button onClick={handleEditClick}>수정</Button>
             <Button onClick={handleDeleteClick}>삭제</Button>

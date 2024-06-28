@@ -159,9 +159,9 @@ const Router = () => {
         <Route
           path="test"
           element={<Layout name={"교회소개"} ListComponent={TestList} />}>
-          <Route path="board" element={<BoardTest />} />
-          <Route path="board/:id" element={<BoardDetail />} />
-          <Route path="board/write" element={<BoardWrite />} />
+          <Route path="develop" element={<BoardTest />} />
+          <Route path=":category/write" element={<BoardWrite />} />
+          <Route path=":category/:id" element={<BoardDetail />} />
           <Route path="board/edit/:id" element={<BoardWrite />} />
           <Route path="imageboard" element={<ImageBoardTest />} />
           <Route path="imageboard/:id" element={<ImageBoardDetail />} />

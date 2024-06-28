@@ -3,7 +3,7 @@ import BoardLayout from "../../common/board/BoardLayout";
 const BoardTest = () => {
   return (
     <div>
-      <BoardLayout title={"글 게시판"} />
+      <BoardLayout title={"개발 과정"} category={"DEVELOP"} />
     </div>
   );
 };
