@@ -7,7 +7,6 @@ const FileUpload = ({ onFilesChange, maxFiles, maxSize, initialFiles }) => {
   const [totalFileSize, setTotalFileSize] = useState(0);
   const [files, setFiles] = useState([]);
 
-  console.log(files);
   useEffect(() => {
     const fetchFileSizes = () => {
       if (initialFiles && initialFiles.length > 0) {
@@ -51,7 +50,6 @@ const FileUpload = ({ onFilesChange, maxFiles, maxSize, initialFiles }) => {
     for (let file of newFiles) {
       const formData = new FormData();
       formData.append("file", file);
-      console.log(file.size);
 
       try {
         const response = await api.post("upload/", formData, {
@@ -59,7 +57,7 @@ const FileUpload = ({ onFilesChange, maxFiles, maxSize, initialFiles }) => {
             "Content-Type": "multipart/form-data",
           },
         });
-        console.log("서버에서온 파일데이터", response.data);
+
         successfullyUploadedFiles.push({
           fileName: response.data,
           fileSize: file.size,
@@ -86,7 +84,6 @@ const FileUpload = ({ onFilesChange, maxFiles, maxSize, initialFiles }) => {
       const response = await api.delete("upload/", {
         params: { fileUrl: fileToRemove.fileName },
       });
-      console.log(response.data);
 
       const newFiles = files.filter((_, i) => i !== index);
       setFiles(newFiles);

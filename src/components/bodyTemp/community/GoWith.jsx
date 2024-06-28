@@ -5,6 +5,7 @@ import api from "../../../api/api";
 import GoWithWrite from "../../modal/GoWithWrite";
 import Button from "../../common/Button";
 import GoWithInfo from "../../modal/GoWithInfo";
+import { useSelector } from "react-redux";
 
 const ITEMS_PER_PAGE = 14;
 
@@ -14,6 +15,7 @@ const GoWith = () => {
   const [isWriteModalOpen, setIsWriteModalOpen] = useState(false);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false); // 상세 모달 상태
   const [selectedBoardId, setSelectedBoardId] = useState(null); // 선택된 게시물 ID
+  const user = useSelector((state) => state.user);
 
   const fetchBoardList = async () => {
     try {
@@ -137,7 +139,7 @@ const GoWith = () => {
     <GoWithContainer>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <BodyTitle title={"예수님과 동행 일기 게시판"} />
-        <Button onClick={openWriteModal} title={"글쓰기"} />
+        {user && <Button onClick={openWriteModal} title={"글쓰기"} />}
       </div>
       <BoardGrid>
         {renderBoardItems()}

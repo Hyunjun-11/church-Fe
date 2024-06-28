@@ -30,7 +30,6 @@ const MainPage = () => {
 
     fetchCategoryBoard();
   }, []);
-  console.log(boards.filter((item) => item.category === "GOWITH"));
 
   return (
     <Container>

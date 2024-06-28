@@ -15,7 +15,7 @@ const GoWithInfo = ({ isOpen, onRequestClose, boardId, onUpdate }) => {
   const [hearts, setHearts] = useState(0);
   const [amens, setAmens] = useState(0);
   const user = useSelector((state) => state.user);
-  const checkMyBoard = useCheckMyBoard(detail?.memberId);
+  const isAuthor = useCheckMyBoard(detail?.memberId);
 
   const fetchDetail = async () => {
     if (boardId) {
@@ -41,7 +41,7 @@ const GoWithInfo = ({ isOpen, onRequestClose, boardId, onUpdate }) => {
   }
 
   const openWriteModal = () => {
-    if (checkMyBoard) {
+    if (isAuthor) {
       setIsWriteModalOpen(true);
       onRequestClose();
     } else {
@@ -50,7 +50,7 @@ const GoWithInfo = ({ isOpen, onRequestClose, boardId, onUpdate }) => {
   };
 
   const handleDeleteClick = async () => {
-    if (checkMyBoard) {
+    if (isAuthor) {
       const isConfirmed = window.confirm("게시글을 삭제하시겠습니까?");
       if (isConfirmed) {
         try {
@@ -131,7 +131,7 @@ const GoWithInfo = ({ isOpen, onRequestClose, boardId, onUpdate }) => {
                   🙏 {amens}
                 </InteractionButton>
               </InteractionContainer>
-              {checkMyBoard && (
+              {isAuthor && (
                 <ButtonContainer>
                   <Button type="button" onClick={openWriteModal}>
                     수정

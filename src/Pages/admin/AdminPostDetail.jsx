@@ -144,7 +144,6 @@ const AdminPostDetail = () => {
   };
 
   const handleBackClick = () => {
-    console.log(category);
     navigate(`/admin/posts`, { state: { category } });
   };
 

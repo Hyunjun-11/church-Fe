@@ -34,6 +34,7 @@ VideoBlot.className = "ql-video";
 Quill.register(VideoBlot);
 
 const getYoutubeEmbedUrl = (url) => {
+  /* eslint-disable no-useless-escape */
   const regExp =
     /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
   const match = url.match(regExp);

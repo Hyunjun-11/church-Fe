@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import api from "../../../api/api";
 import useCheckMyBoard from "../../../hooks/useCheckUser";
+import InteractionContainer from "../Interaction/InteractionContainer";
 
 const BoardDetail = () => {
   const { id, category } = useParams();
@@ -136,6 +137,7 @@ const BoardDetail = () => {
       )}
       <Content
         dangerouslySetInnerHTML={{ __html: selectedItem.content }}></Content>
+      <InteractionContainer boardId={id} />
       <ButtonContainer>
         <LeftButtonContainer>
           <BackButton onClick={handleBackClick}>목록으로</BackButton>

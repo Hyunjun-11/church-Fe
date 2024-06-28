@@ -54,7 +54,6 @@ const GoWithWrite = ({ isOpen, onRequestClose, boardId }) => {
       contentRef.current.focus();
       return;
     }
-    console.log(isEditing);
 
     try {
       if (isEditing) {
