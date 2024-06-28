@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -7,6 +7,42 @@ import styled from "styled-components";
 import api from "../../../api/api";
 import BodyTitle from "../BodyTitle";
 import FileUpload from "../fileUpload/FileUpload";
+
+const BlockEmbed = Quill.import("blots/block/embed");
+const Delta = Quill.import("delta");
+
+class VideoBlot extends BlockEmbed {
+  static create(url) {
+    const node = super.create();
+    node.setAttribute("src", url);
+    node.setAttribute("frameborder", "0");
+    node.setAttribute("allowfullscreen", true);
+    node.setAttribute("width", "560");
+    node.setAttribute("height", "315");
+    return node;
+  }
+
+  static value(node) {
+    return node.getAttribute("src");
+  }
+}
+
+VideoBlot.blotName = "video";
+VideoBlot.tagName = "iframe";
+VideoBlot.className = "ql-video";
+
+Quill.register(VideoBlot);
+
+const getYoutubeEmbedUrl = (url) => {
+  const regExp =
+    /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+  if (match && match[2].length === 11) {
+    return `https://www.youtube.com/embed/${match[2]}`;
+  } else {
+    return null;
+  }
+};
 
 const BoardWrite = () => {
   const navigate = useNavigate();
@@ -40,14 +76,36 @@ const BoardWrite = () => {
 
     fetchBoardDetail();
 
-    const addImageHandler = () => {
+    const addHandlers = () => {
       const quill = quillRef.current.getEditor();
-      const toolbar = quill.getModule("toolbar");
-      toolbar.addHandler("image", handleImageUpload);
+
+      quill.clipboard.addMatcher(Node.TEXT_NODE, function (node, delta) {
+        const url = node.data;
+        const embedUrl = getYoutubeEmbedUrl(url);
+        if (embedUrl) {
+          const newDelta = new Delta()
+            .retain(delta.length())
+            .delete(delta.length())
+            .insert({ video: embedUrl });
+          return newDelta;
+        }
+        return delta;
+      });
+
+      const deleteHandler = (range, context) => {
+        const [blot] = quill.getLeaf(range.index);
+        if (blot && blot.domNode.tagName === "IFRAME") {
+          quill.deleteText(range.index, 1, Quill.sources.USER);
+        }
+        return true;
+      };
+
+      quill.keyboard.addBinding({ key: "Backspace" }, deleteHandler);
+      quill.keyboard.addBinding({ key: "Delete" }, deleteHandler);
     };
 
     if (quillRef.current) {
-      addImageHandler();
+      addHandlers();
     }
   }, [id, user]);
 
@@ -75,13 +133,9 @@ const BoardWrite = () => {
 
       if (isEditing) {
         await api.put(`board/${id}`, payload);
-        console.log(payload);
-        console.log("수정");
         alert("게시글이 수정되었습니다.");
       } else {
-        console.log(payload);
         await api.post(`board/`, payload);
-        console.log("작성");
         alert("게시글이 작성되었습니다.");
       }
       navigate(-1);
@@ -91,43 +145,6 @@ const BoardWrite = () => {
     }
   };
 
-  const handleImageUpload = () => {
-    const input = document.createElement("input");
-    input.setAttribute("type", "file");
-    input.setAttribute("accept", "image/*");
-    input.click();
-
-    input.onchange = async () => {
-      const file = input.files[0];
-      if (file) {
-        const formData = new FormData();
-        formData.append("file", file);
-
-        try {
-          const response = await api.post("/upload/image", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
-
-          const imageUrl = response.data;
-          const quill = quillRef.current.getEditor();
-          const range = quill.getSelection();
-          if (range) {
-            quill.insertEmbed(range.index, "image", imageUrl);
-            quill.setSelection(range.index + 1);
-          }
-          setFormData((prevData) => ({
-            ...prevData,
-            content: quill.root.innerHTML,
-          }));
-        } catch (error) {
-          console.error("Image upload failed:", error);
-          alert("Failed to upload image");
-        }
-      }
-    };
-  };
   const handleFilesChange = (newFiles) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -150,7 +167,7 @@ const BoardWrite = () => {
           { indent: "-1" },
           { indent: "+1" },
         ],
-        ["link", "image"],
+        ["link", "image", "video"],
       ],
     },
   };
