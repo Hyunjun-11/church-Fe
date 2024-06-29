@@ -183,8 +183,8 @@ const Title = styled.div`
 
 const Info = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: end;
   font-size: 14px;
   color: #777;
   margin-bottom: 40px; /* 제목과 작성자 사이의 간격을 늘리기 위해 변경 */
@@ -305,14 +305,6 @@ const FileItem = styled.li`
   }
 `;
 
-const FileLink = styled.a`
-  color: #007bff;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
 const DownloadButton = styled.button`
   background-color: #007bff;
   color: white;
@@ -341,14 +333,4 @@ const DownloadAllButton = styled.button`
   &:hover {
     background-color: #0056b3;
   }
-`;
-
-const FileListHeader = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: #f9f9f9;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
 `;

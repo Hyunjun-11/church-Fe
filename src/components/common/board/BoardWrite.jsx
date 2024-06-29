@@ -7,43 +7,7 @@ import styled from "styled-components";
 import api from "../../../api/api";
 import BodyTitle from "../BodyTitle";
 import FileUpload from "../fileUpload/FileUpload";
-
-const BlockEmbed = Quill.import("blots/block/embed");
-const Delta = Quill.import("delta");
-
-class VideoBlot extends BlockEmbed {
-  static create(url) {
-    const node = super.create();
-    node.setAttribute("src", url);
-    node.setAttribute("frameborder", "0");
-    node.setAttribute("allowfullscreen", true);
-    node.setAttribute("width", "560");
-    node.setAttribute("height", "315");
-    return node;
-  }
-
-  static value(node) {
-    return node.getAttribute("src");
-  }
-}
-
-VideoBlot.blotName = "video";
-VideoBlot.tagName = "iframe";
-VideoBlot.className = "ql-video";
-
-Quill.register(VideoBlot);
-
-const getYoutubeEmbedUrl = (url) => {
-  /* eslint-disable no-useless-escape */
-  const regExp =
-    /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-  const match = url.match(regExp);
-  if (match && match[2].length === 11) {
-    return `https://www.youtube.com/embed/${match[2]}`;
-  } else {
-    return null;
-  }
-};
+import QuillEditor from "../quillEditor/QuillEditor";
 
 const BoardWrite = () => {
   const navigate = useNavigate();
@@ -57,7 +21,6 @@ const BoardWrite = () => {
     files: [],
   });
   const titleRef = useRef(null);
-  const quillRef = useRef(null);
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -76,38 +39,6 @@ const BoardWrite = () => {
     };
 
     fetchBoardDetail();
-
-    const addHandlers = () => {
-      const quill = quillRef.current.getEditor();
-
-      quill.clipboard.addMatcher(Node.TEXT_NODE, function (node, delta) {
-        const url = node.data;
-        const embedUrl = getYoutubeEmbedUrl(url);
-        if (embedUrl) {
-          const newDelta = new Delta()
-            .retain(delta.length())
-            .delete(delta.length())
-            .insert({ video: embedUrl });
-          return newDelta;
-        }
-        return delta;
-      });
-
-      const deleteHandler = (range, context) => {
-        const [blot] = quill.getLeaf(range.index);
-        if (blot && blot.domNode.tagName === "IFRAME") {
-          quill.deleteText(range.index, 1, Quill.sources.USER);
-        }
-        return true;
-      };
-
-      quill.keyboard.addBinding({ key: "Backspace" }, deleteHandler);
-      quill.keyboard.addBinding({ key: "Delete" }, deleteHandler);
-    };
-
-    if (quillRef.current) {
-      addHandlers();
-    }
   }, [id, user]);
 
   const handleContentChange = (content) => {
@@ -157,22 +88,6 @@ const BoardWrite = () => {
     navigate("/education-evangelism");
   };
 
-  const modules = {
-    toolbar: {
-      container: [
-        [{ size: [] }],
-        ["bold", "italic", "underline", "strike", "blockquote"],
-        [
-          { list: "ordered" },
-          { list: "bullet" },
-          { indent: "-1" },
-          { indent: "+1" },
-        ],
-        ["link", "image", "video"],
-      ],
-    },
-  };
-
   return (
     <Container>
       <BodyTitle title={formData.isEditing ? "글 수정" : "글 작성"} />
@@ -200,13 +115,7 @@ const BoardWrite = () => {
         initialFiles={formData.files}
       />
       <EditorContainer>
-        <ReactQuill
-          ref={quillRef}
-          theme="snow"
-          value={formData.content}
-          onChange={handleContentChange}
-          modules={modules}
-        />
+        <QuillEditor value={formData.content} onChange={handleContentChange} />
       </EditorContainer>
       <ButtonContainer>
         <BackButton onClick={handleBackClick}>목록으로</BackButton>
