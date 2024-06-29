@@ -18,7 +18,6 @@ const MainPage = () => {
   const [boards, setBoards] = useState([]);
   const [goWithBoards, setGoWithBoards] = useState([]);
   const navi = useNavigate();
-  console.log(boards);
   useEffect(() => {
     const fetchCategoryBoard = async () => {
       try {
