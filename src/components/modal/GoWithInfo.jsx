@@ -5,6 +5,7 @@ import api from "../../api/api";
 import GoWithWrite from "./GoWithWrite";
 import { useSelector } from "react-redux";
 import useCheckMyBoard from "../../hooks/useCheckUser";
+import InteractionContainer from "../common/Interaction/InteractionContainer";
 
 ReactModal.setAppElement("#root");
 
@@ -23,9 +24,9 @@ const GoWithInfo = ({ isOpen, onRequestClose, boardId, onUpdate }) => {
         const response = await api.get(`board/${boardId}`);
         const data = response.data.data;
         setDetail(data);
-        setLikes(data.likes.likes || 0);
-        setHearts(data.likes.hearts || 0);
-        setAmens(data.likes.prays || 0);
+        setLikes(data.likes || 0);
+        setHearts(data.hearts || 0);
+        setAmens(data.prays || 0);
       } catch (error) {
         console.error("Error fetching detail:", error);
       }
@@ -73,30 +74,6 @@ const GoWithInfo = ({ isOpen, onRequestClose, boardId, onUpdate }) => {
     onUpdate();
   };
 
-  const handleInteractionClick = async (type) => {
-    let payload = {};
-    if (type === "like") {
-      payload = { likes: 1, hearts: 0, prays: 0 };
-    } else if (type === "heart") {
-      payload = { likes: 0, hearts: 1, prays: 0 };
-    } else if (type === "pray") {
-      payload = { likes: 0, hearts: 0, prays: 1 };
-    }
-
-    try {
-      await api.post(`board/${boardId}/like`, payload);
-      if (type === "like") {
-        setLikes(likes + 1);
-      } else if (type === "heart") {
-        setHearts(hearts + 1);
-      } else if (type === "pray") {
-        setAmens(amens + 1);
-      }
-    } catch (error) {
-      console.error("Error liking post:", error);
-    }
-  };
-
   return (
     <>
       <ReactModal
@@ -117,20 +94,13 @@ const GoWithInfo = ({ isOpen, onRequestClose, boardId, onUpdate }) => {
           </ContentWrapper>
           {user && (
             <FooterButton>
-              <InteractionContainer>
-                <InteractionButton
-                  onClick={() => handleInteractionClick("like")}>
-                  👍 {likes}
-                </InteractionButton>
-                <InteractionButton
-                  onClick={() => handleInteractionClick("heart")}>
-                  ❤️ {hearts}
-                </InteractionButton>
-                <InteractionButton
-                  onClick={() => handleInteractionClick("pray")}>
-                  🙏 {amens}
-                </InteractionButton>
-              </InteractionContainer>
+              <InteractionContainer
+                boardId={boardId}
+                likes={likes}
+                hearts={hearts}
+                amens={amens}
+                fetchDetail={fetchDetail}
+              />
               {isAuthor && (
                 <ButtonContainer>
                   <Button type="button" onClick={openWriteModal}>
@@ -278,25 +248,3 @@ const Button = styled.button`
   }
 `;
 //좋아요 , 하트 아이콘들
-const InteractionContainer = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  gap: 10px;
-`;
-
-const InteractionButton = styled.button`
-  min-width: fit-content;
-  display: flex;
-  padding: 8px 16px;
-  font-size: 16px; /* 폰트 크기를 16px로 설정하여 이모티콘이 잘 보이도록 함 */
-  cursor: pointer;
-  border: none;
-  border-radius: 8px;
-  background-color: #f0f0f0; /* 버튼 배경색 설정 */
-  color: #333; /* 버튼 텍스트 색상 설정 */
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #e0e0e0; /* 호버 시 배경색 변경 */
-  }
-`;

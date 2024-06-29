@@ -15,20 +15,25 @@ const BoardDetail = () => {
   const [fileListOpen, setFileListOpen] = useState(false); // 파일 목록 토글 상태
   const user = useSelector((state) => state.user);
   const checkMyBoard = useCheckMyBoard(selectedItem?.memberId);
-
+  const [likes, setLikes] = useState(0);
+  const [hearts, setHearts] = useState(0);
+  const [amens, setAmens] = useState(0);
+  const fetchBoardDetail = async () => {
+    try {
+      const response = await api.get(`/board/${id}`);
+      const data = response.data.data;
+      setSelectedItem(data);
+      setLikes(data.likes || 0);
+      setHearts(data.hearts || 0);
+      setAmens(data.prays || 0);
+    } catch (error) {
+      setError("게시글을 불러오는데 실패했습니다.");
+      console.error("board detail! error", error);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
-    const fetchBoardDetail = async () => {
-      try {
-        const response = await api.get(`/board/${id}`);
-        setSelectedItem(response.data.data);
-      } catch (error) {
-        setError("게시글을 불러오는데 실패했습니다.");
-        console.error("board detail! error", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchBoardDetail();
   }, [id]);
 
@@ -137,7 +142,13 @@ const BoardDetail = () => {
       )}
       <Content
         dangerouslySetInnerHTML={{ __html: selectedItem.content }}></Content>
-      <InteractionContainer boardId={id} />
+      <InteractionContainer
+        boardId={id}
+        likes={likes}
+        hearts={hearts}
+        amens={amens}
+        fetchDetail={fetchBoardDetail}
+      />
       <ButtonContainer>
         <LeftButtonContainer>
           <BackButton onClick={handleBackClick}>목록으로</BackButton>
