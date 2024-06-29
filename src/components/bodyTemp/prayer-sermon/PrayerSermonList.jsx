@@ -11,11 +11,11 @@ const PrayerSermonList = ({ isOpen, onItemClick, type }) => {
       navi: "/prayerSermonList/wednesday-worship",
     },
     {
-      name: "주일학교예배",
+      name: "주일학교",
       navi: "/prayerSermonList/sunday-school-worship",
     },
     {
-      name: "특별예배자료실",
+      name: "특별예배",
       navi: "/prayerSermonList/special-worship",
     },
     {
@@ -41,7 +41,7 @@ const PrayerSermonList = ({ isOpen, onItemClick, type }) => {
       navi: "/prayerSermonList/prayer",
     },
     {
-      name: "목회자 자료실",
+      name: "목회자자료",
       navi: "/prayerSermonList/pastor-materials",
     },
   ];

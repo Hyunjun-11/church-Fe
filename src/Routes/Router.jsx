@@ -1,5 +1,4 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import SignUpSuccess from "../Pages/user/login/SignUpSuccess";
 import ChurchGuide from "../components/bodyTemp/churchInfo/ChurchGuide";
 import ChurchInfo from "../components/bodyTemp/churchInfo/ChurchInfo";
 import ChurchOrganization from "../components/bodyTemp/churchInfo/ChurchOrganization";
@@ -11,7 +10,7 @@ import BibleReading from "../components/bodyTemp/community/BibleReading";
 import BibleRecitation from "../components/bodyTemp/community/BibleRecitation";
 import ChurchNews from "../components/bodyTemp/community/ChurchNews";
 import CommunityList from "../components/bodyTemp/community/CommunityList";
-import Dailybible from "../components/bodyTemp/community/Dailybible";
+import GoWith from "../components/bodyTemp/community/GoWith";
 import ImageResource from "../components/bodyTemp/community/ImageResource";
 import VideoResource from "../components/bodyTemp/community/VideoResource";
 import Daniel from "../components/bodyTemp/education-evangelism/Daniel";
@@ -54,7 +53,6 @@ import ImageBoardDetail from "../components/common/imageBoard/ImageBoardDetail";
 import Footer from "../components/footer/Footer";
 import Header from "../components/header/Header";
 import MainPage from "../components/main/MainPage";
-import GoWith from "../components/bodyTemp/community/GoWith";
 
 const Router = () => {
   const location = useLocation();
@@ -86,7 +84,6 @@ const Router = () => {
           <Route path="videos" element={<VideoResource />}></Route>
           <Route path="bibleRecitation" element={<BibleRecitation />}></Route>
           <Route path="bibleReading" element={<BibleReading />}></Route>
-          <Route path="dailybible" element={<Dailybible />}></Route>
           <Route path="gowith" element={<GoWith />}></Route>
         </Route>
         {/* worship */}

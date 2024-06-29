@@ -4,31 +4,31 @@ import ListBar from "../../common/ListBar";
 const EducationEvangelismList = ({ isOpen, onItemClick, type }) => {
   const list = [
     {
-      name: "사무엘 부서",
+      name: "사무엘",
       navi: "/education-evangelism/samuel",
     },
     {
-      name: "다니엘 부서",
+      name: "다니엘",
       navi: "/education-evangelism/daniel",
     },
     {
-      name: "에스더 부서",
+      name: "에스더",
       navi: "/education-evangelism/esther",
     },
     {
-      name: "청년부 부서",
+      name: "청년부",
       navi: "/education-evangelism/youth",
     },
     {
-      name: "여전도회 부서",
+      name: "여전도회",
       navi: "/education-evangelism/women",
     },
     {
-      name: "남전도회 부서 Ⅰ",
+      name: "남전도회 Ⅰ",
       navi: "/education-evangelism/men1",
     },
     {
-      name: "남전도회 부서 Ⅱ",
+      name: "남전도회 Ⅱ",
       navi: "/education-evangelism/men2",
     },
   ];

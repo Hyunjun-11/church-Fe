@@ -3,7 +3,7 @@ import BoardLayout from "../../common/board/BoardLayout";
 const Men1 = () => {
   return (
     <div>
-      <BoardLayout title={"남전도회 부서 Ⅰ"} category={"MEN1"} />
+      <BoardLayout title={"남전도회 Ⅰ"} category={"MEN1"} />
     </div>
   );
 };

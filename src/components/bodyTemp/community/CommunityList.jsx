@@ -23,10 +23,7 @@ const CommunityList = ({ isOpen, onItemClick, type }) => {
       name: "말씀읽기",
       navi: "/community/bibleReading",
     },
-    {
-      name: "매일성경",
-      navi: "/community/dailybible",
-    },
+
     {
       name: "예수님과 동행",
       navi: "/community/gowith",

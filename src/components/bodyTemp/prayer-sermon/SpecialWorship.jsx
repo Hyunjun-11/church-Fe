@@ -3,7 +3,7 @@ import BodyTitle from "../../common/BodyTitle";
 const SpecialWorship = () => {
   return (
     <div>
-      <BodyTitle title={"특별에배 자료실"} />
+      <BodyTitle title={"특별에배"} />
     </div>
   );
 };

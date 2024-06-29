@@ -1,11 +1,11 @@
-import BodyTitle from "../../common/BodyTitle";
+// import BodyTitle from "../../common/BodyTitle";
 
-const Dailybible = () => {
-  return (
-    <div>
-      <BodyTitle title={"매일성경"} />
-    </div>
-  );
-};
+// const Dailybible = () => {
+//   return (
+//     <div>
+//       <BodyTitle title={"매일성경"} />
+//     </div>
+//   );
+// };
 
-export default Dailybible;
+// export default Dailybible;
