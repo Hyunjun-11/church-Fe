@@ -3,11 +3,22 @@ import styled from "styled-components";
 import api from "../../api/api";
 import MiniCalendar from "../common/calendar/MiniCalendar";
 import { useNavigate } from "react-router-dom";
-
+const categoryRoutes = {
+  SAMUEL: "/education-evangelism/samuel",
+  DANIEL: "/education-evangelism/daniel",
+  YOUTH: "/education-evangelism/youth",
+  ESTHER: "/education-evangelism/esther",
+  WOMEN: "/education-evangelism/women",
+  MEN1: "/education-evangelism/men1",
+  MEN2: "/education-evangelism/men2",
+  DEVELOP: "/test/develop",
+  GOWITH: "community/gowith",
+};
 const MainPage = () => {
   const [boards, setBoards] = useState([]);
   const [goWithBoards, setGoWithBoards] = useState([]);
   const navi = useNavigate();
+  console.log(boards);
   useEffect(() => {
     const fetchCategoryBoard = async () => {
       try {
@@ -30,6 +41,15 @@ const MainPage = () => {
 
     fetchCategoryBoard();
   }, []);
+  const handleNavigate = (category) => {
+    const route = categoryRoutes[category.toUpperCase()];
+
+    if (route) {
+      navi(`${route}`);
+    } else {
+      console.error(`No route defined for category: ${category}`);
+    }
+  };
 
   return (
     <Container>
@@ -82,7 +102,11 @@ const MainPage = () => {
           </Title>
           {boards.slice(0, 7).map((item) => (
             <BoardBody key={item.boardId}>
-              <BoardColumn className="title">{item.title}</BoardColumn>
+              <BoardColumn
+                onClick={() => handleNavigate(item.category)}
+                className="title">
+                {item.title}
+              </BoardColumn>
             </BoardBody>
           ))}
         </Box2>
@@ -99,7 +123,11 @@ const MainPage = () => {
           </Title>
           {goWithBoards.slice(0, 7).map((item) => (
             <BoardBody key={item.boardId}>
-              <BoardColumn className="title">{item.title}</BoardColumn>
+              <BoardColumn
+                onClick={() => handleNavigate(item.category)}
+                className="title">
+                {item.title}
+              </BoardColumn>
             </BoardBody>
           ))}
         </Box2>
