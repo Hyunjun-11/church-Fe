@@ -9,6 +9,7 @@ import AdminLogin from "../Pages/admin/Adminlogin";
 import AdminPostDetail from "../Pages/admin/AdminPostDetail";
 import AdminBibleRecitation from "../Pages/admin/AdminBibleRecitation";
 import AdminBibleRecitationWrite from "../Pages/admin/AdminBibleRecitationWrite";
+import AdminUserDetail from "../Pages/admin/AdminUserDetail";
 
 const AdminRoutes = () => {
   return (
@@ -18,6 +19,7 @@ const AdminRoutes = () => {
         <Route path="" element={<AdminDashboard />} />
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="users" element={<AdminUsers />} />
+        <Route path="users/:id" element={<AdminUserDetail />} />
         <Route path="posts" element={<AdminPost />} />
         <Route path="posts/:id" element={<AdminPostDetail />} />
         <Route path="banner" element={<AdminBanner />} />

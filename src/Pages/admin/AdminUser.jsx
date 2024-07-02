@@ -1,15 +1,45 @@
-// AdminUsers.js
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import api from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
+  const nav = useNavigate();
+  const handleUserDetail = (id) => {
+    nav(`${id}`);
+  };
+
   const fetchUser = async () => {
     try {
       const response = await api.get(`member/readAll`);
-      console.log(response.data.data);
       setUsers(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleApprove = async (id) => {
+    try {
+      await api.patch(`member/approval/${id}`);
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user.id === id ? { ...user, isApproval: true } : user
+        )
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleRevoke = async (id) => {
+    try {
+      await api.put(`member/revoke/${id}`);
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user.id === id ? { ...user, isApproval: false } : user
+        )
+      );
     } catch (error) {
       console.error(error);
     }
@@ -18,6 +48,7 @@ const AdminUsers = () => {
   useEffect(() => {
     fetchUser();
   }, []);
+
   return (
     <UserLayoutContainer>
       <Board>
@@ -29,7 +60,7 @@ const AdminUsers = () => {
           <BoardColumn className="state">상태</BoardColumn>
         </BoardHeader>
         {users.map((item, index) => (
-          <BoardBody key={item.id}>
+          <BoardBody key={item.id} onClick={() => handleUserDetail(item.id)}>
             <BoardColumn className="number">{index + 1}</BoardColumn>
             <BoardColumn className="id">{item.memberId}</BoardColumn>
             <BoardColumn className="name">{item.name}</BoardColumn>
@@ -40,9 +71,16 @@ const AdminUsers = () => {
                 new Date(item.birth).getDate()
               ).padStart(2, "0")}`}
             </BoardColumn>
-
             <BoardColumn className="state">
-              <StateButton>승인</StateButton>
+              {item.isApproval ? (
+                <ApprovedButton onClick={() => handleRevoke(item.id)}>
+                  승인됨
+                </ApprovedButton>
+              ) : (
+                <UnapprovedButton onClick={() => handleApprove(item.id)}>
+                  미승인
+                </UnapprovedButton>
+              )}
             </BoardColumn>
           </BoardBody>
         ))}
@@ -111,14 +149,34 @@ const BoardColumn = styled.div`
   }
 `;
 
-const StateButton = styled.div`
-  // display: flex;
-  // justify-items: center;
+const buttonStyles = css`
   cursor: pointer;
   padding: 4px 8px;
-  border: solid 1px #90ff92;
   border-radius: 1rem;
-  background-color: #e8faea;
-  // width: fit-content;
   user-select: none;
+  transition: background-color 0.2s, transform 0.1s;
+
+  &:active {
+    transform: scale(0.95);
+  }
+`;
+
+const ApprovedButton = styled.div`
+  ${buttonStyles}
+  border: solid 1px #90ff92;
+  background-color: #e8faea;
+
+  &:hover {
+    background-color: #c7f7d4;
+  }
+`;
+
+const UnapprovedButton = styled.div`
+  ${buttonStyles}
+  border: solid 1px #ff9292;
+  background-color: #fae8e8;
+
+  &:hover {
+    background-color: #f7c7c7;
+  }
 `;
