@@ -21,7 +21,6 @@ const AdminUserDetail = () => {
   };
 
   const fetchUserLogs = async () => {
-    // Mock data for logs
     const mockLogs = Array.from({ length: 30 }, (_, index) => ({
       date: `2024-07-${String(index + 1).padStart(2, "0")}`,
       message: `로그 메시지 ${index + 1}`,
