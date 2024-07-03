@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -12,12 +12,15 @@ const BoardDetail = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [fileListOpen, setFileListOpen] = useState(false); // 파일 목록 토글 상태
+  const [fileListOpen, setFileListOpen] = useState(false);
   const user = useSelector((state) => state.user);
   const checkMyBoard = useCheckMyBoard(selectedItem?.memberId);
   const [likes, setLikes] = useState(0);
   const [hearts, setHearts] = useState(0);
   const [amens, setAmens] = useState(0);
+  const [comments, setComments] = useState([]);
+  const [commentContent, setCommentContent] = useState("");
+
   const fetchBoardDetail = async () => {
     try {
       const response = await api.get(`/board/${id}`);
@@ -33,8 +36,20 @@ const BoardDetail = () => {
       setLoading(false);
     }
   };
+
+  const fetchComments = async () => {
+    try {
+      const response = await api.get(`boards/${id}/comments`);
+      const data = response.data.data;
+      setComments(data);
+    } catch (error) {
+      console.error("Failed to fetch comments", error);
+    }
+  };
+
   useEffect(() => {
     fetchBoardDetail();
+    fetchComments();
   }, [id]);
 
   const handleEditClick = () => {
@@ -50,7 +65,7 @@ const BoardDetail = () => {
       try {
         await api.delete(`board/${id}`);
         alert("게시글이 삭제되었습니다.");
-        navigate(-1); // 삭제 후 게시판 목록으로 이동
+        navigate(-1);
       } catch (error) {
         console.error("There was an error deleting the board!", error);
         alert("게시글 삭제에 실패했습니다.");
@@ -61,7 +76,7 @@ const BoardDetail = () => {
   };
 
   const handleBackClick = () => {
-    navigate(-1); // 게시판 목록 페이지로 이동
+    navigate(-1);
   };
 
   const handleDownload = async (fileName) => {
@@ -78,7 +93,7 @@ const BoardDetail = () => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement("a");
         link.href = url;
-        link.setAttribute("download", formatFileName(fileName)); // download 속성을 설정하여 파일로 다운로드
+        link.setAttribute("download", formatFileName(fileName));
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -90,19 +105,42 @@ const BoardDetail = () => {
   };
 
   const handleToggleFileList = () => {
-    setFileListOpen(!fileListOpen); // 파일 목록 토글
+    setFileListOpen(!fileListOpen);
+  };
+
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    if (!user) {
+      alert("로그인한 회원만 댓글을 작성할 수 있습니다.");
+      return;
+    }
+
+    try {
+      await api.post(`boards/${id}/comments`, { content: commentContent });
+      setCommentContent("");
+      fetchComments();
+    } catch (error) {
+      console.error("Failed to post comment", error);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const input = e.target.value;
+    if (input.length <= 120) {
+      setCommentContent(input);
+    }
   };
 
   if (loading) return <div>로딩 중...</div>;
   if (error) return <div>{error}</div>;
 
   const formatDate = (dateString) => {
-    const date = new window.Date(dateString); // 명시적으로 window 객체에서 Date 생성
-    return date.toLocaleString(); // 날짜와 시간을 로컬 형식으로 변환
+    const date = new window.Date(dateString);
+    return date.toLocaleString();
   };
+
   const formatFileName = (fileName) => {
     const uuidLength = 47;
-
     return fileName.substring(uuidLength);
   };
 
@@ -120,13 +158,8 @@ const BoardDetail = () => {
           </FileSectionHeader>
           {fileListOpen && (
             <FileList>
-              {/* <FileListHeader>
-                <DownloadAllButton onClick={handleDownloadAll}>
-                  전체 다운로드
-                </DownloadAllButton>
-              </FileListHeader> */}
               {selectedItem.files.map((fileUrl, index) => {
-                const fileName = fileUrl.fileName; // URL에서 파일 이름 추출
+                const fileName = fileUrl.fileName;
                 return (
                   <FileItem key={index}>
                     {formatFileName(fileName)}
@@ -149,6 +182,31 @@ const BoardDetail = () => {
         amens={amens}
         fetchDetail={fetchBoardDetail}
       />
+      <CommentContainer>
+        <FormContainer onSubmit={handleCommentSubmit}>
+          <TextAreaContainer>
+            <TextArea
+              value={commentContent}
+              onChange={handleInputChange}
+              placeholder="댓글을 입력하세요"
+              required
+            />
+            <CharCounter>{commentContent.length}/120</CharCounter>
+          </TextAreaContainer>
+          <SubmitButton type="submit">댓글 작성</SubmitButton>
+        </FormContainer>
+        <CommentListContainer>
+          {comments.map((comment) => (
+            <CommentItem key={comment.id}>
+              <CommentHeader>
+                <CommentAuthor>{comment.author}</CommentAuthor>
+                <CommentDate>{formatDate(comment.createAt)}</CommentDate>
+              </CommentHeader>
+              <CommentContent>{comment.content}</CommentContent>
+            </CommentItem>
+          ))}
+        </CommentListContainer>
+      </CommentContainer>
       <ButtonContainer>
         <LeftButtonContainer>
           <BackButton onClick={handleBackClick}>목록으로</BackButton>
@@ -163,6 +221,7 @@ const BoardDetail = () => {
     </BoardDetailContainer>
   );
 };
+
 export default BoardDetail;
 
 const BoardDetailContainer = styled.div`
@@ -171,7 +230,10 @@ const BoardDetailContainer = styled.div`
   height: 100%;
   background: #fff;
   border-radius: 8px;
+  display: flex;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.02);
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 const Title = styled.div`
@@ -187,7 +249,7 @@ const Info = styled.div`
   align-items: end;
   font-size: 14px;
   color: #777;
-  margin-bottom: 40px; /* 제목과 작성자 사이의 간격을 늘리기 위해 변경 */
+  margin-bottom: 40px;
 `;
 
 const Author = styled.div`
@@ -205,10 +267,9 @@ const Content = styled.div`
   line-height: 1.6;
   color: #444;
   padding: 20px 0;
-  border-top: 1px solid #ddd;
-  // border-bottom: 1px solid #ddd;
+  border-top: 2px solid #ddd;
   min-height: 10rem;
-  margin-bottom: 20px; /* 추가하여 아래 경계선이 맨 아래까지 나오도록 조정 */
+  margin-bottom: 20px;
 `;
 
 const ButtonContainer = styled.div`
@@ -242,6 +303,7 @@ const Button = styled.button`
     background-color: #0056b3;
   }
 `;
+
 const BackButton = styled.button`
   padding: 12px 20px;
   background-color: transparent;
@@ -256,7 +318,7 @@ const BackButton = styled.button`
     background-color: #f0f0f0;
   }
 `;
-//파일 다운로드
+
 const FileSection = styled.div`
   position: relative;
   margin-top: 20px;
@@ -320,17 +382,88 @@ const DownloadButton = styled.button`
   }
 `;
 
-const DownloadAllButton = styled.button`
+const CommentContainer = styled.div`
+  width: 100%;
+  margin-top: 20px;
+`;
+
+const TextAreaContainer = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+const TextArea = styled.textarea`
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  resize: none; /* 크기 조절 비활성화 */
+  min-height: 100px;
+  box-sizing: border-box;
+`;
+
+const CharCounter = styled.div`
+  font-size: 12px;
+  color: #777;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+`;
+
+const FormContainer = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+`;
+
+const SubmitButton = styled.button`
+  align-self: flex-end;
   background-color: #007bff;
   color: white;
-  padding: 8px 16px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
+  font-size: 16px;
+  transition: background-color 0.5s ease;
 
   &:hover {
     background-color: #0056b3;
   }
+`;
+
+const CommentListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
+
+const CommentItem = styled.div`
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f9f9f9;
+`;
+const CommentHeader = styled.div`
+  display: flex;
+  // justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 5px;
+`;
+
+const CommentAuthor = styled.div`
+  font-weight: bold;
+`;
+
+const CommentDate = styled.div`
+  font-size: 12px;
+  color: #777;
+`;
+
+const CommentContent = styled.div`
+  margin-bottom: 5px;
+  line-height: 1.4;
 `;
