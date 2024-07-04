@@ -5,7 +5,6 @@ const BoardTest = () => {
   return (
     <div>
       <BoardLayout title={"개발 과정"} category={"DEVELOP"} />
-      <EditorInput type="text" placeholder="Type something here..." />
     </div>
   );
 };
