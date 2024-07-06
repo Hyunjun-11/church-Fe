@@ -15,6 +15,10 @@ const TestList = ({ isOpen, onItemClick, type }) => {
     //   navi: "/test/cal",
     // },
   ];
+  const name = 1;
+  const type2 = 2;
+  console.log(name);
+  console.log(type2);
 
   return (
     <ListBar

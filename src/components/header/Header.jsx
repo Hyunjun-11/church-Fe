@@ -71,12 +71,12 @@ const Header = () => {
               {/* <Temporary>임시 - Id : test / PW : 1234</Temporary> */}
             </>
           )}
-          <MenuItem
+          {/* <MenuItem
             onClick={() => {
               onClick("/admin");
             }}>
             관리자
-          </MenuItem>
+          </MenuItem> */}
         </HeaderMenu>
       </HeaderInner>
       <NavigatorBar />
