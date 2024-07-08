@@ -39,7 +39,6 @@ import SundayWorship from "../components/bodyTemp/prayer-sermon/SundayWorship";
 import WednesdayWorship from "../components/bodyTemp/prayer-sermon/WednesdayWorship";
 import BoardTest from "../components/bodyTemp/testBar/BoardTest";
 import CalTest from "../components/bodyTemp/testBar/CalTest";
-import ImageBoardTest from "../components/bodyTemp/testBar/ImageBoardTest";
 import TestList from "../components/bodyTemp/testBar/TestList";
 import Bulletin from "../components/bodyTemp/worshipInfo/Bulletin";
 import ChurchSchedule from "../components/bodyTemp/worshipInfo/ChurchSchedule";
@@ -49,7 +48,6 @@ import Vision from "../components/bodyTemp/worshipInfo/Vision";
 import WorshipInfoList from "../components/bodyTemp/worshipInfo/WorshipInfoList";
 import BoardDetail from "../components/common/board/BoardDetail";
 import BoardWrite from "../components/common/board/BoardWrite";
-import ImageBoardDetail from "../components/common/imageBoard/ImageBoardDetail";
 import Footer from "../components/footer/Footer";
 import Header from "../components/header/Header";
 import MainPage from "../components/main/MainPage";
@@ -160,8 +158,6 @@ const Router = () => {
           <Route path=":category/write" element={<BoardWrite />} />
           <Route path=":category/:id" element={<BoardDetail />} />
           <Route path="board/edit/:id" element={<BoardWrite />} />
-          <Route path="imageboard" element={<ImageBoardTest />} />
-          <Route path="imageboard/:id" element={<ImageBoardDetail />} />
           <Route path="cal" element={<CalTest />} />
         </Route>
       </Routes>
